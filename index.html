@@ -6,7 +6,7 @@
     <title>Action ou Vérité - Édition Royale VIP</title>
     <style>
         body {
-            background-color: #030305;
+            background-color: #020205;
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, sans-serif;
             margin: 0;
@@ -20,58 +20,128 @@
             letter-spacing: -0.3px;
         }
 
-        /* Arrière-plan Liquide Profond et Dynamique Ultra Amélioré */
+        /* Fond animé multicouche ultra pro et hypnotique */
         body::before, body::after {
             content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
-            filter: blur(140px);
-            z-index: -1;
-            opacity: 0.6;
-            animation: liquidMove 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            width: 750px;
+            height: 750px;
+            filter: blur(180px);
+            z-index: -2;
+            opacity: 0.7;
+            animation: liquidBackground 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body::before {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-            top: -25%; left: -25%;
+            background: linear-gradient(135deg, #1d4ed8, #7c3aed, #db2777);
+            top: -30%; left: -30%;
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
         }
 
         body::after {
-            background: linear-gradient(135deg, #f59e0b, #ef4444, #6366f1);
-            bottom: -25%; right: -25%;
+            background: linear-gradient(135deg, #f59e0b, #e11d48, #6366f1);
+            bottom: -30%; right: -30%;
             border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%;
-            animation-delay: -6s;
+            animation-delay: -9s;
         }
 
-        @keyframes liquidMove {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(45px, 35px) rotate(180deg) scale(1.12); }
-            100% { transform: translate(-35px, 45px) rotate(360deg) scale(0.92); }
+        @keyframes liquidBackground {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); filter: blur(160px); }
+            50% { transform: translate(70px, 50px) rotate(180deg) scale(1.18); filter: blur(200px); }
+            100% { transform: translate(-60px, 70px) rotate(360deg) scale(0.92); filter: blur(150px); }
         }
 
-        /* Conteneur principal Liquid Glass Premium */
+        /* Structure globale avec panneaux latéraux */
+        .site-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 30px;
+            padding: 20px;
+            box-sizing: border-box;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        .side-panel {
+            width: 280px;
+            height: 85vh;
+            max-height: 720px;
+            background: rgba(22, 22, 35, 0.4);
+            backdrop-filter: blur(45px) saturate(200%);
+            -webkit-backdrop-filter: blur(45px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 32px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 40px 90px rgba(0,0,0,0.7);
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1024px) {
+            .side-panel { display: none; }
+        }
+
+        .side-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #f59e0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+            color: #a1a1aa;
+        }
+        .stat-item span { color: #fff; font-weight: 600; display: block; font-size: 0.98rem; margin-top: 3px; }
+
+        .creator-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.28));
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            padding: 16px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .creator-badge .label { font-size: 0.75rem; color: #fbbf24; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+        .creator-badge .name { font-size: 1.15rem; font-weight: 800; color: #fff; margin-top: 4px; }
+
+        /* Conteneur principal - VRAI LIQUID GLASS ULTRA PUR (Style iOS 26) */
         .liquid-glass {
-            background: rgba(18, 18, 26, 0.7);
-            backdrop-filter: blur(50px) saturate(210%);
-            -webkit-backdrop-filter: blur(50px) saturate(210%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 38px;
-            padding: 30px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            background: rgba(18, 18, 28, 0.62);
+            backdrop-filter: blur(65px) saturate(240%);
+            -webkit-backdrop-filter: blur(65px) saturate(240%);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            border-radius: 42px;
+            padding: 34px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 70px 140px rgba(0, 0, 0, 0.92), inset 0 1px 3px rgba(255, 255, 255, 0.5), inset 0 -2px 5px rgba(0, 0, 0, 0.4);
             text-align: center;
             box-sizing: border-box;
-            max-height: 92vh;
+            height: 86vh;
+            max-height: 740px;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
         .title-ios {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
             margin-bottom: 6px;
             color: #f4f4f5;
@@ -86,13 +156,13 @@
             text-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
         }
 
-        p { color: #94a3b8; font-size: 0.94rem; margin-bottom: 22px; line-height: 1.4; }
+        p { color: #94a3b8; font-size: 0.96rem; margin-bottom: 22px; line-height: 1.4; }
 
         input {
             width: 100%;
             padding: 16px;
             border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             background: rgba(0, 0, 0, 0.45);
             color: #fff;
             font-size: 1.05rem;
@@ -105,43 +175,80 @@
         input:focus {
             border-color: #f59e0b;
             background: rgba(0, 0, 0, 0.65);
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
         }
 
+        /* BOUTONS EN VRAI LIQUID GLASS PUR */
         button {
             width: 100%;
             padding: 16px;
             border-radius: 18px;
-            border: none;
-            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.06);
             color: white;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 8px;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3);
         }
 
         button:active { transform: scale(0.93); }
-        button:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.25); transform: translateY(-2px); }
+        button:hover { 
+            background: rgba(255, 255, 255, 0.14); 
+            border-color: rgba(255, 255, 255, 0.35); 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Bouton Retour Discret en Liquid Glass */
+        .btn-back-liquid {
+            width: auto;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            border-radius: 12px;
+            margin: 0 0 12px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(15px);
+            color: #d4d4d8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+        .btn-back-liquid:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
 
         .btn-primary { 
-            background: linear-gradient(135deg, #f59e0b, #d97706); 
-            border: none; 
-            box-shadow: 0 12px 30px rgba(217, 119, 6, 0.45); 
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4)); 
+            border: 1px solid rgba(245, 158, 11, 0.5); 
+            box-shadow: 0 12px 30px rgba(217, 119, 6, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
         }
-        .btn-primary:hover { background: linear-gradient(135deg, #fbbf24, #b45309); box-shadow: 0 15px 35px rgba(217, 119, 6, 0.6); }
+        .btn-primary:hover { background: linear-gradient(135deg, rgba(251, 191, 36, 0.4), rgba(180, 83, 9, 0.5)); box-shadow: 0 15px 35px rgba(217, 119, 6, 0.5); }
         
-        .btn-verite { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4); }
-        .btn-verite:hover { background: linear-gradient(135deg, #60a5fa, #1e40af); box-shadow: 0 12px 30px rgba(59, 130, 246, 0.6); }
+        .btn-verite { 
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.4)); 
+            border: 1px solid rgba(59, 130, 246, 0.5); 
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
+        }
+        .btn-verite:hover { background: linear-gradient(135deg, rgba(96, 165, 250, 0.4), rgba(30, 64, 175, 0.5)); box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5); }
 
-        .btn-action { background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4); }
-        .btn-action:hover { background: linear-gradient(135deg, #f87171, #991b1b); box-shadow: 0 12px 30px rgba(239, 68, 68, 0.6); }
+        .btn-action { 
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(185, 28, 28, 0.4)); 
+            border: 1px solid rgba(239, 68, 68, 0.5); 
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
+        }
+        .btn-action:hover { background: linear-gradient(135deg, rgba(248, 113, 113, 0.4), rgba(153, 27, 27, 0.5)); box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5); }
         
         .btn-disabled { 
-            background: rgba(255, 255, 255, 0.03) !important; 
+            background: rgba(255, 255, 255, 0.02) !important; 
             color: #52525b !important; 
             box-shadow: none !important; 
             cursor: not-allowed !important; 
@@ -149,50 +256,196 @@
             border-color: rgba(255, 255, 255, 0.02) !important;
         }
 
-        /* Boutons de Thèmes ultra stylés avec émojis riches */
-        .theme-btn {
+        .home-features {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0 25px 0;
+            justify-content: center;
+        }
+
+        .feature-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 0.78rem;
+            color: #d4d4d8;
+            font-weight: 500;
+        }
+
+        /* Liste de joueurs propre et stylée */
+        #players-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .player-card-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 16px;
             display: flex;
-            justify-content: flex-start;
             align-items: center;
-            padding: 16px 18px;
-            border-radius: 18px;
-            cursor: pointer;
+            justify-content: space-between;
             font-weight: 600;
-            font-size: 1.05rem;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #f4f4f5;
+            backdrop-filter: blur(10px);
+            animation: fadeInPlayer 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .theme-btn:hover { 
-            background: rgba(255, 255, 255, 0.1); 
-            border-color: rgba(255, 255, 255, 0.25); 
-            transform: scale(1.02) translateX(4px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        @keyframes fadeInPlayer {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        
-        .theme-btn.pro { 
-            border: 1px solid rgba(250, 204, 21, 0.5); 
-            color: #fef08a; 
-            background: linear-gradient(135deg, rgba(202, 138, 4, 0.12), rgba(161, 98, 7, 0.22));
-            box-shadow: 0 0 25px rgba(250, 204, 21, 0.12);
+
+        .player-info-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
+        }
+
+        /* SAS DE TRANSITION ULTRA PRO : "C'est au tour de..." */
+        .transition-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 30px 20px;
+            margin: 20px 0;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            backdrop-filter: blur(20px);
+        }
+
+        .turn-subtitle {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .turn-name {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin: 5px 0;
+            animation: pulseName 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseName {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Grille des thèmes */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            padding: 18px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .theme-btn.unlocked { 
-            border-color: rgba(34, 197, 94, 0.5); 
-            color: #4ade80; 
-            background: rgba(34, 197, 94, 0.08); 
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.15);
+        .theme-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
+
+        .theme-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover .icon { transform: scale(1.15) rotate(5deg); }
+
+        .theme-card .name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #f4f4f5;
+            letter-spacing: -0.2px;
+        }
+
+        .theme-card.random {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(79, 70, 229, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 15px 20px;
+            gap: 15px;
+        }
+        .theme-card.random .icon { font-size: 1.8rem; margin-bottom: 0; }
+        .theme-card.random .name { color: #e879f9; font-size: 1.02rem; }
+
+        .theme-card.pro {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(202, 138, 4, 0.15), rgba(161, 98, 7, 0.25));
+            border: 1px solid rgba(250, 204, 21, 0.5);
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 15px 18px;
+            gap: 15px;
+        }
+
+        .theme-card.pro .icon { font-size: 1.8rem; margin-bottom: 0; }
+        .theme-card.pro .info { text-align: left; display: flex; flex-direction: column; }
+        .theme-card.pro .name { color: #fef08a; font-size: 1.02rem; }
+        .theme-card.pro .badge-vip { font-size: 0.7rem; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; margin-top: 2px; }
+
+        .theme-card.unlocked { 
+            border-color: rgba(34, 197, 94, 0.5) !important; 
+            background: rgba(34, 197, 94, 0.08) !important; 
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.15) !important;
+        }
+        .theme-card.unlocked .name { color: #4ade80 !important; }
+        .theme-card.unlocked .badge-vip { color: #86efac !important; }
 
         .hidden { display: none !important; }
 
         .prompt-box {
             background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             padding: 24px;
             border-radius: 24px;
             font-size: 1.25rem;
@@ -239,7 +492,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 10px; }
 
-        /* Animation fluide des écrans */
         .card-transition { animation: cardSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes cardSlide {
             0% { opacity: 0; transform: translateY(20px) scale(0.96); }
@@ -255,92 +507,172 @@
 </head>
 <body>
 
-    <div class="liquid-glass card-transition" id="app">
-        <!-- MODALE CODE PROMO MYSTÈRE -->
-        <div class="modal-overlay" id="promo-modal">
-            <div class="modal-card">
-                <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 8px;">👑</div>
-                <h3 style="margin-top:0; font-size: 1.45rem; color: #fef08a;">Accès Royal VIP</h3>
-                <p style="font-size: 0.85rem; margin-bottom: 18px; color: #a1a1aa;">Contenu réservé à l'élite. Entrez le code secret pour déverrouiller.</p>
-                <input type="text" id="promo-input" placeholder="Code secret..." style="text-align: center; text-transform: uppercase;">
-                <button class="btn-primary" onclick="app.validerPromo()" style="margin-top: 5px;">Déverrouiller ✨</button>
-                <button onclick="app.fermerModal()" style="background: transparent; border: none; color: #71717a; margin-top: 12px; font-size: 0.85rem; cursor: pointer;">Fermer ✕</button>
+    <div class="site-layout">
+        
+        <!-- Panneau Latéral Gauche -->
+        <div class="side-panel">
+            <div>
+                <div class="side-title">⚡ État du Système</div>
+                <div class="stat-item">Plateforme <span>GitHub Pages 🚀</span></div>
+                <div class="stat-item">Sécurité Anti-Doublons <span>Active 🛡️</span></div>
+                <div class="stat-item">Version <span>Édition Royale VIP v2.4</span></div>
+            </div>
+
+            <div class="creator-badge">
+                <div class="label">Conçu par</div>
+                <div class="name">👑 Armand</div>
             </div>
         </div>
 
-        <!-- ÉCRAN 1 : ACCUEIL -->
-        <div id="screen-home" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 15px 0;">
-            <div class="floating-icon" style="font-size: 4rem; margin-bottom: 10px;">👑</div>
-            <h1 class="title-ios">Action<br><span>ou Vérité</span></h1>
-            <p>L'édition ultime de soirée, fluide, esthétique et sans pitié.</p>
-            <button class="btn-primary" onclick="app.changerEcran('screen-themes')">Commencer la partie 🚀</button>
-        </div>
+        <!-- CONTENEUR CENTRAL PRINCIPAL -->
+        <div class="liquid-glass card-transition" id="app">
+            <!-- MODALE CODE PROMO MYSTÈRE -->
+            <div class="modal-overlay" id="promo-modal">
+                <div class="modal-card">
+                    <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 8px;">👑</div>
+                    <h3 style="margin-top:0; font-size: 1.45rem; color: #fef08a;">Accès Royal VIP</h3>
+                    <p style="font-size: 0.85rem; margin-bottom: 18px; color: #a1a1aa;">Contenu réservé à l'élite. Entrez le code secret pour déverrouiller.</p>
+                    <input type="text" id="promo-input" placeholder="Code secret..." style="text-align: center; text-transform: uppercase;">
+                    <button class="btn-primary" onclick="app.validerPromo()" style="margin-top: 5px;">Déverrouiller ✨</button>
+                    <button onclick="app.fermerModal()" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #a1a1aa; margin-top: 12px; font-size: 0.85rem; cursor: pointer;">Fermer ✕</button>
+                </div>
+            </div>
 
-        <!-- ÉCRAN 2 : THÈMES -->
-        <div id="screen-themes" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-            <h1 style="font-size: 1.5rem; margin-bottom: 15px;">🎯 Choisis un Thème</h1>
-            <div class="scrollable-content">
-                <div class="theme-btn" onclick="app.selectionnerTheme('Chill')">🌿 Chill & Fun &nbsp;<span style="font-size:1.2rem; margin-left:auto;">🛋️</span></div>
-                <div class="theme-btn" onclick="app.selectionnerTheme('Lycée')">🎒 Lycée & Cours &nbsp;<span style="font-size:1.2rem; margin-left:auto;">📚</span></div>
-                <div class="theme-btn" onclick="app.selectionnerTheme('Soirée')">🍻 Soirée & Alcool &nbsp;<span style="font-size:1.2rem; margin-left:auto;">🎉</span></div>
-                <div class="theme-btn" onclick="app.selectionnerTheme('Sport')">⚡ Sport & Transpi &nbsp;<span style="font-size:1.2rem; margin-left:auto;">🏆</span></div>
-                <div class="theme-btn" onclick="app.selectionnerTheme('Flirt')">💖 Flirt & Gênance &nbsp;<span style="font-size:1.2rem; margin-left:auto;">👀</span></div>
+            <!-- ÉCRAN 1 : ACCUEIL -->
+            <div id="screen-home" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 15px 0;">
+                <div class="floating-icon" style="font-size: 4.2rem; margin-bottom: 10px;">👑</div>
+                <h1 class="title-ios">Action<br><span>ou Vérité</span></h1>
+                <p>L'expérience ultime de soirée, fluide, interactive et sans pitié.</p>
                 
-                <div class="theme-btn pro" id="theme-hot-btn" onclick="app.accederThemePro('Hot')">
-                    🔥 Hot 18+ / VIP &nbsp;<span style="font-size:1.2rem; margin-left:auto;">🌶️</span>
+                <div class="home-features">
+                    <div class="feature-pill">🔥 7 Thèmes</div>
+                    <div class="feature-pill">🛡 Anti-Doublons</div>
+                    <div class="feature-pill">📱 Mobile & PC</div>
                 </div>
-                <div class="theme-btn pro" id="theme-secrets-btn" onclick="app.accederThemePro('Secrets')">
-                    💀 Confessions & Secrets &nbsp;<span style="font-size:1.2rem; margin-left:auto;">🗝️</span>
+
+                <button class="btn-primary" onclick="app.changerEcran('screen-themes')">Commencer la partie 🚀</button>
+            </div>
+
+            <!-- ÉCRAN 2 : THÈMES -->
+            <div id="screen-themes" class="hidden" style="display:flex; flex-direction:column; height:100%;">
+                <h1 style="font-size: 1.6rem; margin-bottom: 14px;">🎯 Choisis un Thème</h1>
+                <div class="scrollable-content">
+                    <div class="themes-grid">
+                        <div class="theme-card" onclick="app.selectionnerTheme('Chill')">
+                            <div class="icon">🌿</div>
+                            <div class="name">Chill & Fun</div>
+                        </div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Lycée')">
+                            <div class="icon">🎒</div>
+                            <div class="name">Lycée & Cours</div>
+                        </div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Soirée')">
+                            <div class="icon">🍻</div>
+                            <div class="name">Soirée & Alcool</div>
+                        </div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Sport')">
+                            <div class="icon">⚡</div>
+                            <div class="name">Sport & Transpi</div>
+                        </div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Flirt')">
+                            <div class="icon">💖</div>
+                            <div class="name">Flirt & Gênance</div>
+                        </div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Secrets')">
+                            <div class="icon">💀</div>
+                            <div class="name">Confessions</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+                        <div class="theme-card random" onclick="app.selectionnerTheme('Tous')">
+                            <div class="icon">🌪️</div>
+                            <div class="name">Mode Aléatoire (Tout mélanger)</div>
+                        </div>
+                        <div class="theme-card pro" id="theme-hot-btn" onclick="app.accederThemePro('Hot')">
+                            <div class="icon">🔥</div>
+                            <div class="info">
+                                <div class="name">Hot 18+ / VIP</div>
+                                <div class="badge-vip">👑 Contenu Exclusif Coquin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ÉCRAN 3 : JOUEURS AVEC BOUTON DE RETOUR LIQUID GLASS -->
+            <div id="screen-players" class="hidden" style="display:flex; flex-direction:column; height:100%; text-align: left;">
+                <!-- Bouton Retour Discret en haut à gauche -->
+                <div>
+                    <button class="btn-back-liquid" onclick="app.changerEcran('screen-themes')">
+                        ⬅️ Choisir un autre thème
+                    </button>
+                </div>
+                
+                <h1 id="theme-title-display" style="font-size: 1.4rem; margin: 4px 0 10px 0; text-align: center;">👥 Gestion des Joueurs</h1>
+                <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
+                <button onclick="app.ajouterJoueur()">Ajouter un joueur ➕</button>
+                <div class="scrollable-content" style="margin-top: 10px;">
+                    <ul id="players-list"></ul>
+                </div>
+                <button id="start-game-btn" class="btn-primary hidden" onclick="app.lancerPartie()" style="margin-top: auto;">Lancer la partie 🚀🎲</button>
+            </div>
+
+            <!-- ÉCRAN 4 : SAS DE TRANSITION -->
+            <div id="screen-pass-phone" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 5px 0;">
+                <div class="floating-icon" style="font-size: 3rem; margin-bottom: 2px;">📱</div>
+                
+                <div class="transition-card">
+                    <div class="turn-subtitle">C'est au tour de</div>
+                    <div class="turn-name" id="pass-to-name">NOM</div>
+                    <p style="font-size: 0.82rem; color: #94a3b8; margin: 8px 0 0 0;">Passe-lui le téléphone discrètement 🤫</p>
+                </div>
+
+                <button class="btn-primary" onclick="app.afficherChoix()" style="font-size: 1.1rem; padding: 16px;">C'est moi, je suis prêt ! 🔥</button>
+            </div>
+
+            <!-- ÉCRAN 5 : LE CHOIX -->
+            <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                <div id="theme-icon-banner" style="font-size: 2.8rem; margin-bottom: 4px;" class="floating-icon">🎯</div>
+                <div id="coward-counter-badge" class="hidden" style="margin-bottom: 6px;"></div>
+                <h1 id="choix-player-name" style="font-size: 2rem; margin-bottom: 4px;">NOM</h1>
+                <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.85rem; height: 18px; margin-bottom: 15px;"></p>
+                
+                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 76px; font-size: 1.4rem; border-radius: 20px;">🤫 VÉRITÉ</button>
+                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 76px; font-size: 1.4rem; margin-top: 12px; border-radius: 20px;">🔥 ACTION</button>
+                
+                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.25); font-size: 0.9rem; padding: 12px; margin-top: 15px; border-radius: 16px;">🎲 Laisser le destin choisir (Roulette)</button>
+            </div>
+
+            <!-- ÉCRAN 6 : LA SENTENCE -->
+            <div id="screen-prompt" class="hidden" style="display:flex; flex-direction:column; height:100%;">
+                <div id="prompt-icon-header" style="font-size: 2.2rem; margin-bottom: -2px;">✨</div>
+                <h2 id="prompt-type" style="letter-spacing: 1.2px; font-size: 1.1rem; margin-bottom: 0;">TYPE</h2>
+                <div class="scrollable-content" style="display:flex; align-items:center;">
+                    <div id="prompt-text" class="prompt-box">Chargement...</div>
+                </div>
+                
+                <div style="margin-top: auto;">
+                    <button class="btn-primary" onclick="app.tourSuivant()" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(21, 128, 61, 0.4)); border: 1px solid rgba(34, 197, 94, 0.5); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);">J'assume (Suivant) ✅</button>
+                    <button onclick="app.lachete()" style="background: rgba(255, 255, 255, 0.04); color: #a1a1aa; font-size: 0.92rem; border: 1px solid rgba(255,255,255,0.12);">Je refuse (+1 Lâche) 🏳️</button>
                 </div>
             </div>
         </div>
 
-        <!-- ÉCRAN 3 : JOUEURS -->
-        <div id="screen-players" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-            <h1 id="theme-title-display" style="font-size: 1.5rem; margin-bottom: 12px;">👥 Joueurs</h1>
-            <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
-            <button onclick="app.ajouterJoueur()">Ajouter un joueur ➕</button>
-            <div class="scrollable-content" style="margin-top: 10px;">
-                <ul id="players-list" style="list-style: none; padding: 0; text-align: left;"></ul>
-            </div>
-            <button id="start-game-btn" class="btn-primary hidden" onclick="app.lancerPartie()" style="margin-top: auto;">C'est parti ! 🎲</button>
-        </div>
-
-        <!-- ÉCRAN 4 : SAS DE TRANSITION -->
-        <div id="screen-pass-phone" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 15px 0;">
-            <div style="font-size: 3.5rem; margin-bottom: 8px;" class="floating-icon">📱</div>
-            <h1 style="font-size: 1.5rem; color: #e4e4e7;">Temps mort ⏳</h1>
-            <p style="font-size: 0.95rem;">Passe le téléphone discrètement à :</p>
-            <div style="font-size: 2.4rem; font-weight: 800; color: #fff; margin: 12px 0; text-shadow: 0 0 20px rgba(255,255,255,0.3);" id="pass-to-name">NOM</div>
-            <button class="btn-primary" onclick="app.afficherChoix()">C'est moi ! 👆</button>
-        </div>
-
-        <!-- ÉCRAN 5 : LE CHOIX -->
-        <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
-            <div id="theme-icon-banner" style="font-size: 2.5rem; margin-bottom: 4px;" class="floating-icon">🎯</div>
-            <div id="coward-counter-badge" class="hidden" style="margin-bottom: 6px;"></div>
-            <h1 id="choix-player-name" style="font-size: 1.9rem; margin-bottom: 4px;">NOM</h1>
-            <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.82rem; height: 18px; margin-bottom: 15px;"></p>
-            
-            <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 72px; font-size: 1.35rem; border-radius: 20px;">🤫 VÉRITÉ</button>
-            <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 72px; font-size: 1.35rem; margin-top: 12px; border-radius: 20px;">🔥 ACTION</button>
-            
-            <button onclick="app.rouletteDestin()" style="background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.25); font-size: 0.88rem; padding: 12px; margin-top: 15px; border-radius: 16px;">🎲 Laisser le destin choisir (Roulette)</button>
-        </div>
-
-        <!-- ÉCRAN 6 : LA SENTENCE -->
-        <div id="screen-prompt" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-            <div id="prompt-icon-header" style="font-size: 2rem; margin-bottom: -2px;">✨</div>
-            <h2 id="prompt-type" style="letter-spacing: 1.2px; font-size: 1.05rem; margin-bottom: 0;">TYPE</h2>
-            <div class="scrollable-content" style="display:flex; align-items:center;">
-                <div id="prompt-text" class="prompt-box">Chargement...</div>
+        <!-- Panneau Latéral Droit -->
+        <div class="side-panel">
+            <div>
+                <div class="side-title">💡 Règles & Astuces</div>
+                <div class="stat-item">Code Secret VIP <span>Tape "ARMAND29" 🔑</span></div>
+                <div class="stat-item">Règle des Vérités <span>Bloqué après 2 vérités d'affilée 🚫</span></div>
+                <div class="stat-item">Compteur de Lâcheté <span>Chaque refus s'additionne 📉</span></div>
             </div>
             
-            <div style="margin-top: auto;">
-                <button class="btn-primary" onclick="app.tourSuivant()" style="background: linear-gradient(135deg, #22c55e, #15803d); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);">J'assume (Suivant) ✅</button>
-                <button onclick="app.lachete()" style="background: rgba(255, 255, 255, 0.06); color: #a1a1aa; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.08);">Je refuse (+1 Lâche) 🏳️</button>
+            <div style="font-size: 0.8rem; color: #71717a; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px;">
+                Bonne partie à tous ! 🎉
             </div>
         </div>
+
     </div>
 
     <script>
@@ -356,13 +688,14 @@
             poolsActuels: {},
 
             themeIcons: {
-                'Chill': '🌿🛋️',
-                'Lycée': '🎒📚',
-                'Soirée': '🍻🎉',
-                'Sport': '⚡🏆',
-                'Flirt': '💖👀',
-                'Hot': '🔥🌶️',
-                'Secrets': '💀🗝️'
+                'Chill': '🌿',
+                'Lycée': '🎒',
+                'Soirée': '🍻',
+                'Sport': '⚡',
+                'Flirt': '💖',
+                'Hot': '🔥',
+                'Secrets': '💀',
+                'Tous': '🌪️'
             },
 
             banques: {
@@ -488,14 +821,12 @@
                     this.proDebloque = true;
                     this.fermerModal();
                     
-                    ['theme-hot-btn', 'theme-secrets-btn'].forEach(id => {
-                        const btn = document.getElementById(id);
-                        if(btn) {
-                            btn.classList.remove('pro');
-                            btn.classList.add('unlocked');
-                            btn.innerHTML = '<span>👑 Déverrouillé par Majesté 👑</span>';
-                        }
-                    });
+                    const btnHot = document.getElementById('theme-hot-btn');
+                    if(btnHot) {
+                        btnHot.classList.remove('pro');
+                        btnHot.classList.add('unlocked');
+                        btnHot.querySelector('.badge-vip').innerText = "👑 Déverrouillé par Majesté";
+                    }
                     
                     alert("Accès Royal accordé ! Tous les thèmes VIP sont ouverts.");
                 } else {
@@ -505,16 +836,33 @@
 
             selectionnerTheme(nom) {
                 this.themeActuel = nom;
-                document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom;
+                document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom + " " + (this.themeIcons[nom] || '');
                 
                 const icone = this.themeIcons[nom] || '✨';
                 document.getElementById('theme-icon-banner').innerText = icone;
                 document.getElementById('prompt-icon-header').innerText = icone;
 
-                this.poolsActuels = {
-                    verites: [...this.banques[nom].verites],
-                    actions: [...this.banques[nom].actions]
-                };
+                if (nom === 'Tous') {
+                    let toutesVerites = [];
+                    let toutesActions = [];
+                    let themesDispo = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
+                    if (this.proDebloque) themesDispo.push('Hot');
+
+                    themesDispo.forEach(t => {
+                        toutesVerites.push(...this.banques[t].verites);
+                        toutesActions.push(...this.banques[t].actions);
+                    });
+
+                    this.poolsActuels = {
+                        verites: toutesVerites,
+                        actions: toutesActions
+                    };
+                } else {
+                    this.poolsActuels = {
+                        verites: [...this.banques[nom].verites],
+                        actions: [...this.banques[nom].actions]
+                    };
+                }
 
                 this.changerEcran('screen-players');
             },
@@ -529,7 +877,15 @@
                     input.value = '';
                     
                     const list = document.getElementById('players-list');
-                    list.innerHTML = this.joueurs.map(j => `<li style="padding: 10px 12px; margin-bottom: 6px; background: rgba(255,255,255,0.04); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); font-weight: 500;">👤 ${j}</li>`).join('');
+                    list.innerHTML = this.joueurs.map((j, index) => `
+                        <li class="player-card-item">
+                            <div class="player-info-left">
+                                <div class="player-avatar">👤</div>
+                                <span>${j}</span>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); padding: 4px 8px; border-radius: 8px;">✨ Joueur #${index + 1}</span>
+                        </li>
+                    `).join('');
                     
                     if (this.joueurs.length >= 3) {
                         document.getElementById('start-game-btn').classList.remove('hidden');
@@ -554,7 +910,7 @@
                 
                 const badge = document.getElementById('coward-counter-badge');
                 if (this.compteurLaches[joueurActuel] > 0) {
-                    badge.innerHTML = `<span class="coward-badge">🛡️ Score de lâcheté : ${this.compteurLaches[joueurActuel]}</span>`;
+                    badge.innerHTML = `<span style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block;">🛡️ Score de lâcheté : ${this.compteurLaches[joueurActuel]}</span>`;
                     badge.classList.remove('hidden');
                 } else {
                     badge.classList.add('hidden');
@@ -600,7 +956,15 @@
 
                 let clePool = type + 's';
                 if (this.poolsActuels[clePool].length === 0) {
-                    this.poolsActuels[clePool] = [...this.banques[this.themeActuel][clePool]];
+                    if (this.themeActuel === 'Tous') {
+                        let toutes = [];
+                        let ths = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
+                        if(this.proDebloque) ths.push('Hot');
+                        ths.forEach(t => toutes.push(...this.banques[t][clePool]));
+                        this.poolsActuels[clePool] = toutes;
+                    } else {
+                        this.poolsActuels[clePool] = [...this.banques[this.themeActuel][clePool]];
+                    }
                 }
 
                 const indexAleatoire = Math.floor(Math.random() * this.poolsActuels[clePool].length);
