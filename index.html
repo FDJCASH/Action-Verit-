@@ -358,6 +358,24 @@
             50% { transform: scale(1.03); }
         }
 
+        /* Animation de la Roue Numérique des Gages */
+        .roulette-number-box {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            border: 2px solid rgba(245, 158, 11, 0.6);
+            color: #fbbf24;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.3rem;
+            text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+            animation: bounceNum 0.5s infinite alternate;
+        }
+        @keyframes bounceNum {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
         /* Grille des thèmes */
         .themes-grid {
             display: grid;
@@ -515,7 +533,7 @@
                 <div class="side-title">⚡ État du Système</div>
                 <div class="stat-item">Plateforme <span>GitHub Pages 🚀</span></div>
                 <div class="stat-item">Sécurité Anti-Doublons <span>Active 🛡️</span></div>
-                <div class="stat-item">Version <span>Édition Royale VIP v2.4</span></div>
+                <div class="stat-item">Version <span>Édition Royale VIP v2.5 + Roue</span></div>
             </div>
 
             <div class="creator-badge">
@@ -602,7 +620,6 @@
 
             <!-- ÉCRAN 3 : JOUEURS AVEC BOUTON DE RETOUR LIQUID GLASS -->
             <div id="screen-players" class="hidden" style="display:flex; flex-direction:column; height:100%; text-align: left;">
-                <!-- Bouton Retour Discret en haut à gauche -->
                 <div>
                     <button class="btn-back-liquid" onclick="app.changerEcran('screen-themes')">
                         ⬅️ Choisir un autre thème
@@ -635,7 +652,7 @@
             <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
                 <div id="theme-icon-banner" style="font-size: 2.8rem; margin-bottom: 4px;" class="floating-icon">🎯</div>
                 <div id="coward-counter-badge" class="hidden" style="margin-bottom: 6px;"></div>
-                <h1 id="choix-player-name" style="font-size: 2rem; margin-bottom: 4px;">NOM</h1>
+                <h1 id="choix-player-name" style="font-size: 2.0rem; margin-bottom: 4px;">NOM</h1>
                 <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.85rem; height: 18px; margin-bottom: 15px;"></p>
                 
                 <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 76px; font-size: 1.4rem; border-radius: 20px;">🤫 VÉRITÉ</button>
@@ -730,8 +747,9 @@
                         "Qui ici a la réputation de tenir le moins bien l'alcool selon toi ?"
                     ],
                     actions: [
-                        "Distribue 3 gorgées bien méritées à la personne de ton choix, ou bois-les si tu refuses.",
-                        "Affronte {cible} à un 'Shifumi' impitoyable : le perdant boit 3 gorgées.",
+                        "Jeu des 3 verres : On prépare devant {cible} 3 verres (2 d'eau et 1 de vodka). {cible} se retourne, on mélange, et elle doit en boire un pour deviner le verre d'alcool du premier coup ! Si elle rate, elle boit un gage de {nombre} gorgées.",
+                        "Distribue <span class='roulette-number-box' data-min='1' data-max='6'>...</span> gorgées bien méritées à la personne de ton choix, ou bois-les si tu refuses.",
+                        "Affronte {cible} à un 'Shifumi' impitoyable : le perdant boit <span class='roulette-number-box' data-min='2' data-max='5'>...</span> gorgées.",
                         "Joue le barman fou : prépare un mélange improbable avec ce qu'il y a sur la table et bois-le en regardant {cible}."
                     ]
                 },
@@ -742,9 +760,9 @@
                         "As-tu déjà simulé une blessure imaginaire juste pour ne pas courir en EPS ?"
                     ],
                     actions: [
-                        "Tiens la position de la chaise contre un mur pendant 45 secondes sans bouger.",
+                        "Tiens la position de la chaise contre un mur pendant <span class='roulette-number-box' data-min='20' data-max='60'>...</span> secondes sans bouger.",
                         "Défie {cible} à un bras de fer féroce. Le perdant s'incline et prend un gage.",
-                        "Enchaîne 15 pompes impeccables. Si tu échoues, {cible} décide de ta punition."
+                        "Enchaîne <span class='roulette-number-box' data-min='10' data-max='25'>...</span> pompes impeccables. Si tu échoues, {cible} décide de ta punition."
                     ]
                 },
                 'Flirt': {
@@ -754,7 +772,7 @@
                         "As-tu déjà secrètement fantasmé sur la copine ou le copain d'un(e) de tes potes ?"
                     ],
                     actions: [
-                        "Offre un massage des épaules relaxant de 30 secondes bien mérité à {cible}.",
+                        "Offre un massage des épaules relaxant de <span class='roulette-number-box' data-min='15' data-max='45'>...</span> secondes bien mérité à {cible}.",
                         "Mime ta pire technique de drague lourde et malaisante sur {cible} sans rigoler.",
                         "Fais une déclaration d'amour théâtrale et enflammée d'une minute chrono à {cible}."
                     ]
@@ -772,7 +790,7 @@
                         "Fais un bisou très langoureux ou dans le cou de {cible}.",
                         "Mime de façon explicite ta position ou ton expression préférée pendant un moment intime.",
                         "Envoie un message vocal ou textuel un peu osé à un contact au hasard (ou à {cible}).",
-                        "Laisse {cible} explorer ta galerie photo pendant 15 secondes sans rien interdire.",
+                        "Laisse {cible} explorer ta galerie photo pendant <span class='roulette-number-box' data-min='10' data-max='30'>...</span> secondes sans rien interdire.",
                         "Chuchote à l'oreille de {cible} la phrase la plus crue et osée qui te traverse l'esprit."
                     ]
                 },
@@ -783,7 +801,7 @@
                         "As-tu déjà volé un objet, même complètement insignifiant ? Lequel ?"
                     ],
                     actions: [
-                        "Laisse {cible} fouiller librement dans ton journal d'appels ou tes derniers messages pendant 10 secondes.",
+                        "Laisse {cible} fouiller librement dans ton journal d'appels ou tes derniers messages pendant <span class='roulette-number-box' data-min='10' data-max='30'>...</span> secondes.",
                         "Raconte ton plus grand moment de solitude en public devant tout le monde sans filtre.",
                         "Confesse une gaffe monumentale que tu n'as jamais osé avouer à personne ici."
                     ]
@@ -910,7 +928,7 @@
                 
                 const badge = document.getElementById('coward-counter-badge');
                 if (this.compteurLaches[joueurActuel] > 0) {
-                    badge.innerHTML = `<span style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block;">🛡️ Score de lâcheté : ${this.compteurLaches[joueurActuel]}</span>`;
+                    badge.innerHTML = `<span style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block;">🛡️️ Score de lâcheté : ${this.compteurLaches[joueurActuel]}</span>`;
                     badge.classList.remove('hidden');
                 } else {
                     badge.classList.add('hidden');
@@ -978,6 +996,25 @@
 
                 document.getElementById('prompt-text').innerHTML = promptStr;
                 this.changerEcran('screen-prompt');
+
+                // Animation de la roue numérique si présente
+                setTimeout(() => {
+                    const box = document.querySelector('#prompt-text .roulette-number-box');
+                    if(box) {
+                        const min = parseInt(box.getAttribute('data-min'));
+                        const max = parseInt(box.getAttribute('data-max'));
+                        let iterations = 0;
+                        const interval = setInterval(() => {
+                            box.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+                            iterations++;
+                            if (iterations > 10) {
+                                clearInterval(interval);
+                                const finalNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                                box.innerText = finalNum;
+                            }
+                        }, 60);
+                    }
+                }, 50);
             },
 
             tourSuivant() {
