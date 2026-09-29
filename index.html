@@ -18,7 +18,6 @@
             overflow: hidden;
             position: relative;
             letter-spacing: -0.3px;
-            transition: background 0.8s ease;
         }
 
         /* Arrière-plan Liquide Profond et Dynamique */
@@ -31,7 +30,6 @@
             z-index: -1;
             opacity: 0.5;
             animation: liquidMove 14s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-            transition: background 0.8s ease;
         }
 
         body::before {
@@ -285,8 +283,8 @@
         <div id="screen-themes" class="hidden">
             <h1 style="font-size: 1.5rem; margin-bottom: 12px;">🎯 Choisis un Thème</h1>
             <div class="scrollable-content">
-                <div class="theme-btn" onclick="app.selectionnerTheme('Chill')"><span>🌿 Chill & Fun</span></div>
-                <div class="theme-btn" onclick="app.selectionnerTheme('Lycée')"><span>🎒 Lycée & Cours</span></div>
+                <div class="theme-btn" onclick="app.selectionnerTheme('Chill')"><span>🟢 Chill & Fun</span></div>
+                <div class="theme-btn" onclick="app.selectionnerTheme('Lycée')"><span>🟢 Lycée & Cours</span></div>
                 <div class="theme-btn" onclick="app.selectionnerTheme('Soirée')"><span>🍻 Soirée & Alcool</span></div>
                 <div class="theme-btn" onclick="app.selectionnerTheme('Sport')"><span>💪 Sport & Transpi</span></div>
                 <div class="theme-btn" onclick="app.selectionnerTheme('Flirt')"><span>😏 Flirt & Gênance</span></div>
@@ -302,11 +300,7 @@
 
         <!-- ÉCRAN 3 : JOUEURS -->
         <div id="screen-players" class="hidden">
-            <!-- Illustration visuelle animée du thème sélectionné -->
-            <div id="theme-illustration-box" style="margin-bottom: 8px;">
-                <div id="theme-icon-banner" style="font-size: 3rem;" class="floating-icon">✨</div>
-            </div>
-            <h1 id="theme-title-display" style="font-size: 1.4rem; margin-bottom: 10px;">👥 Joueurs</h1>
+            <h1 id="theme-title-display" style="font-size: 1.5rem; margin-bottom: 12px;">👥 Joueurs</h1>
             <input type="text" id="player-input" placeholder="Prénom..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
             <button onclick="app.ajouterJoueur()">Ajouter</button>
             <div class="scrollable-content" style="margin-top: 8px;">
@@ -326,6 +320,7 @@
 
         <!-- ÉCRAN 5 : LE CHOIX -->
         <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+            <div id="theme-icon-banner" style="font-size: 2.2rem; margin-bottom: 2px;" class="floating-icon">🎯</div>
             <div id="coward-counter-badge" class="hidden" style="margin-bottom: 5px;"></div>
             <h1 id="choix-player-name" style="font-size: 1.8rem; margin-bottom: 3px;">NOM</h1>
             <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.82rem; height: 18px; margin-bottom: 15px;"></p>
@@ -338,7 +333,7 @@
 
         <!-- ÉCRAN 6 : LA SENTENCE -->
         <div id="screen-prompt" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-            <div id="prompt-icon-header" style="font-size: 2.2rem; margin-bottom: -2px;" class="floating-icon">✨</div>
+            <div id="prompt-icon-header" style="font-size: 1.8rem; margin-bottom: -5px;">✨</div>
             <h2 id="prompt-type" style="letter-spacing: 1px; font-size: 1rem; margin-bottom: 0;">TYPE</h2>
             <div class="scrollable-content" style="display:flex; align-items:center;">
                 <div id="prompt-text" class="prompt-box">Chargement...</div>
@@ -361,15 +356,17 @@
             maxVerites: 2,
             proDebloque: false,
             
-            // Association d'une identité visuelle et de couleurs d'ambiance par thème
-            themeData: {
-                'Chill': { icon: '🌿', color1: '#065f46', color2: '#1e3a8a' },
-                'Lycée': { icon: '🎒', color1: '#4338ca', color2: '#6d28d9' },
-                'Soirée': { icon: '🍻', color1: '#b45309', color2: '#991b1b' },
-                'Sport': { icon: '💪', color1: '#0f766e', color2: '#1e1b4b' },
-                'Flirt': { icon: '😏', color1: '#be185d', color2: '#701a75' },
-                'Hot': { icon: '🔥', color1: '#991b1b', color2: '#450a0a' },
-                'Secrets': { icon: '💀', color1: '#1f2937', color2: '#111827' }
+            // Copies dynamiques des banques de questions pour gérer l'anti-répétition en cours de partie
+            poolsActuels: {},
+
+            themeIcons: {
+                'Chill': '🌿',
+                'Lycée': '🎒',
+                'Soirée': '🍻',
+                'Sport': '⚡',
+                'Flirt': '💖',
+                'Hot': '🔥',
+                'Secrets': '💀'
             },
 
             banques: {
@@ -435,14 +432,19 @@
                 },
                 'Hot': {
                     verites: [
-                        "Quel est ton fantasme le plus inavouable ?",
-                        "As-tu déjà flirté avec quelqu'un uniquement par ennui ?",
-                        "Quelle est la chose la plus folle que tu ferais par amour ?"
+                        "Quel est ton plus grand fantasme secret que tu n'as jamais osé avouer ?",
+                        "Quelle est la chose la plus folle, osée ou insolite que tu aies faite par désir ?",
+                        "Quel est ton 'guilty pleasure' le plus intense en matière de sexe et de séduction ?",
+                        "As-tu déjà eu des envies ou des actes coquins dans un endroit totalement inattendu/public ?",
+                        "Quelle est la position ou le délire le plus torride que tu aimerais expérimenter ?",
+                        "Quel(le) acteur/actrice ou célébrité te fait complètement fantasmer la nuit ?"
                     ],
                     actions: [
-                        "Fais un compliment très sensuel à {cible} en chuchotant.",
-                        "Laisse {cible} choisir une photo de ta galerie qu'il/elle a le droit de regarder pendant 10 secondes.",
-                        "Regarde {cible} dans les yeux pendant 20 secondes sans cligner des yeux ni sourire."
+                        "Fais un bisou très langoureux ou dans le cou de {cible}.",
+                        "Mime ta position ou ton expression préférée pendant un moment très intime.",
+                        "Envoie un message vocal ou textuel un peu chaud à un contact au hasard (ou à {cible}).",
+                        "Laisse {cible} explorer ta galerie photo pendant 15 secondes sans rien effacer.",
+                        "Murmure à l'oreille de {cible} la phrase la plus crue et osée qui te passe par la tête."
                     ]
                 },
                 'Secrets': {
@@ -507,30 +509,17 @@
 
             selectionnerTheme(nom) {
                 this.themeActuel = nom;
-                document.getElementById('theme-title-display').innerText = "👥 Joueurs (" + nom + ")";
+                document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom;
                 
-                // Applique les animations et l'identité visuelle du thème sélectionné
-                const tInfo = this.themeData[nom] || { icon: '✨', color1: '#1e3a8a', color2: '#7c3aed' };
-                document.getElementById('theme-icon-banner').innerText = tInfo.icon;
-                document.getElementById('prompt-icon-header').innerText = tInfo.icon;
+                const icone = this.themeIcons[nom] || '✨';
+                document.getElementById('theme-icon-banner').innerText = icone;
+                document.getElementById('prompt-icon-header').innerText = icone;
 
-                // Modifie subtilement l'ambiance lumineuse de fond en fonction du thème
-                document.body.style.setProperty('--bg-color1', tInfo.color1);
-                document.body.style.setProperty('--bg-color2', tInfo.color2);
-                
-                // Met à jour les lueurs dynamiques de l'arrière-plan
-                const beforeEl = document.querySelector('body::before');
-                const afterEl = document.querySelector('body::after');
-                // On injecte directement via les variables ou le style inline si besoin
-                document.documentElement.style.setProperty('--dynamic-c1', tInfo.color1);
-                document.documentElement.style.setProperty('--dynamic-c2', tInfo.color2);
-                
-                const sheets = document.styleSheets[0];
-                // Ajuste dynamiquement le style du body::before et body::after
-                for(let rule of sheets.cssRules) {
-                    if(rule.selectorText === 'body::before') rule.style.background = `linear-gradient(45deg, ${tInfo.color1}, #7c3aed)`;
-                    if(rule.selectorText === 'body::after') rule.style.background = `linear-gradient(45deg, ${tInfo.color2}, #db2777)`;
-                }
+                // Initialisation des listes de questions pour ce thème (copie pour éviter les répétitions)
+                this.poolsActuels = {
+                    verites: [...this.banques[nom].verites],
+                    actions: [...this.banques[nom].actions]
+                };
 
                 this.changerEcran('screen-players');
             },
@@ -614,8 +603,17 @@
                     document.getElementById('prompt-type').style.color = "#ef4444";
                 }
 
-                const liste = this.banques[this.themeActuel][type + 's'];
-                let promptStr = liste[Math.floor(Math.random() * liste.length)];
+                // --- GESTION ANTI-RÉPÉTITION ---
+                let clePool = type + 's'; // 'verites' ou 'actions'
+                if (this.poolsActuels[clePool].length === 0) {
+                    // Si le stock est vide, on le recharge pour éviter les blocages
+                    this.poolsActuels[clePool] = [...this.banques[this.themeActuel][clePool]];
+                }
+
+                // On extrait une question aléatoire du pool et on la retire pour qu'elle ne retombe pas
+                const indexAleatoire = Math.floor(Math.random() * this.poolsActuels[clePool].length);
+                let promptStr = this.poolsActuels[clePool].splice(indexAleatoire, 1)[0];
+                // ------------------------------
 
                 if (promptStr.includes('{cible}')) {
                     let autresJoueurs = this.joueurs.filter(j => j !== joueurActuel);
