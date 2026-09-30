@@ -46,6 +46,7 @@
         .theme-secrets { --bg-color-1: #475569; --bg-color-2: #334155; --bg-color-3: #0f172a; --bg-color-4: #1e293b; --bg-color-5: #64748b; --bg-color-6: #020617; }
         .theme-hot { --bg-color-1: #b91c1c; --bg-color-2: #dc2626; --bg-color-3: #f97316; --bg-color-4: #991b1b; --bg-color-5: #ea580c; --bg-color-6: #7f1d1d; }
         .theme-diamant { --bg-color-1: #000000; --bg-color-2: #434343; --bg-color-3: #fbbf24; --bg-color-4: #1f2937; --bg-color-5: #b45309; --bg-color-6: #000000; }
+        .theme-teams { --bg-color-1: #3b82f6; --bg-color-2: #1d4ed8; --bg-color-3: #ef4444; --bg-color-4: #b91c1c; --bg-color-5: #9333ea; --bg-color-6: #6366f1; }
 
         /* Structure globale */
         .site-layout { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 30px; padding: 20px; box-sizing: border-box; max-width: 1350px; margin: 0 auto; position: relative; z-index: 1; }
@@ -83,18 +84,17 @@
         .btn-verite { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.4)); border: 1px solid rgba(59, 130, 246, 0.5); }
         .btn-action { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(185, 28, 28, 0.4)); border: 1px solid rgba(239, 68, 68, 0.5); }
         .btn-shop { background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(126, 34, 206, 0.4)); border: 1px solid rgba(168, 85, 247, 0.5); margin-top: 10px; }
+        .btn-teams { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.4)); border: 1px solid rgba(99, 102, 241, 0.5); margin-top: 10px; }
         .btn-disabled { background: rgba(255, 255, 255, 0.02) !important; color: #52525b !important; cursor: not-allowed !important; }
 
         #players-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
         .player-card-item { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: #f4f4f5; animation: fadeInPlayer 0.3s; }
         @keyframes fadeInPlayer { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
         
-        /* Style rond pour les photos des joueurs */
         .player-avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border: 2px solid rgba(251,191,36,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); object-fit: cover; }
         .player-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .player-avatar:hover { transform: scale(1.15); }
 
-        /* Rond de sélection de photo pour l'ajout */
         .avatar-picker-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; }
         .avatar-circle-preview { width: 75px; height: 75px; border-radius: 50%; border: 2px dashed rgba(251,191,36,0.6); background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; position: relative; transition: all 0.3s; }
         .avatar-circle-preview img { width: 100%; height: 100%; object-fit: cover; }
@@ -105,7 +105,6 @@
         .turn-name { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #ffffff, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(251, 191, 36, 0.4); margin: 5px 0; animation: pulseName 2s infinite ease-in-out; }
         @keyframes pulseName { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        /* Grand rond pour le joueur actif pendant son tour */
         .active-player-avatar-large { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #fbbf24; object-fit: cover; margin: 0 auto 10px auto; box-shadow: 0 0 25px rgba(251,191,36,0.5); display: flex; align-items: center; justify-content: center; font-size: 3rem; background: rgba(0,0,0,0.4); overflow: hidden; }
         .active-player-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -200,6 +199,7 @@
 
                 <p style="margin-bottom: 15px; font-size: 0.88rem;">L'expérience ultime de soirée, fluide, interactive et sans pitié.</p>
                 <button class="btn-primary" onclick="app.initSystemEtAllerAuxThemes()">Commencer la partie 🚀</button>
+                <button class="btn-teams" onclick="app.lancerModeEquipes()">⚔️ Mode Guerre des Clans (Équipes)</button>
                 <button class="btn-shop" onclick="app.changerEcran('screen-shop')">🛒 Boutique VIP & Skins</button>
             </div>
 
@@ -268,7 +268,6 @@
                 <h1 id="theme-title-display" style="font-size: 1.2rem; margin: 2px 0 6px 0; text-align: center;">👥 Joueurs & Gages Perso</h1>
                 
                 <div class="scrollable-content">
-                    <!-- Ajout du rond pour la photo directement dans l'interface de saisie -->
                     <div class="avatar-picker-container">
                         <div class="avatar-circle-preview" onclick="document.getElementById('hidden-photo-input').click()" title="Ajouter une photo">
                             <span id="avatar-preview-icon">📸</span>
@@ -279,6 +278,15 @@
                     </div>
 
                     <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
+                    
+                    <!-- Sélecteur d'équipe (visible uniquement en mode équipes) -->
+                    <div id="team-select-container" class="hidden" style="margin-bottom: 8px;">
+                        <select id="player-team-select">
+                            <option value="rouge">🔥 Équipe Rouge</option>
+                            <option value="bleu">💧 Équipe Bleue</option>
+                        </select>
+                    </div>
+
                     <button onclick="app.ajouterJoueur()" style="margin-top:0;">Ajouter un joueur ➕</button>
                     <ul id="players-list" style="margin-top: 8px;"></ul>
 
@@ -303,8 +311,7 @@
                     <div style="font-size:0.9rem; font-weight:800; color:#fbbf24; padding:6px 10px;">Gains session : <span id="current-gains">0</span> 🪙</div>
                 </div>
                 <div class="transition-card" style="text-align: center;">
-                    <div class="turn-subtitle">C'est au tour de</div>
-                    <!-- Photo ronde du joueur affichée pendant le passage de téléphone -->
+                    <div class="turn-subtitle" id="turn-subtitle-team">C'est au tour de</div>
                     <div id="pass-player-avatar-container" style="margin: 12px auto;"></div>
                     <div class="turn-name" id="pass-to-name">NOM</div>
                     <p style="font-size: 0.82rem; color: #94a3b8; margin: 8px 0 0 0;">Passe-lui le téléphone discrètement 🤫</p>
@@ -314,7 +321,6 @@
 
             <!-- ÉCRAN 5 : LE CHOIX -->
             <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
-                <!-- Photo ronde du joueur actif au moment du choix -->
                 <div id="choice-player-avatar-container"></div>
                 <div id="theme-icon-banner" style="font-size: 2.2rem; margin-bottom: 2px;" class="floating-icon">🎯</div>
                 <div id="coward-counter-badge" class="hidden" style="margin-bottom: 6px;"></div>
@@ -386,7 +392,10 @@
             confettisOrDebloque: localStorage.getItem('aov_confettis_unlocked') === 'true',
             gainsPartieEncours: 0,
             currentPromptType: '',
-            tempPhotoBase64: null, // Stockage temporaire de la photo prise
+            tempPhotoBase64: null,
+            
+            modeEquipes: false, // Nouveau mode équipes
+            scoresEquipes: { rouge: 0, bleu: 0 },
             
             freeSkins: ['🦁', '🦊', '🐼', '🐯', '🐻', '🐨'],
             premiumSkins: ['👑', '🔥', '💎', '⚡', '💀', '🤖'],
@@ -394,7 +403,7 @@
             themeClasses: { 
                 'Chill': 'theme-chill', 'Lycée': 'theme-lycee', 'Soirée': 'theme-soiree', 
                 'Sport': 'theme-sport', 'Flirt': 'theme-flirt', 'Secrets': 'theme-secrets', 
-                'Hot': 'theme-hot', 'Diamant Noir': 'theme-diamant' 
+                'Hot': 'theme-hot', 'Diamant Noir': 'theme-diamant', 'Equipes': 'theme-teams' 
             },
 
             banques: {
@@ -535,8 +544,23 @@
 
             initSystemEtAllerAuxThemes() {
                 audioSystem.init(); audioSystem.play('click'); this.vibrer(30);
+                this.modeEquipes = false;
                 this.updateUI();
                 this.changerEcran('screen-themes');
+            },
+
+            lancerModeEquipes() {
+                audioSystem.init(); audioSystem.play('click'); this.vibrer(30);
+                this.modeEquipes = true;
+                this.scoresEquipes = { rouge: 0, bleu: 0 };
+                this.themeActuel = 'Tous';
+                document.getElementById('theme-title-display').innerText = "⚔️ Mode Guerre des Clans";
+                document.getElementById('bg-layer').className = 'bg-hardware-layer theme-teams';
+                this.regenererPool();
+                
+                // Afficher le sélecteur d'équipe dans l'ajout de joueur
+                document.getElementById('team-select-container').classList.remove('hidden');
+                this.changerEcran('screen-players');
             },
             
             updateUI() {
@@ -648,6 +672,8 @@
 
             selectionnerTheme(nom) {
                 this.vibrer(); audioSystem.play('click');
+                this.modeEquipes = false;
+                document.getElementById('team-select-container').classList.add('hidden');
                 this.themeActuel = nom;
                 document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom;
                 document.getElementById('bg-layer').className = 'bg-hardware-layer ' + (this.themeClasses[nom] || '');
@@ -678,18 +704,23 @@
                     this.vibrer(20); audioSystem.play('click');
                     this.joueurs.push(nom);
                     
+                    let equipe = 'rouge';
+                    if (this.modeEquipes) {
+                        equipe = document.getElementById('player-team-select').value;
+                    }
+
                     let defaultEmoji = this.freeSkins[this.joueurs.length % this.freeSkins.length];
-                    let photoToUse = this.tempPhotoBase64; // Récupère la photo prise ou importée
+                    let photoToUse = this.tempPhotoBase64;
 
                     this.joueurInfos[nom] = { 
                         verites: 0, laches: 0, courage: 0, 
                         skinIndex: 0, 
                         skinPool: this.skinsDebloques ? [...this.freeSkins, ...this.premiumSkins] : [...this.freeSkins], 
                         emoji: defaultEmoji,
-                        photo: photoToUse 
+                        photo: photoToUse,
+                        equipe: equipe
                     };
 
-                    // Reset input et aperçu photo
                     input.value = '';
                     this.tempPhotoBase64 = null;
                     document.getElementById('avatar-preview-img').classList.add('hidden');
@@ -733,13 +764,17 @@
                 list.innerHTML = this.joueurs.map(j => {
                     let info = this.joueurInfos[j];
                     let avatarContent = info.photo ? `<img src="${info.photo}" alt="Avatar">` : info.emoji;
+                    let equipeBadge = this.modeEquipes ? `<span style="font-size:0.75rem; padding:2px 6px; border-radius:6px; background:${info.equipe==='rouge'?'rgba(239,68,68,0.3)':'rgba(59,130,246,0.3)'}; color:${info.equipe==='rouge'?'#f87171':'#60a5fa'}">${info.equipe.toUpperCase()}</span>` : '';
                     return `
                         <li class="player-card-item">
                             <div class="player-info-left" style="display:flex; align-items:center; gap:12px;">
                                 <div class="player-avatar" onclick="app.changerSkinJoueur('${j}')" title="Changer">${avatarContent}</div>
                                 <span>${j}</span>
                             </div>
-                            <span style="font-size:0.7rem; color:#a1a1aa;">${info.photo ? 'Photo active 📸' : 'Tap avatar 🎨'}</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                ${equipeBadge}
+                                <span style="font-size:0.7rem; color:#a1a1aa;">${info.photo ? '📸' : '🎨'}</span>
+                            </div>
                         </li>
                     `;
                 }).join('');
@@ -749,6 +784,9 @@
                 this.vibrer([30,50]); audioSystem.play('click'); 
                 this.gainsPartieEncours = 0; 
                 this.joueurTourIndex = 0; 
+                if (this.modeEquipes) {
+                    this.scoresEquipes = { rouge: 0, bleu: 0 };
+                }
                 this.preparerTour(); 
             },
 
@@ -758,7 +796,14 @@
                 document.getElementById('pass-to-name').innerText = p; 
                 document.getElementById('current-gains').innerText = this.gainsPartieEncours;
                 
-                // Affiche la photo ronde du joueur dans l'écran de transition
+                const subtitle = document.getElementById('turn-subtitle-team');
+                if (this.modeEquipes) {
+                    let colorTeam = info.equipe === 'rouge' ? '#f87171' : '#60a5fa';
+                    subtitle.innerHTML = `Tour de l'Équipe <span style="color:${colorTeam}; font-weight:800;">${info.equipe.toUpperCase()}</span> 🔥`;
+                } else {
+                    subtitle.innerText = "C'est au tour de";
+                }
+
                 const passAvatarContainer = document.getElementById('pass-player-avatar-container');
                 if (info.photo) {
                     passAvatarContainer.innerHTML = `<div class="active-player-avatar-large"><img src="${info.photo}" alt="Avatar"></div>`;
@@ -774,7 +819,6 @@
                 const joueurActuel = this.joueurs[this.joueurTourIndex]; const info = this.joueurInfos[joueurActuel];
                 document.getElementById('choix-player-name').innerText = joueurActuel;
                 
-                // Affiche la photo ronde du joueur actif au moment de choisir Action ou Vérité
                 const choiceAvatarContainer = document.getElementById('choice-player-avatar-container');
                 if (info.photo) {
                     choiceAvatarContainer.innerHTML = `<div class="active-player-avatar-large" style="width:75px; height:75px; margin: 0 auto 6px auto;"><img src="${info.photo}" alt="Avatar"></div>`;
@@ -889,8 +933,13 @@
                     
                     let gain = (this.currentPromptType === 'action') ? 10 : 5;
                     this.gainsPartieEncours += gain;
-
                     this.tresor += gain;
+
+                    if (this.modeEquipes) {
+                        let equipeJoueur = this.joueurInfos[p].equipe;
+                        this.scoresEquipes[equipeJoueur] += gain;
+                    }
+
                     localStorage.setItem('aov_tresor', this.tresor);
                     this.updateUI();
 
@@ -909,21 +958,40 @@
 
             afficherPodium() {
                 this.vibrer(100); audioSystem.play('success'); this.changerEcran('screen-podium');
-                
                 document.getElementById('final-gains-display').innerText = this.gainsPartieEncours;
                 
-                let sortedLaches = [...this.joueurs].sort((a,b) => this.joueurInfos[b].laches - this.joueurInfos[a].laches);
-                let sortedCourage = [...this.joueurs].sort((a,b) => this.joueurInfos[b].courage - this.joueurInfos[a].courage);
-                document.getElementById('podium-results').innerHTML = `
-                    <div class="podium-rank" style="border-color:#fbbf24; box-shadow:0 0 15px rgba(251,191,36,0.2);">
-                        <div class="podium-icon">🦁</div>
-                        <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Kamikaze</span><br><strong style="font-size:1.3rem;">${sortedCourage[0]}</strong> (${this.joueurInfos[sortedCourage[0]].courage} réussites)</div>
-                    </div>
-                    <div class="podium-rank" style="border-color:#ef4444; background:rgba(239,68,68,0.05);">
-                        <div class="podium-icon">🏳️️</div>
-                        <div class="podium-info"><span style="color:#ef4444; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Gros Lâche</span><br><strong style="font-size:1.3rem;">${sortedLaches[0]}</strong> (${this.joueurInfos[sortedLaches[0]].laches} refus)</div>
-                    </div>
-                `;
+                let containerPodium = document.getElementById('podium-results');
+
+                if (this.modeEquipes) {
+                    let vainqueur = this.scoresEquipes.rouge > this.scoresEquipes.bleu ? "🔥 Équipe Rouge" : (this.scoresEquipes.bleu > this.scoresEquipes.rouge ? "💧 Équipe Bleue" : "🤝 Égalité parfaite");
+                    containerPodium.innerHTML = `
+                        <div class="podium-rank" style="border-color:#fbbf24; box-shadow:0 0 15px rgba(251,191,36,0.3); background: rgba(251,191,36,0.1);">
+                            <div class="podium-icon">👑</div>
+                            <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Clan Vainqueur</span><br><strong style="font-size:1.4rem;">${vainqueur}</strong></div>
+                        </div>
+                        <div class="podium-rank" style="border-color:#f87171;">
+                            <div class="podium-icon">🔥</div>
+                            <div class="podium-info"><span>Score Équipe Rouge</span><br><strong style="font-size:1.2rem;">${this.scoresEquipes.rouge} 🪙</strong></div>
+                        </div>
+                        <div class="podium-rank" style="border-color:#60a5fa;">
+                            <div class="podium-icon">💧</div>
+                            <div class="podium-info"><span>Score Équipe Bleue</span><br><strong style="font-size:1.2rem;">${this.scoresEquipes.bleu} 🪙</strong></div>
+                        </div>
+                    `;
+                } else {
+                    let sortedLaches = [...this.joueurs].sort((a,b) => this.joueurInfos[b].laches - this.joueurInfos[a].laches);
+                    let sortedCourage = [...this.joueurs].sort((a,b) => this.joueurInfos[b].courage - this.joueurInfos[a].courage);
+                    containerPodium.innerHTML = `
+                        <div class="podium-rank" style="border-color:#fbbf24; box-shadow:0 0 15px rgba(251,191,36,0.2);">
+                            <div class="podium-icon">🦁</div>
+                            <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Kamikaze</span><br><strong style="font-size:1.3rem;">${sortedCourage[0]}</strong> (${this.joueurInfos[sortedCourage[0]].courage} réussites)</div>
+                        </div>
+                        <div class="podium-rank" style="border-color:#ef4444; background:rgba(239,68,68,0.05);">
+                            <div class="podium-icon">🏳</div>
+                            <div class="podium-info"><span style="color:#ef4444; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Gros Lâche</span><br><strong style="font-size:1.3rem;">${sortedLaches[0]}</strong> (${this.joueurInfos[sortedLaches[0]].laches} refus)</div>
+                        </div>
+                    `;
+                }
             }
         };
     </script>
