@@ -88,13 +88,26 @@
         #players-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
         .player-card-item { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: #f4f4f5; animation: fadeInPlayer 0.3s; }
         @keyframes fadeInPlayer { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-        .player-avatar { width: 34px; height: 34px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        /* Style rond pour les photos des joueurs */
+        .player-avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border: 2px solid rgba(251,191,36,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); object-fit: cover; }
+        .player-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .player-avatar:hover { transform: scale(1.15); }
+
+        /* Rond de sélection de photo pour l'ajout */
+        .avatar-picker-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 10px; }
+        .avatar-circle-preview { width: 75px; height: 75px; border-radius: 50%; border: 2px dashed rgba(251,191,36,0.6); background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; position: relative; transition: all 0.3s; }
+        .avatar-circle-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-circle-preview span { font-size: 1.5rem; }
 
         .transition-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; padding: 25px 20px; margin: 15px 0; box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(0,0,0,0.5); }
         .turn-subtitle { font-size: 1.1rem; color: #cbd5e1; font-weight: 500; margin-bottom: 8px; }
         .turn-name { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #ffffff, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(251, 191, 36, 0.4); margin: 5px 0; animation: pulseName 2s infinite ease-in-out; }
         @keyframes pulseName { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+        /* Grand rond pour le joueur actif pendant son tour */
+        .active-player-avatar-large { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #fbbf24; object-fit: cover; margin: 0 auto 10px auto; box-shadow: 0 0 25px rgba(251,191,36,0.5); display: flex; align-items: center; justify-content: center; font-size: 3rem; background: rgba(0,0,0,0.4); overflow: hidden; }
+        .active-player-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
 
         #countdown-display { font-size: 3.5rem; font-weight: 900; color: #ef4444; text-shadow: 0 0 30px rgba(239,68,68,0.7); margin: 15px 0; }
         .roulette-number-box { display: inline-block; background: rgba(245, 158, 11, 0.15); border: 2px solid rgba(245, 158, 11, 0.6); color: #fbbf24; padding: 2px 12px; border-radius: 12px; font-weight: 900; font-size: 1.3rem; }
@@ -180,7 +193,6 @@
                 <div class="floating-icon" style="font-size: 3.5rem; margin-bottom: 5px;">👑</div>
                 <h1 class="title-ios" style="font-size: 2.2rem;">Action<br><span>ou Vérité</span></h1>
                 
-                <!-- COMPTEUR DE PIÈCES VISIBLE DIRECTEMENT À L'ACCUEIL -->
                 <div style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.4); padding: 10px 18px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto; width: fit-content;">
                     <span style="font-size: 1.2rem;">🪙</span>
                     <span style="font-size: 1.1rem; font-weight: 800; color: #fbbf24;" id="home-coin-display">0 🪙</span>
@@ -245,7 +257,7 @@
                             <div class="info"><div class="name">Diamant Noir VIP</div><div class="badge-vip" id="diamant-status">🔒 Boutique (300 🪙)</div></div>
                         </div>
 
-                        <div class="theme-card random" onclick="app.selectionnerTheme('Tous')"><div class="icon">🌪️️</div><div class="name">Mode Aléatoire (Mix de tous les thèmes)</div></div>
+                        <div class="theme-card random" onclick="app.selectionnerTheme('Tous')"><div class="icon">🌪</div><div class="name">Mode Aléatoire (Mix de tous les thèmes)</div></div>
                     </div>
                 </div>
             </div>
@@ -256,6 +268,16 @@
                 <h1 id="theme-title-display" style="font-size: 1.2rem; margin: 2px 0 6px 0; text-align: center;">👥 Joueurs & Gages Perso</h1>
                 
                 <div class="scrollable-content">
+                    <!-- Ajout du rond pour la photo directement dans l'interface de saisie -->
+                    <div class="avatar-picker-container">
+                        <div class="avatar-circle-preview" onclick="document.getElementById('hidden-photo-input').click()" title="Ajouter une photo">
+                            <span id="avatar-preview-icon">📸</span>
+                            <img id="avatar-preview-img" class="hidden" src="" alt="Aperçu">
+                        </div>
+                        <span style="font-size: 0.75rem; color: #a1a1aa; margin-top: 4px;">Appuie pour ta photo 📷</span>
+                        <input type="file" id="hidden-photo-input" accept="image/*" capture="environment" style="display: none;" onchange="app.gererSelectionPhoto(event)">
+                    </div>
+
                     <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
                     <button onclick="app.ajouterJoueur()" style="margin-top:0;">Ajouter un joueur ➕</button>
                     <ul id="players-list" style="margin-top: 8px;"></ul>
@@ -280,9 +302,10 @@
                     <button class="btn-back-liquid" onclick="app.afficherPodium()" style="font-size:0.75rem; padding:6px 10px; border-color: rgba(239,68,68,0.4); color:#fca5a5;">🛑 Finir la partie</button>
                     <div style="font-size:0.9rem; font-weight:800; color:#fbbf24; padding:6px 10px;">Gains session : <span id="current-gains">0</span> 🪙</div>
                 </div>
-                <div class="floating-icon" style="font-size: 3rem; margin-bottom: 2px;">📱</div>
-                <div class="transition-card">
+                <div class="transition-card" style="text-align: center;">
                     <div class="turn-subtitle">C'est au tour de</div>
+                    <!-- Photo ronde du joueur affichée pendant le passage de téléphone -->
+                    <div id="pass-player-avatar-container" style="margin: 12px auto;"></div>
                     <div class="turn-name" id="pass-to-name">NOM</div>
                     <p style="font-size: 0.82rem; color: #94a3b8; margin: 8px 0 0 0;">Passe-lui le téléphone discrètement 🤫</p>
                 </div>
@@ -291,20 +314,22 @@
 
             <!-- ÉCRAN 5 : LE CHOIX -->
             <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
-                <div id="theme-icon-banner" style="font-size: 2.8rem; margin-bottom: 4px;" class="floating-icon">🎯</div>
+                <!-- Photo ronde du joueur actif au moment du choix -->
+                <div id="choice-player-avatar-container"></div>
+                <div id="theme-icon-banner" style="font-size: 2.2rem; margin-bottom: 2px;" class="floating-icon">🎯</div>
                 <div id="coward-counter-badge" class="hidden" style="margin-bottom: 6px;"></div>
-                <h1 id="choix-player-name" style="font-size: 2.0rem; margin-bottom: 4px;">NOM</h1>
+                <h1 id="choix-player-name" style="font-size: 1.8rem; margin-bottom: 4px;">NOM</h1>
                 <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.85rem; height: 18px; margin-bottom: 15px;"></p>
                 
-                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 76px; font-size: 1.4rem; border-radius: 20px;">🤫 VÉRITÉ <span style="font-size:0.8rem; color:rgba(255,255,255,0.6); display:block;">+5 🪙</span></button>
-                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 76px; font-size: 1.4rem; margin-top: 12px; border-radius: 20px;">🔥 ACTION <span style="font-size:0.8rem; color:rgba(255,255,255,0.6); display:block;">+10 🪙</span></button>
-                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.25); font-size: 0.9rem; padding: 12px; margin-top: 15px; border-radius: 16px;">🎲 Le destin (Roulette)</button>
+                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 68px; font-size: 1.3rem; border-radius: 20px;">🤫 VÉRITÉ <span style="font-size:0.75rem; color:rgba(255,255,255,0.6); display:block;">+5 🪙</span></button>
+                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 68px; font-size: 1.3rem; margin-top: 10px; border-radius: 20px;">🔥 ACTION <span style="font-size:0.75rem; color:rgba(255,255,255,0.6); display:block;">+10 🪙</span></button>
+                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.25); font-size: 0.85rem; padding: 10px; margin-top: 12px; border-radius: 16px;">🎲 Le destin (Roulette)</button>
             </div>
 
             <!-- ÉCRAN 6 : LA SENTENCE -->
             <div id="screen-prompt" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-                <div id="prompt-icon-header" style="font-size: 2.2rem; margin-bottom: -2px;">✨</div>
-                <h2 id="prompt-type" style="letter-spacing: 1.2px; font-size: 1.1rem; margin-bottom: 0;">TYPE</h2>
+                <div id="prompt-icon-header" style="font-size: 2rem; margin-bottom: -2px;">✨</div>
+                <h2 id="prompt-type" style="letter-spacing: 1.2px; font-size: 1rem; margin-bottom: 0;">TYPE</h2>
                 <div class="scrollable-content" style="display:flex; align-items:center; flex-direction:column; justify-content:center;">
                     <div id="prompt-text" class="prompt-box" style="width: 100%;">Chargement...</div>
                     <div id="timer-container" class="hidden"></div>
@@ -361,6 +386,7 @@
             confettisOrDebloque: localStorage.getItem('aov_confettis_unlocked') === 'true',
             gainsPartieEncours: 0,
             currentPromptType: '',
+            tempPhotoBase64: null, // Stockage temporaire de la photo prise
             
             freeSkins: ['🦁', '🦊', '🐼', '🐯', '🐻', '🐨'],
             premiumSkins: ['👑', '🔥', '💎', '⚡', '💀', '🤖'],
@@ -371,7 +397,6 @@
                 'Hot': 'theme-hot', 'Diamant Noir': 'theme-diamant' 
             },
 
-            // BANQUES DE QUESTIONS ET ACTIONS ULTRA DIVERSIFIÉES ET GÉANTES
             banques: {
                 'Chill': { 
                     verites: [
@@ -515,7 +540,6 @@
             },
             
             updateUI() {
-                // MISE À JOUR PARTOUT : ACCUEIL, PANNEAU LATÉRAL, ETC.
                 document.getElementById('side-coin-display').innerText = this.tresor + " 🪙";
                 const homeCoin = document.getElementById('home-coin-display');
                 if(homeCoin) homeCoin.innerText = this.tresor + " 🪙";
@@ -597,7 +621,7 @@
             changerEcran(idEcran) {
                 document.querySelectorAll('.liquid-glass > div').forEach(div => { if(!div.classList.contains('modal-overlay')) div.classList.add('hidden'); });
                 document.getElementById(idEcran).classList.remove('hidden');
-                this.updateUI(); // Rafraîchit les pièces à chaque changement d'écran
+                this.updateUI();
                 const cont = document.querySelector('.liquid-glass');
                 cont.classList.remove('card-transition'); void cont.offsetWidth; cont.classList.add('card-transition');
             },
@@ -631,14 +655,47 @@
                 this.changerEcran('screen-players');
             },
 
+            gererSelectionPhoto(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.tempPhotoBase64 = e.target.result;
+                        const imgElem = document.getElementById('avatar-preview-img');
+                        const iconElem = document.getElementById('avatar-preview-icon');
+                        imgElem.src = this.tempPhotoBase64;
+                        imgElem.classList.remove('hidden');
+                        iconElem.classList.add('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+
             ajouterJoueur() {
-                const input = document.getElementById('player-input'); const nom = input.value.trim();
+                const input = document.getElementById('player-input'); 
+                const nom = input.value.trim();
                 if (nom && !this.joueurs.includes(nom)) {
                     this.vibrer(20); audioSystem.play('click');
                     this.joueurs.push(nom);
+                    
                     let defaultEmoji = this.freeSkins[this.joueurs.length % this.freeSkins.length];
-                    this.joueurInfos[nom] = { verites: 0, laches: 0, courage: 0, skinIndex: 0, skinPool: this.skinsDebloques ? [...this.freeSkins, ...this.premiumSkins] : [...this.freeSkins], emoji: defaultEmoji };
+                    let photoToUse = this.tempPhotoBase64; // Récupère la photo prise ou importée
+
+                    this.joueurInfos[nom] = { 
+                        verites: 0, laches: 0, courage: 0, 
+                        skinIndex: 0, 
+                        skinPool: this.skinsDebloques ? [...this.freeSkins, ...this.premiumSkins] : [...this.freeSkins], 
+                        emoji: defaultEmoji,
+                        photo: photoToUse 
+                    };
+
+                    // Reset input et aperçu photo
                     input.value = '';
+                    this.tempPhotoBase64 = null;
+                    document.getElementById('avatar-preview-img').classList.add('hidden');
+                    document.getElementById('avatar-preview-icon').classList.remove('hidden');
+                    document.getElementById('hidden-photo-input').value = '';
+
                     this.rendreListeJoueurs();
                     if (this.joueurs.length >= 2) document.getElementById('start-game-btn').classList.remove('hidden');
                 }
@@ -664,22 +721,28 @@
             changerSkinJoueur(nom) {
                 this.vibrer(15); audioSystem.play('click');
                 let info = this.joueurInfos[nom];
-                info.skinIndex = (info.skinIndex + 1) % info.skinPool.length;
-                info.emoji = info.skinPool[info.skinIndex];
-                this.rendreListeJoueurs();
+                if (!info.photo) {
+                    info.skinIndex = (info.skinIndex + 1) % info.skinPool.length;
+                    info.emoji = info.skinPool[info.skinIndex];
+                    this.rendreListeJoueurs();
+                }
             },
 
             rendreListeJoueurs() {
                 const list = document.getElementById('players-list');
-                list.innerHTML = this.joueurs.map(j => `
-                    <li class="player-card-item">
-                        <div class="player-info-left" style="display:flex; align-items:center; gap:12px;">
-                            <div class="player-avatar" onclick="app.changerSkinJoueur('${j}')" title="Clique pour changer de skin">${this.joueurInfos[j].emoji}</div>
-                            <span>${j}</span>
-                        </div>
-                        <span style="font-size:0.7rem; color:#a1a1aa;">Tap avatar 🎨</span>
-                    </li>
-                `).join('');
+                list.innerHTML = this.joueurs.map(j => {
+                    let info = this.joueurInfos[j];
+                    let avatarContent = info.photo ? `<img src="${info.photo}" alt="Avatar">` : info.emoji;
+                    return `
+                        <li class="player-card-item">
+                            <div class="player-info-left" style="display:flex; align-items:center; gap:12px;">
+                                <div class="player-avatar" onclick="app.changerSkinJoueur('${j}')" title="Changer">${avatarContent}</div>
+                                <span>${j}</span>
+                            </div>
+                            <span style="font-size:0.7rem; color:#a1a1aa;">${info.photo ? 'Photo active 📸' : 'Tap avatar 🎨'}</span>
+                        </li>
+                    `;
+                }).join('');
             },
 
             lancerPartie() { 
@@ -690,16 +753,35 @@
             },
 
             preparerTour() { 
-                document.getElementById('pass-to-name').innerText = this.joueurs[this.joueurTourIndex]; 
+                const p = this.joueurs[this.joueurTourIndex];
+                const info = this.joueurInfos[p];
+                document.getElementById('pass-to-name').innerText = p; 
                 document.getElementById('current-gains').innerText = this.gainsPartieEncours;
+                
+                // Affiche la photo ronde du joueur dans l'écran de transition
+                const passAvatarContainer = document.getElementById('pass-player-avatar-container');
+                if (info.photo) {
+                    passAvatarContainer.innerHTML = `<div class="active-player-avatar-large"><img src="${info.photo}" alt="Avatar"></div>`;
+                } else {
+                    passAvatarContainer.innerHTML = `<div class="active-player-avatar-large">${info.emoji}</div>`;
+                }
+
                 this.changerEcran('screen-pass-phone'); 
             },
 
             afficherChoix() {
                 this.vibrer(); audioSystem.play('click');
                 const joueurActuel = this.joueurs[this.joueurTourIndex]; const info = this.joueurInfos[joueurActuel];
-                document.getElementById('choix-player-name').innerText = `${info.emoji} ${joueurActuel}`;
+                document.getElementById('choix-player-name').innerText = joueurActuel;
                 
+                // Affiche la photo ronde du joueur actif au moment de choisir Action ou Vérité
+                const choiceAvatarContainer = document.getElementById('choice-player-avatar-container');
+                if (info.photo) {
+                    choiceAvatarContainer.innerHTML = `<div class="active-player-avatar-large" style="width:75px; height:75px; margin: 0 auto 6px auto;"><img src="${info.photo}" alt="Avatar"></div>`;
+                } else {
+                    choiceAvatarContainer.innerHTML = `<div class="active-player-avatar-large" style="width:75px; height:75px; margin: 0 auto 6px auto; font-size: 2rem;">${info.emoji}</div>`;
+                }
+
                 const btnVerite = document.getElementById('btn-verite'), textAvertissement = document.getElementById('avertissement-lache');
                 if (info.verites >= this.maxVerites) {
                     btnVerite.classList.add('btn-disabled'); btnVerite.onclick = null;
@@ -726,7 +808,6 @@
                 else { info.verites = 0; document.getElementById('prompt-type').innerText = "🔥 ACTION (+10 🪙)"; document.getElementById('prompt-type').style.color = "#f87171"; }
 
                 let clePool = type + 's';
-                
                 if (!this.poolsActuels[clePool] || this.poolsActuels[clePool].length === 0) {
                     this.regenererPool();
                 }
@@ -776,7 +857,6 @@
             },
 
             lancerConfettisExplosion(btnElement) {
-                // Si l'effet or est débloqué, les confettis sont dorés et scintillants !
                 const colors = this.confettisOrDebloque ? ['#fbbf24', '#f59e0b', '#d97706', '#ffffff', '#ffdf00'] : ['#fbbf24', '#f59e0b', '#3b82f6', '#ef4444'];
                 const rect = btnElement.getBoundingClientRect();
                 const startX = rect.left + rect.width / 2; const startY = rect.top + rect.height / 2;
@@ -840,7 +920,7 @@
                         <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Kamikaze</span><br><strong style="font-size:1.3rem;">${sortedCourage[0]}</strong> (${this.joueurInfos[sortedCourage[0]].courage} réussites)</div>
                     </div>
                     <div class="podium-rank" style="border-color:#ef4444; background:rgba(239,68,68,0.05);">
-                        <div class="podium-icon">🏳️</div>
+                        <div class="podium-icon">🏳️️</div>
                         <div class="podium-info"><span style="color:#ef4444; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Gros Lâche</span><br><strong style="font-size:1.3rem;">${sortedLaches[0]}</strong> (${this.joueurInfos[sortedLaches[0]].laches} refus)</div>
                     </div>
                 `;
