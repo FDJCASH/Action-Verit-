@@ -85,6 +85,8 @@
         .btn-action { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(185, 28, 28, 0.4)); border: 1px solid rgba(239, 68, 68, 0.5); }
         .btn-shop { background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(126, 34, 206, 0.4)); border: 1px solid rgba(168, 85, 247, 0.5); margin-top: 10px; }
         .btn-teams { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(220, 38, 38, 0.4)); border: 1px solid rgba(239, 68, 68, 0.5); margin-top: 10px; }
+        .btn-feed { background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4)); border: 1px solid rgba(245, 158, 11, 0.5); margin-top: 10px; }
+        .btn-roulette-mode { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(190, 24, 93, 0.4)); border: 1px solid rgba(236, 72, 153, 0.5); margin-top: 10px; }
         .btn-disabled { background: rgba(255, 255, 255, 0.02) !important; color: #52525b !important; cursor: not-allowed !important; }
 
         #players-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -133,6 +135,18 @@
         .podium-rank { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; animation: fadeInUp 0.4s ease; }
         .podium-icon { font-size: 2rem; margin-right: 15px; }
 
+        .feed-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 14px; border-radius: 14px; margin-bottom: 8px; font-size: 0.88rem; text-align: left; display: flex; align-items: center; gap: 10px; animation: fadeInUp 0.3s ease; }
+
+        /* Notification de Trophée Secret */
+        #achievement-popup {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.95), rgba(217, 119, 6, 0.95));
+            color: #000; padding: 12px 20px; border-radius: 20px; font-weight: 800; font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.5); z-index: 9999; display: flex; align-items: center; gap: 10px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+        }
+        #achievement-popup.show { transform: translateX(-50%) translateY(0); }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(10px); }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-card { background: rgba(25, 8, 12, 0.95); border: 1px solid rgba(220, 38, 38, 0.5); padding: 28px; border-radius: 32px; width: 82%; max-width: 330px; text-align: center; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -159,6 +173,15 @@
     </style>
 </head>
 <body>
+
+    <!-- POPUP TROPHÉE SECRET -->
+    <div id="achievement-popup">
+        <span style="font-size: 1.5rem;" id="ach-icon">🏆</span>
+        <div>
+            <div style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px;">Trophée Secret Débloqué !</div>
+            <div id="ach-title" style="font-size: 0.95rem;">Titre du trophée</div>
+        </div>
+    </div>
 
     <div class="bg-hardware-layer" id="bg-layer">
         <div class="bg-shape1"></div>
@@ -213,6 +236,18 @@
                 <button class="btn-primary" onclick="app.initSystemEtAllerAuxThemes()">Commencer la partie 🚀</button>
                 <button class="btn-teams" onclick="app.lancerModeEquipes()">⚔️ Mode Guerre des Clans (Équipes)</button>
                 <button class="btn-shop" onclick="app.changerEcran('screen-shop')">🛒 Boutique VIP & Skins</button>
+                <button class="btn-feed" onclick="app.ouvrirFilActu()">📜 Fil d'Actu en Direct</button>
+            </div>
+
+            <!-- ÉCRAN FIL D'ACTU -->
+            <div id="screen-feed" class="hidden" style="display:flex; flex-direction:column; height:100%;">
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-home')">⬅ Accueil</button></div>
+                <div class="floating-icon" style="font-size: 2.3rem; margin-bottom: 2px;">📜</div>
+                <h1 style="font-size: 1.4rem; margin-bottom: 2px;">Journal de Bord</h1>
+                <p style="font-size: 0.78rem; margin-bottom: 6px;">Les faits d'armes et dossiers de la soirée.</p>
+                <div class="scrollable-content" id="feed-container">
+                    <div style="color: #71717a; text-align: center; margin-top: 40px; font-size: 0.9rem;">Aucun événement pour le moment. Lance une partie ! 🔥</div>
+                </div>
             </div>
 
             <!-- ÉCRAN BOUTIQUE & SKINS -->
@@ -220,7 +255,7 @@
                 <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-home')">⬅ Retour</button></div>
                 <div class="floating-icon" style="font-size: 2.3rem; margin-bottom: 2px;">🛒</div>
                 <h1 style="font-size: 1.4rem; margin-bottom: 2px;">Boutique VIP</h1>
-                <p style="font-size: 0.78rem; margin-bottom: 6px;">Dépense tes pièces pour débloquer du contenu exclusif.</p>
+                <p style="font-size: 0.78rem; margin-bottom: 6px;">Dépense tes pièces personnelles pour débloquer du contenu.</p>
                 
                 <div class="scrollable-content">
                     <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(220,38,38,0.3); padding: 10px 12px; border-radius: 16px; margin-bottom: 8px;">
@@ -333,7 +368,7 @@
             <div id="screen-pass-phone" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 5px 0;">
                 <div style="display:flex; justify-content:space-between; width:100%;">
                     <button class="btn-back-liquid" onclick="app.afficherPodium()" style="font-size:0.75rem; padding:6px 10px; border-color: rgba(239,68,68,0.4); color:#fca5a5;">🛑 Finir la partie</button>
-                    <div style="font-size:0.9rem; font-weight:800; color:#fca5a5; padding:6px 10px;">Gains session : <span id="current-gains">0</span> 🪙</div>
+                    <div style="font-size:0.9rem; font-weight:800; color:#fca5a5; padding:6px 10px;">Cagnotte : <span id="current-player-coins">0</span> 🪙</div>
                 </div>
                 <div class="transition-card" style="text-align: center;">
                     <div class="turn-subtitle" id="turn-subtitle-team">C'est au tour de</div>
@@ -344,7 +379,7 @@
                 <button class="btn-primary" onclick="app.afficherChoix()" style="font-size: 1.1rem; padding: 16px;">C'est moi, je suis prêt ! 🔥</button>
             </div>
 
-            <!-- ÉCRAN 5 : LE CHOIX -->
+            <!-- ÉCRAN 5 : LE CHOIX (AVEC BOUTON ROULETTE MODE) -->
             <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
                 <div id="choice-player-avatar-container"></div>
                 <div id="theme-icon-banner" style="font-size: 2.2rem; margin-bottom: 2px;" class="floating-icon">🎯</div>
@@ -352,9 +387,10 @@
                 <h1 id="choix-player-name" style="font-size: 1.8rem; margin-bottom: 4px;">NOM</h1>
                 <p id="avertissement-lache" style="color: #fca5a5; font-weight: 500; font-size: 0.85rem; height: 18px; margin-bottom: 15px;"></p>
                 
-                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 68px; font-size: 1.3rem; border-radius: 20px;">🤫 VÉRITÉ <span style="font-size:0.75rem; color:rgba(255,255,255,0.6); display:block;">+5 🪙</span></button>
-                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 68px; font-size: 1.3rem; margin-top: 10px; border-radius: 20px;">🔥 ACTION <span style="font-size:0.75rem; color:rgba(255,255,255,0.6); display:block;">+10 🪙</span></button>
-                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); font-size: 0.85rem; padding: 10px; margin-top: 12px; border-radius: 16px;">🎲 Le destin (Roulette)</button>
+                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 58px; font-size: 1.2rem; border-radius: 18px;">🤫 VÉRITÉ <span style="font-size:0.7rem; color:rgba(255,255,255,0.6); display:block;">+5 🪙</span></button>
+                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 58px; font-size: 1.2rem; margin-top: 8px; border-radius: 18px;">🔥 ACTION <span style="font-size:0.7rem; color:rgba(255,255,255,0.6); display:block;">+10 🪙</span></button>
+                <button class="btn-roulette-mode" onclick="app.rouletteModeSurprise()" style="height: 52px; font-size: 1.1rem; margin-top: 8px; border-radius: 18px;">🎰 Mode Roulette Russe (Gage Mystère)</button>
+                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); font-size: 0.8rem; padding: 8px; margin-top: 8px; border-radius: 14px;">🎲 Le destin classique</button>
             </div>
 
             <!-- ÉCRAN 6 : LA SENTENCE -->
@@ -371,7 +407,7 @@
                 </div>
             </div>
 
-            <!-- ÉCRAN 7 : PODIUM (AVEC JACKPOT ET TROPHÉES) -->
+            <!-- ÉCRAN 7 : PODIUM -->
             <div id="screen-podium" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
                 <div class="floating-icon" style="font-size: 3.5rem; margin-bottom: 10px;">🏆</div>
                 <h1 style="font-size: 2.2rem; color:#fef08a; margin-bottom:5px;">Bilan de la soirée</h1>
@@ -379,7 +415,7 @@
                 <div class="scrollable-content" id="podium-results" style="width: 100%;"></div>
                 
                 <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.4); padding: 15px; border-radius: 15px; margin-top: 10px;">
-                    <div style="font-size: 0.9rem; color: #fca5a5;">Gains de la session (Jackpot 🪙) :</div>
+                    <div style="font-size: 0.9rem; color: #fca5a5;">Total amassé dans le Trésor Global :</div>
                     <div style="font-size: 2rem; font-weight: 900; color: #f87171;">+<span id="final-gains-display">0</span> 🪙</div>
                 </div>
 
@@ -420,7 +456,6 @@
                     osc.start(); osc.stop(this.ctx.currentTime + 0.4); 
                 }
                 else if(type === 'jackpot') { 
-                    // Effet sonore Jackpot / Caisse enregistreuse en crescendo
                     let now = this.ctx.currentTime;
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(1200, now);
@@ -437,7 +472,7 @@
         const app = {
             joueurs: [], joueurInfos: {},
             themeActuel: '', joueurTourIndex: 0,
-            maxVerites: 2, poolsActuels: { verites: [], actions: [] }, timerInterval: null,
+            maxVerites: 2, poolsActuels: { verites: [], actions: [], roulettes: [] }, timerInterval: null,
             
             tresor: parseInt(localStorage.getItem('aov_tresor')) || 0,
             hotDebloque: localStorage.getItem('aov_hot_unlocked') === 'true',
@@ -447,6 +482,7 @@
             hasShield: localStorage.getItem('aov_shield') === 'true',
             hasLuck: localStorage.getItem('aov_luck') === 'true',
             
+            feedEvenements: [],
             gainsPartieEncours: 0,
             currentPromptType: '',
             tempPhotoBase64: null,
@@ -465,143 +501,77 @@
 
             banques: {
                 'Chill': { 
-                    verites: [
-                        "Quel est ton pire achat compulsif qui n'a servi à rien ?", 
-                        "Quelle est ta dernière recherche Google la plus honteuse ?", 
-                        "Quel est ton plus grand plaisir coupable en musique ou en série ?", 
-                        "Si tu devais manger un seul plat toute ta vie, ce serait quoi ?", 
-                        "Quel est ton plus gros ridicule en public dont tu te souviens ?",
-                        "Quelle est la chose la plus bizarre que tu fais quand tu es tout seul chez toi ?",
-                        "Quel est le pire cadeau que l'on t'ait offert et que tu as dû faire semblant d'aimer ?",
-                        "À quoi penses-tu généralement juste avant de t'endormir ?"
-                    ], 
-                    actions: [
-                        "Invente une rumeur totalement absurde sur {cible} et raconte-la avec assurance.", 
-                        "Fais un compliment très sérieux et intense à {cible} pendant 20 secondes.", 
-                        "Imite ta célébrité ou ton influenceur préféré pendant 30 secondes.", 
-                        "Mime ta pire journée de cours ou de boulot en accéléré.", 
-                        "Envoie un message vocal de 5 secondes en faisant le bruit d'un animal au dernier contact de ta liste.",
-                        "Fais une danse ridicule sans musique pendant [TIMER:20]."
-                    ] 
+                    verites: ["Quel est ton pire achat compulsif qui n'a servi à rien ?", "Quelle est ta dernière recherche Google la plus honteuse ?", "Quel est ton plus grand plaisir coupable en musique ou en série ?", "Si tu devais manger un seul plat toute ta vie, ce serait quoi ?"], 
+                    actions: ["Invente une rumeur totalement absurde sur {cible} et raconte-la avec assurance.", "Fais un compliment très sérieux et intense à {cible} pendant 20 secondes.", "Imite ta célébrité préférée pendant 30 secondes."],
+                    roulettes: ["⚡ GAGE ROULETTE : Échange ta place ou donne un ordre à {cible} pendant 2 tours !", "💥 ROULETTE MYSTÈRE : Fais 10 pompes immédiates sous les acclamations des potes !", "🔥 COUP DE QUATE : {cible} doit t'avouer un gros secret inavouable !"]
                 },
                 'Lycée': { 
-                    verites: [
-                        "Quel prof as-tu envie d'envoyer balader dès le matin ?", 
-                        "Quelle est ta pire note de toute ta scolarité ?", 
-                        "As-tu déjà dormi pendant un cours entier sans que le prof ne s'en aperçoive ?", 
-                        "Quel est le plus gros mensonge que tu as sorti à tes parents pour sécher ou justifier un retard ?", 
-                        "As-tu déjà copié sur quelqu'un lors d'un contrôle important ?",
-                        "Quel élève de ta classe trouves-tu le plus insupportable ?",
-                        "As-tu déjà mangé en cachette en plein milieu d'un cours ?"
-                    ], 
-                    actions: [
-                        "Improvise un discours de délégué ultra convaincant pour réclamer un distributeur de tacos au lycée.", 
-                        "Mime un prof strict pendant [TIMER:20], {cible} doit deviner de quelle matière il s'agit.", 
-                        "Fais un sketch de 30 secondes montrant ta réaction quand tu reçois une interro surprise.", 
-                        "Prends la pose de penseur le plus dramatique possible pendant [TIMER:25].",
-                        "Invente un poème de 4 lignes sur le contrôle continu et recite-le avec emphase."
-                    ] 
+                    verites: ["Quel prof as-tu envie d'envoyer balader dès le matin ?", "Quelle est ta pire note de toute ta scolarité ?", "As-tu déjà dormi pendant un cours entier ?"], 
+                    actions: ["Improvise un discours de délégué ultra convaincant pour réclamer un distributeur de tacos.", "Mime un prof strict pendant [TIMER:20], {cible} doit deviner."],
+                    roulettes: ["🎒 ROULETTE LYCÉE : Cite tous tes profs principaux à l'envers en [TIMER:15] ou perds 5 pièces !", "⚡ COLLÈGE OU LYCÉE : Donne ton pire dossier de prof en public !"]
                 },
                 'Soirée': { 
-                    verites: [
-                        "Quel est ton pire black-out ou ta plus grosse cuite mémorable ?", 
-                        "Qui dans cette pièce tient le moins bien l'alcool selon toi ?", 
-                        "As-tu déjà envoyé un message bourré ultra gênant à la mauvaise personne ?", 
-                        "Quel est ton plus grand dossier en soirée que personne ne connaît ?",
-                        "As-tu déjà fait semblant d'être ivre pour rigoler ?",
-                        "Quel est le truc le plus débile que tu aies fait un soir de fête ?"
-                    ], 
-                    actions: [
-                        "Distribue <span class='roulette-number-box' data-min='1' data-max='6'>...</span> gorgées aux personnes de ton choix.", 
-                        "Affronte {cible} à un Shifumi instantané. Le perdant boit <span class='roulette-number-box' data-min='2' data-max='5'>...</span> gorgées.", 
-                        "Jeu des 3 verres : {cible} mélange les rôles, devine le bon verre ou bois <span class='roulette-number-box' data-min='1' data-max='4'>...</span> gorgées.",
-                        "💀 MALÉDICTION : Pendant 3 tours, {cible} ne doit pas prononcer 'Oui' ou 'Non'. Une gorgée par erreur.",
-                        "Bois un verre d'eau cul-sec en faisant un toast royal à la santé d'Armand."
-                    ] 
+                    verites: ["Quel est ton pire black-out ou ta plus grosse cuite mémorable ?", "Qui dans cette pièce tient le moins bien l'alcool ?"], 
+                    actions: ["Distribue <span class='roulette-number-box' data-min='1' data-max='6'>...</span> gorgées aux personnes de ton choix.", "Affronte {cible} à un Shifumi instantané."],
+                    roulettes: ["🍻 ROULETTE SOIRÉE : Tout le monde boit 2 gorgées sauf toi !", "💀 MORT SUBITE : Cul-sec d'eau ou de soda immédiat !"]
                 },
                 'Sport': { 
-                    verites: [
-                        "Quelle est ta pire excuse pour sécher l'EPS en catastrophe ?", 
-                        "As-tu déjà simulé une blessure pour ne pas courir le cross du collège/lycée ?", 
-                        "Quel sport trouves-tu absolument surestimé et ennuyeux à regarder ?", 
-                        "Quelle est ta pire honte ou gamelle monumentale en cours de sport ?", 
-                        "Quel athlète ou sportif professionnel détestes-tu secrètement ?",
-                        "Combien de pompes d'affilée penses-tu pouvoir faire sans t'arrêter ?",
-                        "Quel est le sport le plus ridicule auquel tu aies participé ?"
-                    ], 
-                    actions: [
-                        "Tiens la chaise contre un mur pendant [TIMER:45] sans tricher.", 
-                        "Enchaîne <span class='roulette-number-box' data-min='10' data-max='30'>...</span> squats sautés le plus vite possible.", 
-                        "Fais la planche abdominale pendant [TIMER:40] sans bouger d'un millimètre.", 
-                        "Imite l'échauffement ultra rigide et ridicule d'un coach sportif de fitness pendant [TIMER:25].",
-                        "Fais une course sur place en levant les genoux le plus haut possible pendant [TIMER:20].",
-                        "Porte {cible} sur ton dos sur 5 mètres sans la faire tomber.",
-                        "Fais <span class='roulette-number-box' data-min='5' data-max='15'>...</span> pompes bien rythmées.",
-                        "Tiens en équilibre sur un seul pied les yeux fermés pendant [TIMER:30]."
-                    ] 
+                    verites: ["Quelle est ta pire excuse pour sécher l'EPS ?", "As-tu déjà simulé une blessure pour ne pas courir ?"], 
+                    actions: ["Tiens la chaise contre un mur pendant [TIMER:45] sans tricher.", "Enchaîne <span class='roulette-number-box' data-min='10' data-max='30'>...</span> squats sautés."],
+                    roulettes: ["⚡ ROULETTE SPORT : Fais la planche abdominale pendant [TIMER:30] en hurlant ton prénom !", "🔥 DÉFI PUNCH : Fais le plus de pompes possibles en [TIMER:20] !"]
                 },
                 'Flirt': { 
-                    verites: [
-                        "Quel est ton pire râteau de toute ton existence ?", 
-                        "Qui possède incontestablement le plus de charme dans cette pièce ?", 
-                        "As-tu déjà eu un coup de foudre total pour quelqu'un en moins de 5 minutes ?", 
-                        "Quel est ton critère numéro un chez une personne qui te fait craquer ?",
-                        "As-tu déjà stalké le compte Instagram de quelqu'un pendant des heures par ennui ou amour ?",
-                        "Quelle est la phrase d'accroche la plus cliché qu'on t'ait dite ?"
-                    ], 
-                    actions: [
-                        "Fais un massage des épaules de [TIMER:30] à {cible} avec application.", 
-                        "Déclare ta flamme amoureuse la plus théâtrale possible à {cible} les genoux sur le sol.", 
-                        "Regarde {cible} droit dans les yeux sans cligner des paupières ni rire pendant [TIMER:20].",
-                        "Fais un clin d'œil ultra appuyé et un sourire ravageur à {cible}."
-                    ] 
+                    verites: ["Quel est ton pire râteau de toute ton existence ?", "Qui possède incontestablement le plus de charme ici ?"], 
+                    actions: ["Fais un massage des épaules de [TIMER:30] à {cible}.", "Déclare ta flamme amoureuse la plus théâtrale à {cible}."],
+                    roulettes: ["💖 ROULETTE FLIRT : Fais un regard ténébreux à {cible} pendant [TIMER:15] sans rire !", "✨ COUP DE FOUDRE : Dis un compliment ultra romantique au voisin de gauche !"]
                 },
                 'Secrets': { 
-                    verites: [
-                        "Quel est le plus lourd secret que tu caches encore à tes parents ?", 
-                        "As-tu déjà volé un objet, même un petit truc, quand tu étais plus jeune ?", 
-                        "Quel est ton plus grand regret dans ta vie jusqu'à présent ?", 
-                        "Quel secret confierais-tu à absolument personne ici ?",
-                        "As-tu déjà menti à ton meilleur ami sur un sujet très important ?"
-                    ], 
-                    actions: [
-                        "Laisse {cible} inspecter librement tes derniers messages ou photos pendant [TIMER:20].", 
-                        "Raconte ton plus grand moment de solitude absolue en public.", 
-                        "Avoue un petit péché mignon ou une manie bizarre que tu n'as jamais dite à personne."
-                    ] 
+                    verites: ["Quel est le plus lourd secret que tu caches encore à tes parents ?", "As-tu déjà volé un objet quand tu étais plus jeune ?"], 
+                    actions: ["Laisse {cible} inspecter librement tes derniers messages pendant [TIMER:20].", "Raconte ton plus grand moment de solitude en public."],
+                    roulettes: ["💀 ROULETTE SECRETE : Avoue la dernière chose que tu as cachée à ton meilleur ami !", "🔥 CONFESSION : Tout le monde te pose une question, tu dois dire la vérité absolue !"]
                 },
                 'Hot': { 
-                    verites: [
-                        "Quel est ton plus grand fantasme secret inavouable ?", 
-                        "Quelle est la chose la plus torride ou osée que tu aies faite ?", 
-                        "Quel(le) acteur/actrice ou célébrité te fait totalement fantasmer ?",
-                        "Quel est ton endroit le plus insolite où tu aimerais galocher quelqu'un ?"
-                    ], 
-                    actions: [
-                        "Fais un bisou très langoureux dans le cou de {cible}.", 
-                        "Laisse {cible} explorer ta galerie photo personnelle pendant [TIMER:15].", 
-                        "Chuchote un secret très chaud à l'oreille de {cible}."
-                    ] 
+                    verites: ["Quel est ton plus grand fantasme secret inavouable ?", "Quelle est la chose la plus torride que tu aies faite ?"], 
+                    actions: ["Fais un bisou très langoureux dans le cou de {cible}.", "Chuchote un secret très chaud à l'oreille de {cible}."],
+                    roulettes: ["🔥 ROULETTE HOT : Regarde {cible} dans les yeux et dis-lui ce qui te fait craquer chez lui/elle !", "⚡ FEU TOTAL : Un gage torride choisi par le groupe !"]
                 },
                 'Diamant Noir': { 
-                    verites: [
-                        "Pour 1 million d'euros, serais-tu prêt à trahir la personne à ta droite sans hésiter ?", 
-                        "Quel est le plus grand complexe que tu caches derrière ton arrogance ?", 
-                        "Si tu devais bannir définitivement quelqu'un de cette pièce pour sauver ta peau, qui choisirais-tu ?"
-                    ], 
-                    actions: [
-                        "Lèche la chaussure de {cible} ou donne-lui 10 euros cash immédiatement.", 
-                        "Supprime sur le champ l'application de ton choix sur ton téléphone sous les yeux de tous.", 
-                        "Critique le style vestimentaire de {cible} avec un aplomb total pendant [TIMER:30]."
-                    ] 
+                    verites: ["Pour 1 million d'euros, serais-tu prêt à trahir la personne à ta droite ?", "Quel est le plus grand complexe derrière ton arrogance ?"], 
+                    actions: ["Lèche la chaussure de {cible} ou donne-lui 10 euros cash.", "Supprime une application de ton choix sous les yeux de tous."],
+                    roulettes: ["💎 ROULETTE DIAMANT : Le souverain absolu distribue 20 pièces ou retire 10 pièces à quelqu'un !", "👑 PACTOLE : Double ta cagnotte ou perds tout sur un pile ou face !"]
                 }
             },
 
-            // Système de vibrations haptiques avancées
             vibrer(pattern=30) { 
-                if(navigator.vibrate) {
-                    try { navigator.vibrate(pattern); } catch(e) {}
+                if(navigator.vibrate) { try { navigator.vibrate(pattern); } catch(e) {} }
+            },
+
+            // Système de Trophées Secrets
+            verifierTrophées(nomJoueur) {
+                let info = this.joueurInfos[nomJoueur];
+                if (!info.trophées) info.trophées = [];
+
+                if (info.cagnotte >= 50 && !info.trophées.includes('vip')) {
+                    info.trophées.push('vip');
+                    this.afficherPopupTrophée('👑', 'Le VIP (50 pièces amassées)');
                 }
+                if (info.courage >= 3 && !info.trophées.includes('kamikaze')) {
+                    info.trophées.push('kamikaze');
+                    this.afficherPopupTrophée('🦁', 'Le Kamikaze (3 actions réussies)');
+                }
+                if (info.laches >= 2 && !info.trophées.includes('lache')) {
+                    info.trophées.push('lache');
+                    this.afficherPopupTrophée('🏳️', 'Le Froussard (2 refus encaissés)');
+                }
+            },
+
+            afficherPopupTrophée(icon, texte) {
+                this.vibrer([50, 50, 100]); audioSystem.play('success');
+                const pop = document.getElementById('achievement-popup');
+                document.getElementById('ach-icon').innerText = icon;
+                document.getElementById('ach-title').innerText = texte;
+                pop.classList.add('show');
+                setTimeout(() => { pop.classList.remove('show'); }, 3500);
             },
 
             initSystemEtAllerAuxThemes() {
@@ -641,10 +611,34 @@
                 if (this.confettisOrDebloque) { btnConfettis.innerText = "Déjà possédé ✅"; btnConfettis.disabled = true; btnConfettis.style.background = "rgba(255,255,255,0.1)"; }
 
                 const btnShield = document.getElementById('btn-buy-shield');
-                if (this.hasShield) { btnShield.innerText = "Actif 🛡️"; btnShield.disabled = true; }
+                if (this.hasShield) { btnShield.innerText = "Actif 🛡"; btnShield.disabled = true; }
 
                 const btnLuck = document.getElementById('btn-buy-luck');
                 if (this.hasLuck) { btnLuck.innerText = "Actif 🍀"; btnLuck.disabled = true; }
+            },
+
+            ouvrirFilActu() {
+                this.vibrer(25); audioSystem.play('click');
+                const container = document.getElementById('feed-container');
+                if (this.feedEvenements.length === 0) {
+                    container.innerHTML = `<div style="color: #71717a; text-align: center; margin-top: 40px; font-size: 0.9rem;">Aucun événement enregistré pour l'instant. Joue une partie pour remplir le journal ! 🔥</div>`;
+                } else {
+                    container.innerHTML = this.feedEvenements.map(ev => `
+                        <div class="feed-item">
+                            <span style="font-size: 1.4rem;">${ev.icon}</span>
+                            <div>
+                                <strong style="color: #fca5a5;">${ev.nom}</strong>
+                                <div style="font-size: 0.78rem; color: #a1a1aa; margin-top: 2px;">${ev.texte}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+                this.changerEcran('screen-feed');
+            },
+
+            ajouterEvenementFeed(icon, nom, texte) {
+                this.feedEvenements.unshift({ icon, nom, texte });
+                if (this.feedEvenements.length > 25) this.feedEvenements.pop();
             },
 
             declencherSecretPrompt() {
@@ -737,7 +731,7 @@
             },
 
             regenererPool() {
-                let tv = [], ta = [];
+                let tv = [], ta = [], tr = [];
                 let nom = this.themeActuel;
                 if (nom === 'Tous') {
                     let ths = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
@@ -746,14 +740,16 @@
                     ths.forEach(t => { 
                         if(this.banques[t]) {
                             tv.push(...this.banques[t].verites); 
-                            ta.push(...this.banques[t].actions); 
+                            ta.push(...this.banques[t].actions);
+                            if(this.banques[t].roulettes) tr.push(...this.banques[t].roulettes);
                         }
                     });
                 } else {
                     tv = [...(this.banques[nom]?.verites || [])];
                     ta = [...(this.banques[nom]?.actions || [])];
+                    tr = [...(this.banques[nom]?.roulettes || ["⚡ ROULETTE MYSTÈRE : Fais un gage choisi par les autres !"])];
                 }
-                this.poolsActuels = { verites: tv, actions: ta };
+                this.poolsActuels = { verites: tv, actions: ta, roulettes: tr };
             },
 
             selectionnerTheme(nom) {
@@ -800,6 +796,7 @@
 
                     this.joueurInfos[nom] = { 
                         verites: 0, laches: 0, courage: 0, 
+                        cagnotte: 0, trophées: [],
                         skinIndex: 0, 
                         skinPool: this.skinsDebloques ? [...this.freeSkins, ...this.premiumSkins] : [...this.freeSkins], 
                         emoji: defaultEmoji,
@@ -859,7 +856,7 @@
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 ${equipeBadge}
-                                <span style="font-size:0.7rem; color:#a1a1aa;">${info.photo ? '📸' : '🎨'}</span>
+                                <span style="font-size:0.75rem; color:#fca5a5;">${info.cagnotte} 🪙</span>
                             </div>
                         </li>
                     `;
@@ -870,6 +867,7 @@
                 this.vibrer([40, 40]); audioSystem.play('success'); 
                 this.gainsPartieEncours = 0; 
                 this.joueurTourIndex = 0; 
+                this.feedEvenements = [];
                 if (this.modeEquipes) {
                     this.scoresEquipes = { rouge: 0, bleu: 0 };
                 }
@@ -880,7 +878,7 @@
                 const p = this.joueurs[this.joueurTourIndex];
                 const info = this.joueurInfos[p];
                 document.getElementById('pass-to-name').innerText = p; 
-                document.getElementById('current-gains').innerText = this.gainsPartieEncours;
+                document.getElementById('current-player-coins').innerText = info.cagnotte;
                 
                 const subtitle = document.getElementById('turn-subtitle-team');
                 if (this.modeEquipes) {
@@ -923,6 +921,11 @@
                 this.changerEcran('screen-choice');
             },
 
+            rouletteModeSurprise() {
+                this.vibrer([40, 60, 40]); audioSystem.play('roulette');
+                this.revelerPrompt('roulette');
+            },
+
             rouletteDestin() {
                 this.vibrer([30, 40, 30]); audioSystem.play('roulette');
                 const p = this.joueurs[this.joueurTourIndex];
@@ -939,13 +942,17 @@
                     if (!this.hasShield || info.verites < this.maxVerites) info.verites++; 
                     document.getElementById('prompt-type').innerText = "🤫 VÉRITÉ (+5 🪙)"; 
                     document.getElementById('prompt-type').style.color = "#60a5fa"; 
-                } else { 
+                } else if (type === 'action') { 
                     info.verites = 0; 
                     document.getElementById('prompt-type').innerText = "🔥 ACTION (+10 🪙)"; 
                     document.getElementById('prompt-type').style.color = "#f87171"; 
+                } else {
+                    info.verites = 0;
+                    document.getElementById('prompt-type').innerText = "🎰 ROULETTE MYSTÈRE (+15 🪙)";
+                    document.getElementById('prompt-type').style.color = "#ec4899";
                 }
 
-                let clePool = type + 's';
+                let clePool = type === 'roulette' ? 'roulettes' : (type + 's');
                 if (!this.poolsActuels[clePool] || this.poolsActuels[clePool].length === 0) {
                     this.regenererPool();
                 }
@@ -1021,30 +1028,43 @@
             tourSuivant(assume = false, btnElement = null) {
                 clearInterval(this.timerInterval);
                 const p = this.joueurs[this.joueurTourIndex];
+                const info = this.joueurInfos[p];
+
                 if(assume) { 
-                    this.joueurInfos[p].courage++; 
+                    info.courage++; 
                     if(btnElement) this.lancerConfettisExplosion(btnElement); 
                     
-                    let gain = (this.currentPromptType === 'action') ? 10 : 5;
+                    let gain = 5;
+                    if (this.currentPromptType === 'action') gain = 10;
+                    if (this.currentPromptType === 'roulette') gain = 15;
                     if (this.hasLuck) gain *= 2;
 
+                    info.cagnotte += gain;
                     this.gainsPartieEncours += gain;
                     this.tresor += gain;
 
                     if (this.modeEquipes) {
-                        let equipeJoueur = this.joueurInfos[p].equipe;
+                        let equipeJoueur = info.equipe;
                         this.scoresEquipes[equipeJoueur] += gain;
                     }
 
                     localStorage.setItem('aov_tresor', this.tresor);
                     this.updateUI();
+                    this.verifierTrophées(p); // Vérifie si un trophée secret est débloqué
+
+                    let typeText = this.currentPromptType === 'action' ? '🔥 une Action' : (this.currentPromptType === 'roulette' ? '🎰 une Roulette Mystère' : '🤫 une Vérité');
+                    this.ajouterEvenementFeed(this.currentPromptType === 'action' ? '🔥' : (this.currentPromptType === 'roulette' ? '🎰' : '✨'), p, `A assumé ${typeText} et empoche +${gain} 🪙 !`);
 
                     this.vibrer([70, 40, 100]); 
-                    audioSystem.play('jackpot'); // Son Jackpot à chaque encaissement réussi !
+                    audioSystem.play('jackpot');
 
                     setTimeout(() => { this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length; this.preparerTour(); }, 1200);
                 } else {
-                    this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length; this.preparerTour();
+                    info.laches++;
+                    this.verifierTrophées(p);
+                    this.ajouterEvenementFeed('🏳️', p, `A fait le gros lâche et a refusé son défi !`);
+                    this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length; 
+                    this.preparerTour();
                 }
             },
 
@@ -1055,9 +1075,6 @@
                 
                 const container = document.getElementById('refuse-action-container');
                 container.classList.add('shake-animation');
-                
-                const p = this.joueurs[this.joueurTourIndex]; 
-                this.joueurInfos[p].laches++;
 
                 setTimeout(() => {
                     container.classList.remove('shake-animation');
@@ -1090,12 +1107,12 @@
                         </div>
                     `;
                 } else {
+                    let sortedRiches = [...this.joueurs].sort((a,b) => this.joueurInfos[b].cagnotte - this.joueurInfos[a].cagnotte);
                     let sortedLaches = [...this.joueurs].sort((a,b) => this.joueurInfos[b].laches - this.joueurInfos[a].laches);
-                    let sortedCourage = [...this.joueurs].sort((a,b) => this.joueurInfos[b].courage - this.joueurInfos[a].courage);
                     containerPodium.innerHTML = `
                         <div class="podium-rank" style="border-color:#fbbf24; box-shadow:0 0 15px rgba(251,191,36,0.2);">
                             <div class="podium-icon">🦁</div>
-                            <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Kamikaze (Trophée Or)</span><br><strong style="font-size:1.3rem;">${sortedCourage[0]}</strong> (${this.joueurInfos[sortedCourage[0]].courage} réussites)</div>
+                            <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Millionnaire (Top Cagnotte)</span><br><strong style="font-size:1.3rem;">${sortedRiches[0]}</strong> (${this.joueurInfos[sortedRiches[0]].cagnotte} 🪙)</div>
                         </div>
                         <div class="podium-rank" style="border-color:#ef4444; background:rgba(239,68,68,0.05);">
                             <div class="podium-icon">🏳️</div>
