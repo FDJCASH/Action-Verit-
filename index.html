@@ -3,648 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action ou Vérité - Édition Royale VIP</title>
+    <title>Action ou Vérité - Édition Royale VIP Ultime</title>
     <style>
+        :root {
+            --bg-color-1: #1d4ed8; --bg-color-2: #7c3aed; --bg-color-3: #db2777;
+            --bg-color-4: #f59e0b; --bg-color-5: #e11d48; --bg-color-6: #6366f1;
+        }
+
         body {
-            background-color: #020205;
-            color: #ffffff;
+            background-color: #020205; color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-            letter-spacing: -0.3px;
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; letter-spacing: -0.3px;
         }
 
-        /* Fond animé multicouche ultra pro et hypnotique */
-        body::before, body::after {
-            content: '';
-            position: absolute;
-            width: 750px;
-            height: 750px;
-            filter: blur(180px);
-            z-index: -2;
-            opacity: 0.7;
-            animation: liquidBackground 18s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        /* --- BLINDAGE ANTI-CLIGNOTEMENT (S23 ULTRA) --- */
+        .bg-hardware-layer {
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2; overflow: hidden; background-color: #020205;
+            transform: translateZ(0); transition: --bg-color-1 1s, --bg-color-2 1s, --bg-color-3 1s;
+        }
+        .bg-shape1, .bg-shape2 {
+            position: absolute; width: 600px; height: 600px; filter: blur(100px);
+            opacity: 0.6; will-change: transform; backface-visibility: hidden; transform: translate3d(0,0,0);
+            animation: liquidBackground 14s infinite alternate ease-in-out; transition: background 1.5s ease;
+        }
+        .bg-shape1 { background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3)); top: -20%; left: -20%; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .bg-shape2 { background: linear-gradient(135deg, var(--bg-color-4), var(--bg-color-5), var(--bg-color-6)); bottom: -20%; right: -20%; border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%; animation-delay: -7s; }
+
+        @keyframes liquidBackground { 
+            0% { transform: translate3d(0, 0, 0) scale(1); } 
+            50% { transform: translate3d(40px, 30px, 0) scale(1.1); } 
+            100% { transform: translate3d(-30px, 40px, 0) scale(0.95); } 
         }
 
-        body::before {
-            background: linear-gradient(135deg, #1d4ed8, #7c3aed, #db2777);
-            top: -30%; left: -30%;
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-        }
+        /* Thèmes Dynamiques */
+        .theme-chill { --bg-color-1: #047857; --bg-color-2: #059669; --bg-color-3: #3b82f6; --bg-color-4: #065f46; --bg-color-5: #10b981; --bg-color-6: #2563eb; }
+        .theme-lycee { --bg-color-1: #2563eb; --bg-color-2: #1d4ed8; --bg-color-3: #38bdf8; --bg-color-4: #0284c7; --bg-color-5: #0369a1; --bg-color-6: #0ea5e9; }
+        .theme-soiree { --bg-color-1: #8b5cf6; --bg-color-2: #6d28d9; --bg-color-3: #ec4899; --bg-color-4: #4c1d95; --bg-color-5: #be185d; --bg-color-6: #db2777; }
+        .theme-sport { --bg-color-1: #ea580c; --bg-color-2: #c2410c; --bg-color-3: #f59e0b; --bg-color-4: #9a3412; --bg-color-5: #d97706; --bg-color-6: #7c2d12; }
+        .theme-flirt { --bg-color-1: #db2777; --bg-color-2: #be185d; --bg-color-3: #f43f5e; --bg-color-4: #9f1239; --bg-color-5: #e11d48; --bg-color-6: #881337; }
+        .theme-secrets { --bg-color-1: #475569; --bg-color-2: #334155; --bg-color-3: #0f172a; --bg-color-4: #1e293b; --bg-color-5: #64748b; --bg-color-6: #020617; }
+        .theme-hot { --bg-color-1: #b91c1c; --bg-color-2: #dc2626; --bg-color-3: #f97316; --bg-color-4: #991b1b; --bg-color-5: #ea580c; --bg-color-6: #7f1d1d; }
+        .theme-diamant { --bg-color-1: #000000; --bg-color-2: #434343; --bg-color-3: #fbbf24; --bg-color-4: #1f2937; --bg-color-5: #b45309; --bg-color-6: #000000; }
 
-        body::after {
-            background: linear-gradient(135deg, #f59e0b, #e11d48, #6366f1);
-            bottom: -30%; right: -30%;
-            border-radius: 60% 40% 30% 70% / 50% 40% 50% 60%;
-            animation-delay: -9s;
-        }
+        /* Structure globale */
+        .site-layout { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 30px; padding: 20px; box-sizing: border-box; max-width: 1350px; margin: 0 auto; position: relative; z-index: 1; }
+        .side-panel { width: 280px; height: 85vh; max-height: 720px; background: rgba(22, 22, 35, 0.4); backdrop-filter: blur(45px) saturate(200%); -webkit-backdrop-filter: blur(45px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 32px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 40px 90px rgba(0,0,0,0.7); text-align: left; box-sizing: border-box; }
+        @media (max-width: 1024px) { .side-panel { display: none; } }
 
-        @keyframes liquidBackground {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); filter: blur(160px); }
-            50% { transform: translate(70px, 50px) rotate(180deg) scale(1.18); filter: blur(200px); }
-            100% { transform: translate(-60px, 70px) rotate(360deg) scale(0.92); filter: blur(150px); }
-        }
-
-        /* Structure globale avec panneaux latéraux */
-        .site-layout {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            gap: 30px;
-            padding: 20px;
-            box-sizing: border-box;
-            max-width: 1350px;
-            margin: 0 auto;
-        }
-
-        .side-panel {
-            width: 280px;
-            height: 85vh;
-            max-height: 720px;
-            background: rgba(22, 22, 35, 0.4);
-            backdrop-filter: blur(45px) saturate(200%);
-            -webkit-backdrop-filter: blur(45px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 32px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 40px 90px rgba(0,0,0,0.7);
-            text-align: left;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 1024px) {
-            .side-panel { display: none; }
-        }
-
-        .side-title {
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: #f59e0b;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            font-size: 0.88rem;
-            color: #a1a1aa;
-        }
-        .stat-item span { color: #fff; font-weight: 600; display: block; font-size: 0.98rem; margin-top: 3px; }
-
-        .creator-badge {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.28));
-            border: 1px solid rgba(245, 158, 11, 0.45);
-            padding: 16px;
-            border-radius: 20px;
-            text-align: center;
-        }
+        .creator-badge { background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.28)); border: 1px solid rgba(245, 158, 11, 0.45); padding: 16px; border-radius: 20px; text-align: center; margin-bottom: 20px; cursor: pointer; }
         .creator-badge .label { font-size: 0.75rem; color: #fbbf24; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
-        .creator-badge .name { font-size: 1.15rem; font-weight: 800; color: #fff; margin-top: 4px; }
+        .creator-badge .name { font-size: 1.4rem; font-weight: 900; color: #fff; margin-top: 4px; }
+        
+        .coin-display-box { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(251, 191, 36, 0.3); padding: 18px; border-radius: 20px; text-align: center; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
+        .coin-display-box .title { font-size: 0.8rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .coin-display-box .amount { font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, #fef08a, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 2px 5px rgba(245,158,11,0.3)); }
 
-        /* Conteneur principal - VRAI LIQUID GLASS ULTRA PUR (Style iOS 26) */
+        /* VRAI LIQUID GLASS ULTRA PUR */
         .liquid-glass {
-            background: rgba(18, 18, 28, 0.62);
-            backdrop-filter: blur(65px) saturate(240%);
-            -webkit-backdrop-filter: blur(65px) saturate(240%);
-            border: 1px solid rgba(255, 255, 255, 0.26);
-            border-radius: 42px;
-            padding: 34px;
-            width: 100%;
-            max-width: 480px;
+            background: rgba(18, 18, 28, 0.62); backdrop-filter: blur(65px) saturate(240%); -webkit-backdrop-filter: blur(65px) saturate(240%);
+            border: 1px solid rgba(255, 255, 255, 0.26); border-radius: 42px; padding: 34px; width: 100%; max-width: 480px;
             box-shadow: 0 70px 140px rgba(0, 0, 0, 0.92), inset 0 1px 3px rgba(255, 255, 255, 0.5), inset 0 -2px 5px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            box-sizing: border-box;
-            height: 86vh;
-            max-height: 740px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
+            text-align: center; box-sizing: border-box; height: 86vh; max-height: 740px; display: flex; flex-direction: column; position: relative;
         }
 
-        .title-ios {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: #f4f4f5;
-            letter-spacing: -1.2px;
-            line-height: 1.1;
-        }
+        .title-ios { font-size: 2.8rem; font-weight: 800; margin-bottom: 6px; color: #f4f4f5; letter-spacing: -1.2px; line-height: 1.1; }
+        .title-ios span { background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 35px rgba(245, 158, 11, 0.4); }
+        
+        input, select { width: 100%; padding: 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(0, 0, 0, 0.45); color: #fff; font-size: 1rem; margin-bottom: 10px; box-sizing: border-box; outline: none; transition: all 0.3s; }
+        input:focus, select:focus { border-color: #f59e0b; background: rgba(0, 0, 0, 0.65); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
 
-        .title-ios span {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
-        }
-
-        p { color: #94a3b8; font-size: 0.96rem; margin-bottom: 22px; line-height: 1.4; }
-
-        input {
-            width: 100%;
-            padding: 16px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(0, 0, 0, 0.45);
-            color: #fff;
-            font-size: 1.05rem;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        input:focus {
-            border-color: #f59e0b;
-            background: rgba(0, 0, 0, 0.65);
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
-        }
-
-        /* BOUTONS EN VRAI LIQUID GLASS PUR */
-        button {
-            width: 100%;
-            padding: 16px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(255, 255, 255, 0.06);
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-        }
-
+        button { width: 100%; padding: 16px; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.06); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 8px; transition: all 0.25s; backdrop-filter: blur(20px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3); }
         button:active { transform: scale(0.93); }
-        button:hover { 
-            background: rgba(255, 255, 255, 0.14); 
-            border-color: rgba(255, 255, 255, 0.35); 
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
-        }
+        button:hover { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.35); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5); }
 
-        /* Bouton Retour Discret en Liquid Glass */
-        .btn-back-liquid {
-            width: auto;
-            padding: 8px 14px;
-            font-size: 0.82rem;
-            border-radius: 12px;
-            margin: 0 0 12px 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            backdrop-filter: blur(15px);
-            color: #d4d4d8;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.2);
-        }
-        .btn-back-liquid:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+        .btn-back-liquid { width: auto; padding: 8px 14px; font-size: 0.82rem; border-radius: 12px; margin: 0 0 12px 0; display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.14); color: #d4d4d8; }
+        .btn-primary { background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4)); border: 1px solid rgba(245, 158, 11, 0.5); }
+        .btn-verite { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.4)); border: 1px solid rgba(59, 130, 246, 0.5); }
+        .btn-action { background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(185, 28, 28, 0.4)); border: 1px solid rgba(239, 68, 68, 0.5); }
+        .btn-shop { background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(126, 34, 206, 0.4)); border: 1px solid rgba(168, 85, 247, 0.5); margin-top: 10px; }
+        .btn-disabled { background: rgba(255, 255, 255, 0.02) !important; color: #52525b !important; cursor: not-allowed !important; }
 
-        .btn-primary { 
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4)); 
-            border: 1px solid rgba(245, 158, 11, 0.5); 
-            box-shadow: 0 12px 30px rgba(217, 119, 6, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
-        }
-        .btn-primary:hover { background: linear-gradient(135deg, rgba(251, 191, 36, 0.4), rgba(180, 83, 9, 0.5)); box-shadow: 0 15px 35px rgba(217, 119, 6, 0.5); }
-        
-        .btn-verite { 
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(29, 78, 216, 0.4)); 
-            border: 1px solid rgba(59, 130, 246, 0.5); 
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
-        }
-        .btn-verite:hover { background: linear-gradient(135deg, rgba(96, 165, 250, 0.4), rgba(30, 64, 175, 0.5)); box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5); }
+        #players-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        .player-card-item { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: #f4f4f5; animation: fadeInPlayer 0.3s; }
+        @keyframes fadeInPlayer { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        .player-avatar { width: 34px; height: 34px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .player-avatar:hover { transform: scale(1.15); }
 
-        .btn-action { 
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(185, 28, 28, 0.4)); 
-            border: 1px solid rgba(239, 68, 68, 0.5); 
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4); 
-        }
-        .btn-action:hover { background: linear-gradient(135deg, rgba(248, 113, 113, 0.4), rgba(153, 27, 27, 0.5)); box-shadow: 0 12px 30px rgba(239, 68, 68, 0.5); }
-        
-        .btn-disabled { 
-            background: rgba(255, 255, 255, 0.02) !important; 
-            color: #52525b !important; 
-            box-shadow: none !important; 
-            cursor: not-allowed !important; 
-            transform: none !important; 
-            border-color: rgba(255, 255, 255, 0.02) !important;
-        }
+        .transition-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; padding: 25px 20px; margin: 15px 0; box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(0,0,0,0.5); }
+        .turn-subtitle { font-size: 1.1rem; color: #cbd5e1; font-weight: 500; margin-bottom: 8px; }
+        .turn-name { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #ffffff, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(251, 191, 36, 0.4); margin: 5px 0; animation: pulseName 2s infinite ease-in-out; }
+        @keyframes pulseName { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        .home-features {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0 25px 0;
-            justify-content: center;
-        }
+        #countdown-display { font-size: 3.5rem; font-weight: 900; color: #ef4444; text-shadow: 0 0 30px rgba(239,68,68,0.7); margin: 15px 0; }
+        .roulette-number-box { display: inline-block; background: rgba(245, 158, 11, 0.15); border: 2px solid rgba(245, 158, 11, 0.6); color: #fbbf24; padding: 2px 12px; border-radius: 12px; font-weight: 900; font-size: 1.3rem; }
 
-        .feature-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 12px;
-            border-radius: 14px;
-            font-size: 0.78rem;
-            color: #d4d4d8;
-            font-weight: 500;
-        }
-
-        /* Liste de joueurs propre et stylée */
-        #players-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .player-card-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px 16px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 600;
-            color: #f4f4f5;
-            backdrop-filter: blur(10px);
-            animation: fadeInPlayer 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes fadeInPlayer {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .player-info-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .player-avatar {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
-        }
-
-        /* SAS DE TRANSITION ULTRA PRO : "C'est au tour de..." */
-        .transition-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px;
-            padding: 30px 20px;
-            margin: 20px 0;
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 20px 40px rgba(0,0,0,0.5);
-            position: relative;
-            backdrop-filter: blur(20px);
-        }
-
-        .turn-subtitle {
-            font-size: 1.1rem;
-            color: #cbd5e1;
-            font-weight: 500;
-            margin-bottom: 8px;
-            letter-spacing: -0.2px;
-        }
-
-        .turn-name {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
-            letter-spacing: -1px;
-            line-height: 1.1;
-            margin: 5px 0;
-            animation: pulseName 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseName {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        /* Animation de la Roue Numérique des Gages */
-        .roulette-number-box {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.15);
-            border: 2px solid rgba(245, 158, 11, 0.6);
-            color: #fbbf24;
-            padding: 2px 12px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 1.3rem;
-            text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
-            animation: bounceNum 0.5s infinite alternate;
-        }
-        @keyframes bounceNum {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* Grille des thèmes */
-        .themes-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 5px;
-        }
-
-        .theme-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 22px;
-            padding: 18px 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .theme-card:hover {
-            transform: translateY(-5px) scale(1.03);
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .theme-card .icon {
-            font-size: 2.4rem;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-            transition: transform 0.3s ease;
-        }
-
+        .themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 5px; }
+        .theme-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px; padding: 18px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+        .theme-card:hover { transform: translateY(-5px) scale(1.03); border-color: rgba(255, 255, 255, 0.25); }
+        .theme-card .icon { font-size: 2.4rem; margin-bottom: 8px; transition: transform 0.3s ease; }
         .theme-card:hover .icon { transform: scale(1.15) rotate(5deg); }
-
-        .theme-card .name {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #f4f4f5;
-            letter-spacing: -0.2px;
-        }
-
-        .theme-card.random {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(79, 70, 229, 0.25));
-            border: 1px solid rgba(168, 85, 247, 0.5);
-            flex-direction: row;
-            justify-content: flex-start;
-            padding: 15px 20px;
-            gap: 15px;
-        }
-        .theme-card.random .icon { font-size: 1.8rem; margin-bottom: 0; }
-        .theme-card.random .name { color: #e879f9; font-size: 1.02rem; }
-
-        .theme-card.pro {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(202, 138, 4, 0.15), rgba(161, 98, 7, 0.25));
-            border: 1px solid rgba(250, 204, 21, 0.5);
-            flex-direction: row;
-            justify-content: flex-start;
-            padding: 15px 18px;
-            gap: 15px;
-        }
-
-        .theme-card.pro .icon { font-size: 1.8rem; margin-bottom: 0; }
-        .theme-card.pro .info { text-align: left; display: flex; flex-direction: column; }
-        .theme-card.pro .name { color: #fef08a; font-size: 1.02rem; }
-        .theme-card.pro .badge-vip { font-size: 0.7rem; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; margin-top: 2px; }
-
-        .theme-card.unlocked { 
-            border-color: rgba(34, 197, 94, 0.5) !important; 
-            background: rgba(34, 197, 94, 0.08) !important; 
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.15) !important;
-        }
-        .theme-card.unlocked .name { color: #4ade80 !important; }
-        .theme-card.unlocked .badge-vip { color: #86efac !important; }
+        .theme-card .name { font-size: 0.95rem; font-weight: 700; color: #f4f4f5; }
+        
+        .theme-card.random, .theme-card.pro, .theme-card.diamant { grid-column: span 2; flex-direction: row; justify-content: flex-start; gap: 15px; padding: 15px 18px; }
+        .theme-card.pro { background: linear-gradient(135deg, rgba(202, 138, 4, 0.15), rgba(161, 98, 7, 0.25)); border: 1px solid rgba(250, 204, 21, 0.5); }
+        .theme-card.diamant { background: linear-gradient(135deg, rgba(31, 41, 55, 0.6), rgba(0, 0, 0, 0.8)); border: 1px solid rgba(251, 191, 36, 0.6); box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
+        .theme-card.diamant .name { color: #fef08a; }
+        .badge-vip { font-size: 0.7rem; color: #fbbf24; text-transform: uppercase; font-weight: 800; margin-top: 2px; }
 
         .hidden { display: none !important; }
+        .prompt-box { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.14); padding: 24px; border-radius: 24px; font-size: 1.25rem; line-height: 1.5; margin: 15px 0; font-weight: 500; }
 
-        .prompt-box {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            padding: 24px;
-            border-radius: 24px;
-            font-size: 1.25rem;
-            line-height: 1.5;
-            margin: 15px 0;
-            box-shadow: inset 0 3px 15px rgba(0,0,0,0.6);
-            font-weight: 500;
-        }
+        .podium-rank { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; }
+        .podium-icon { font-size: 2rem; margin-right: 15px; }
 
-        /* Modale raffinée */
-        .modal-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(25px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-        }
+        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); display: flex; justify-content: center; align-items: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        
-        .modal-card {
-            background: rgba(22, 22, 29, 0.95);
-            border: 1px solid rgba(250, 204, 21, 0.4);
-            padding: 28px;
-            border-radius: 32px;
-            width: 82%;
-            max-width: 330px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.85), 0 0 35px rgba(250, 204, 21, 0.15);
-            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalPop {
-            0% { transform: scale(0.8) translateY(20px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+        .modal-card { background: rgba(22, 22, 29, 0.95); border: 1px solid rgba(250, 204, 21, 0.4); padding: 28px; border-radius: 32px; width: 82%; max-width: 330px; text-align: center; }
 
         .scrollable-content { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; padding-right: 4px; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 10px; }
-
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 10px; }
+        
         .card-transition { animation: cardSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes cardSlide {
-            0% { opacity: 0; transform: translateY(20px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
+        @keyframes cardSlide { 0% { opacity: 0; transform: translateY(20px) scale(0.96); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        
         .floating-icon { animation: floatAnim 3.5s ease-in-out infinite; }
-        @keyframes floatAnim {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-        }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(3deg); } }
+
+        .confetti-piece { position: absolute; width: 14px; height: 14px; z-index: 999; border-radius: 4px; pointer-events: none; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.2s ease-in; }
     </style>
 </head>
 <body>
 
+    <div class="bg-hardware-layer" id="bg-layer">
+        <div class="bg-shape1"></div>
+        <div class="bg-shape2"></div>
+    </div>
+
     <div class="site-layout">
-        
-        <!-- Panneau Latéral Gauche -->
         <div class="side-panel">
             <div>
-                <div class="side-title">⚡ État du Système</div>
-                <div class="stat-item">Plateforme <span>GitHub Pages 🚀</span></div>
-                <div class="stat-item">Sécurité Anti-Doublons <span>Active 🛡️</span></div>
-                <div class="stat-item">Version <span>Édition Royale VIP v2.5 + Roue</span></div>
+                <div class="creator-badge" onclick="app.declencherSecretPrompt()">
+                    <div class="label">Créateur VIP</div>
+                    <div class="name">👑 Armand</div>
+                </div>
+                
+                <div class="coin-display-box">
+                    <div class="title">Mon Trésor Global</div>
+                    <div class="amount" id="side-coin-display">0 🪙</div>
+                </div>
             </div>
-
-            <div class="creator-badge">
-                <div class="label">Conçu par</div>
-                <div class="name">👑 Armand</div>
+            
+            <div style="font-size: 0.82rem; color: #71717a; text-align: center;">
+                <div style="margin-bottom: 8px;">✅ Action : +10 🪙</div>
+                <div>✅ Vérité : +5 🪙</div>
             </div>
         </div>
 
-        <!-- CONTENEUR CENTRAL PRINCIPAL -->
         <div class="liquid-glass card-transition" id="app">
-            <!-- MODALE CODE PROMO MYSTÈRE -->
+            
+            <!-- MODALE CODE PROMO CACHÉ -->
             <div class="modal-overlay" id="promo-modal">
                 <div class="modal-card">
-                    <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 8px;">👑</div>
-                    <h3 style="margin-top:0; font-size: 1.45rem; color: #fef08a;">Accès Royal VIP</h3>
-                    <p style="font-size: 0.85rem; margin-bottom: 18px; color: #a1a1aa;">Contenu réservé à l'élite. Entrez le code secret pour déverrouiller.</p>
+                    <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 8px;">🔥</div>
+                    <h3 style="margin-top:0; font-size: 1.45rem; color: #fef08a;">Accès Restreint</h3>
+                    <p style="font-size: 0.82rem; color: #a1a1aa; margin-bottom: 15px;">Zone réservée. Entrez le code secret.</p>
                     <input type="text" id="promo-input" placeholder="Code secret..." style="text-align: center; text-transform: uppercase;">
-                    <button class="btn-primary" onclick="app.validerPromo()" style="margin-top: 5px;">Déverrouiller ✨</button>
-                    <button onclick="app.fermerModal()" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #a1a1aa; margin-top: 12px; font-size: 0.85rem; cursor: pointer;">Fermer ✕</button>
+                    <button class="btn-primary" onclick="app.validerPromo()">Valider ✨</button>
+                    <button onclick="app.fermerModal()" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: #a1a1aa; margin-top: 12px; font-size: 0.85rem;">Fermer ✕</button>
                 </div>
             </div>
 
             <!-- ÉCRAN 1 : ACCUEIL -->
             <div id="screen-home" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 15px 0;">
-                <div class="floating-icon" style="font-size: 4.2rem; margin-bottom: 10px;">👑</div>
-                <h1 class="title-ios">Action<br><span>ou Vérité</span></h1>
-                <p>L'expérience ultime de soirée, fluide, interactive et sans pitié.</p>
+                <div class="floating-icon" style="font-size: 3.5rem; margin-bottom: 5px;">👑</div>
+                <h1 class="title-ios" style="font-size: 2.2rem;">Action<br><span>ou Vérité</span></h1>
                 
-                <div class="home-features">
-                    <div class="feature-pill">🔥 7 Thèmes</div>
-                    <div class="feature-pill">🛡 Anti-Doublons</div>
-                    <div class="feature-pill">📱 Mobile & PC</div>
+                <!-- COMPTEUR DE PIÈCES VISIBLE DIRECTEMENT À L'ACCUEIL -->
+                <div style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.4); padding: 10px 18px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 8px auto; width: fit-content;">
+                    <span style="font-size: 1.2rem;">🪙</span>
+                    <span style="font-size: 1.1rem; font-weight: 800; color: #fbbf24;" id="home-coin-display">0 🪙</span>
                 </div>
 
-                <button class="btn-primary" onclick="app.changerEcran('screen-themes')">Commencer la partie 🚀</button>
+                <p style="margin-bottom: 15px; font-size: 0.88rem;">L'expérience ultime de soirée, fluide, interactive et sans pitié.</p>
+                <button class="btn-primary" onclick="app.initSystemEtAllerAuxThemes()">Commencer la partie 🚀</button>
+                <button class="btn-shop" onclick="app.changerEcran('screen-shop')">🛒 Boutique VIP & Skins</button>
+            </div>
+
+            <!-- ÉCRAN BOUTIQUE & SKINS -->
+            <div id="screen-shop" class="hidden" style="display:flex; flex-direction:column; height:100%;">
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-home')">⬅ Retour</button></div>
+                <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 3px;">🛒</div>
+                <h1 style="font-size: 1.5rem; margin-bottom: 3px;">Boutique VIP</h1>
+                <p style="font-size: 0.82rem; margin-bottom: 8px;">Dépense tes pièces pour débloquer du contenu exclusif.</p>
+                
+                <div class="scrollable-content">
+                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(251,191,36,0.3); padding: 12px; border-radius: 16px; margin-bottom: 8px;">
+                        <div style="font-size: 1.6rem;">💎</div>
+                        <h3 style="margin: 2px 0; color: #fef08a; font-size: 1rem;">Thème "Diamant Noir"</h3>
+                        <p style="font-size: 0.75rem; margin-bottom: 8px;">Défis de riches, luxe et arrogance.</p>
+                        <button id="btn-buy-diamant" onclick="app.acheterDiamant()" style="background: linear-gradient(135deg, #fbbf24, #d97706); color: #000; font-weight: 900; padding: 10px; font-size: 0.9rem;">300 🪙</button>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(168,85,247,0.3); padding: 12px; border-radius: 16px; margin-bottom: 8px;">
+                        <div style="font-size: 1.6rem;">👑🔥⚡</div>
+                        <h3 style="margin: 2px 0; color: #e879f9; font-size: 1rem;">Pack Skins Légendaires</h3>
+                        <p style="font-size: 0.75rem; margin-bottom: 8px;">Débloque des skins de profils exclusifs.</p>
+                        <button id="btn-buy-skins" onclick="app.acheterPackSkins()" style="background: linear-gradient(135deg, #a855f7, #7e22ce); color: #fff; font-weight: 900; padding: 10px; font-size: 0.9rem;">150 🪙</button>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(244,63,94,0.3); padding: 12px; border-radius: 16px;">
+                        <div style="font-size: 1.6rem;">🌟✨🥇</div>
+                        <h3 style="margin: 2px 0; color: #fb7185; font-size: 1rem;">Effet Confettis Or Pur</h3>
+                        <p style="font-size: 0.75rem; margin-bottom: 8px;">Pluie de paillettes dorées de millionnaire.</p>
+                        <button id="btn-buy-confettis" onclick="app.acheterConfettisOr()" style="background: linear-gradient(135deg, #f43f5e, #be185d); color: #fff; font-weight: 900; padding: 10px; font-size: 0.9rem;">200 🪙</button>
+                    </div>
+                </div>
             </div>
 
             <!-- ÉCRAN 2 : THÈMES -->
             <div id="screen-themes" class="hidden" style="display:flex; flex-direction:column; height:100%;">
-                <h1 style="font-size: 1.6rem; margin-bottom: 14px;">🎯 Choisis un Thème</h1>
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-home')">⬅ Accueil</button></div>
+                <h1 style="font-size: 1.5rem; margin-bottom: 10px;">🎯 Choisis un Thème</h1>
                 <div class="scrollable-content">
                     <div class="themes-grid">
-                        <div class="theme-card" onclick="app.selectionnerTheme('Chill')">
-                            <div class="icon">🌿</div>
-                            <div class="name">Chill & Fun</div>
-                        </div>
-                        <div class="theme-card" onclick="app.selectionnerTheme('Lycée')">
-                            <div class="icon">🎒</div>
-                            <div class="name">Lycée & Cours</div>
-                        </div>
-                        <div class="theme-card" onclick="app.selectionnerTheme('Soirée')">
-                            <div class="icon">🍻</div>
-                            <div class="name">Soirée & Alcool</div>
-                        </div>
-                        <div class="theme-card" onclick="app.selectionnerTheme('Sport')">
-                            <div class="icon">⚡</div>
-                            <div class="name">Sport & Transpi</div>
-                        </div>
-                        <div class="theme-card" onclick="app.selectionnerTheme('Flirt')">
-                            <div class="icon">💖</div>
-                            <div class="name">Flirt & Gênance</div>
-                        </div>
-                        <div class="theme-card" onclick="app.selectionnerTheme('Secrets')">
-                            <div class="icon">💀</div>
-                            <div class="name">Confessions</div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 10px;">
-                        <div class="theme-card random" onclick="app.selectionnerTheme('Tous')">
-                            <div class="icon">🌪️</div>
-                            <div class="name">Mode Aléatoire (Tout mélanger)</div>
-                        </div>
-                        <div class="theme-card pro" id="theme-hot-btn" onclick="app.accederThemePro('Hot')">
+                        <div class="theme-card" onclick="app.selectionnerTheme('Chill')"><div class="icon">🌿</div><div class="name">Chill & Fun</div></div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Lycée')"><div class="icon">🎒</div><div class="name">Lycée & Cours</div></div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Soirée')"><div class="icon">🍻</div><div class="name">Soirée & Alcool</div></div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Sport')"><div class="icon">⚡</div><div class="name">Sport & Transpi</div></div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Flirt')"><div class="icon">💖</div><div class="name">Flirt & Gênance</div></div>
+                        <div class="theme-card" onclick="app.selectionnerTheme('Secrets')"><div class="icon">💀</div><div class="name">Confessions</div></div>
+                        
+                        <div class="theme-card pro" id="theme-hot-btn" onclick="app.accederThemeHot()">
                             <div class="icon">🔥</div>
-                            <div class="info">
-                                <div class="name">Hot 18+ / VIP</div>
-                                <div class="badge-vip">👑 Contenu Exclusif Coquin</div>
-                            </div>
+                            <div class="info"><div class="name">Hot 18+ / VIP</div><div class="badge-vip" id="hot-status">🔒 Verrouillé</div></div>
                         </div>
+
+                        <div class="theme-card diamant" id="theme-diamant-btn" onclick="app.selectionnerDiamant()">
+                            <div class="icon">💎</div>
+                            <div class="info"><div class="name">Diamant Noir VIP</div><div class="badge-vip" id="diamant-status">🔒 Boutique (300 🪙)</div></div>
+                        </div>
+
+                        <div class="theme-card random" onclick="app.selectionnerTheme('Tous')"><div class="icon">🌪️️</div><div class="name">Mode Aléatoire (Mix de tous les thèmes)</div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ÉCRAN 3 : JOUEURS AVEC BOUTON DE RETOUR LIQUID GLASS -->
+            <!-- ÉCRAN 3 : JOUEURS + GAGES PERSOS -->
             <div id="screen-players" class="hidden" style="display:flex; flex-direction:column; height:100%; text-align: left;">
-                <div>
-                    <button class="btn-back-liquid" onclick="app.changerEcran('screen-themes')">
-                        ⬅️ Choisir un autre thème
-                    </button>
-                </div>
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-themes')">⬅ Changer de thème</button></div>
+                <h1 id="theme-title-display" style="font-size: 1.2rem; margin: 2px 0 6px 0; text-align: center;">👥 Joueurs & Gages Perso</h1>
                 
-                <h1 id="theme-title-display" style="font-size: 1.4rem; margin: 4px 0 10px 0; text-align: center;">👥 Gestion des Joueurs</h1>
-                <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
-                <button onclick="app.ajouterJoueur()">Ajouter un joueur ➕</button>
-                <div class="scrollable-content" style="margin-top: 10px;">
-                    <ul id="players-list"></ul>
+                <div class="scrollable-content">
+                    <input type="text" id="player-input" placeholder="Prénom du joueur..." onkeypress="if(event.key === 'Enter') app.ajouterJoueur()">
+                    <button onclick="app.ajouterJoueur()" style="margin-top:0;">Ajouter un joueur ➕</button>
+                    <ul id="players-list" style="margin-top: 8px;"></ul>
+
+                    <div style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.2); padding: 12px; border-radius: 16px; margin-top: 15px;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: #fbbf24; margin-bottom: 6px;">✨ Ajouter un gage / question perso :</div>
+                        <select id="custom-type">
+                            <option value="actions">🔥 Action personnalisée</option>
+                            <option value="verites">🤫 Vérité personnalisée</option>
+                        </select>
+                        <input type="text" id="custom-prompt-input" placeholder="Ex: Boire cul-sec avec..." style="margin-bottom: 6px;">
+                        <button onclick="app.ajouterGagePerso()" style="background: rgba(251,191,36,0.2); border-color: rgba(251,191,36,0.5); font-size: 0.85rem; padding: 10px;">Ajouter au jeu 🎯</button>
+                    </div>
                 </div>
-                <button id="start-game-btn" class="btn-primary hidden" onclick="app.lancerPartie()" style="margin-top: auto;">Lancer la partie 🚀🎲</button>
+
+                <button id="start-game-btn" class="btn-primary hidden" onclick="app.lancerPartie()" style="margin-top: 5px;">Lancer la partie 🚀🎲</button>
             </div>
 
             <!-- ÉCRAN 4 : SAS DE TRANSITION -->
             <div id="screen-pass-phone" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%; padding: 5px 0;">
+                <div style="display:flex; justify-content:space-between; width:100%;">
+                    <button class="btn-back-liquid" onclick="app.afficherPodium()" style="font-size:0.75rem; padding:6px 10px; border-color: rgba(239,68,68,0.4); color:#fca5a5;">🛑 Finir la partie</button>
+                    <div style="font-size:0.9rem; font-weight:800; color:#fbbf24; padding:6px 10px;">Gains session : <span id="current-gains">0</span> 🪙</div>
+                </div>
                 <div class="floating-icon" style="font-size: 3rem; margin-bottom: 2px;">📱</div>
-                
                 <div class="transition-card">
                     <div class="turn-subtitle">C'est au tour de</div>
                     <div class="turn-name" id="pass-to-name">NOM</div>
                     <p style="font-size: 0.82rem; color: #94a3b8; margin: 8px 0 0 0;">Passe-lui le téléphone discrètement 🤫</p>
                 </div>
-
                 <button class="btn-primary" onclick="app.afficherChoix()" style="font-size: 1.1rem; padding: 16px;">C'est moi, je suis prêt ! 🔥</button>
             </div>
 
@@ -655,378 +296,554 @@
                 <h1 id="choix-player-name" style="font-size: 2.0rem; margin-bottom: 4px;">NOM</h1>
                 <p id="avertissement-lache" style="color: #fbbf24; font-weight: 500; font-size: 0.85rem; height: 18px; margin-bottom: 15px;"></p>
                 
-                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 76px; font-size: 1.4rem; border-radius: 20px;">🤫 VÉRITÉ</button>
-                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 76px; font-size: 1.4rem; margin-top: 12px; border-radius: 20px;">🔥 ACTION</button>
-                
-                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.25); font-size: 0.9rem; padding: 12px; margin-top: 15px; border-radius: 16px;">🎲 Laisser le destin choisir (Roulette)</button>
+                <button id="btn-verite" class="btn-verite" onclick="app.revelerPrompt('verite')" style="height: 76px; font-size: 1.4rem; border-radius: 20px;">🤫 VÉRITÉ <span style="font-size:0.8rem; color:rgba(255,255,255,0.6); display:block;">+5 🪙</span></button>
+                <button id="btn-action" class="btn-action" onclick="app.revelerPrompt('action')" style="height: 76px; font-size: 1.4rem; margin-top: 12px; border-radius: 20px;">🔥 ACTION <span style="font-size:0.8rem; color:rgba(255,255,255,0.6); display:block;">+10 🪙</span></button>
+                <button onclick="app.rouletteDestin()" style="background: rgba(255, 255, 255, 0.04); border: 1px dashed rgba(255, 255, 255, 0.25); font-size: 0.9rem; padding: 12px; margin-top: 15px; border-radius: 16px;">🎲 Le destin (Roulette)</button>
             </div>
 
             <!-- ÉCRAN 6 : LA SENTENCE -->
             <div id="screen-prompt" class="hidden" style="display:flex; flex-direction:column; height:100%;">
                 <div id="prompt-icon-header" style="font-size: 2.2rem; margin-bottom: -2px;">✨</div>
                 <h2 id="prompt-type" style="letter-spacing: 1.2px; font-size: 1.1rem; margin-bottom: 0;">TYPE</h2>
-                <div class="scrollable-content" style="display:flex; align-items:center;">
-                    <div id="prompt-text" class="prompt-box">Chargement...</div>
+                <div class="scrollable-content" style="display:flex; align-items:center; flex-direction:column; justify-content:center;">
+                    <div id="prompt-text" class="prompt-box" style="width: 100%;">Chargement...</div>
+                    <div id="timer-container" class="hidden"></div>
                 </div>
+                <div style="margin-top: auto; position: relative;">
+                    <button class="btn-primary" onclick="app.tourSuivant(true, this)" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(21, 128, 61, 0.4)); border: 1px solid rgba(34, 197, 94, 0.5);">J'assume (Encaisser) ✅</button>
+                    <button onclick="app.lachete()" style="background: rgba(255, 255, 255, 0.04); color: #a1a1aa; font-size: 0.92rem; border: 1px solid rgba(255,255,255,0.12);">Je refuse (0 🪙) 🏳</button>
+                </div>
+            </div>
+
+            <!-- ÉCRAN 7 : PODIUM -->
+            <div id="screen-podium" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                <div class="floating-icon" style="font-size: 3.5rem; margin-bottom: 10px;">🏆</div>
+                <h1 style="font-size: 2.2rem; color:#fef08a; margin-bottom:5px;">Bilan de la soirée</h1>
+                <p style="margin-bottom: 15px;">Voici le verdict incontestable.</p>
+                <div class="scrollable-content" id="podium-results" style="width: 100%;"></div>
                 
-                <div style="margin-top: auto;">
-                    <button class="btn-primary" onclick="app.tourSuivant()" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(21, 128, 61, 0.4)); border: 1px solid rgba(34, 197, 94, 0.5); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);">J'assume (Suivant) ✅</button>
-                    <button onclick="app.lachete()" style="background: rgba(255, 255, 255, 0.04); color: #a1a1aa; font-size: 0.92rem; border: 1px solid rgba(255,255,255,0.12);">Je refuse (+1 Lâche) 🏳️</button>
+                <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.4); padding: 15px; border-radius: 15px; margin-top: 10px;">
+                    <div style="font-size: 0.9rem; color: #fef08a;">Gains de la session ajoutés au Trésor :</div>
+                    <div style="font-size: 2rem; font-weight: 900; color: #fbbf24;">+<span id="final-gains-display">0</span> 🪙</div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Panneau Latéral Droit -->
-        <div class="side-panel">
-            <div>
-                <div class="side-title">💡 Règles & Astuces</div>
-                <div class="stat-item">Code Secret VIP <span>Tape "ARMAND29" 🔑</span></div>
-                <div class="stat-item">Règle des Vérités <span>Bloqué après 2 vérités d'affilée 🚫</span></div>
-                <div class="stat-item">Compteur de Lâcheté <span>Chaque refus s'additionne 📉</span></div>
+                <button class="btn-primary" onclick="location.reload()" style="margin-top: 20px;">Nouvelle Partie 🔄</button>
             </div>
-            
-            <div style="font-size: 0.8rem; color: #71717a; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px;">
-                Bonne partie à tous ! 🎉
-            </div>
-        </div>
 
+        </div>
     </div>
 
     <script>
-        const app = {
-            joueurs: [],
-            themeActuel: '',
-            joueurTourIndex: 0,
-            veritesConsecutives: {},
-            compteurLaches: {},
-            maxVerites: 2,
-            proDebloque: false,
-            
-            poolsActuels: {},
+        const audioSystem = {
+            ctx: null,
+            init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if(this.ctx.state === 'suspended') this.ctx.resume(); },
+            play(type) {
+                if(!this.ctx) return;
+                const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+                osc.connect(gain); gain.connect(this.ctx.destination);
+                if(type === 'click') { osc.type = 'sine'; osc.frequency.setValueAtTime(800, this.ctx.currentTime); gain.gain.setValueAtTime(0.05, this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.1); osc.start(); osc.stop(this.ctx.currentTime + 0.1); }
+                else if(type === 'roulette') { osc.type = 'triangle'; osc.frequency.setValueAtTime(1000, this.ctx.currentTime); gain.gain.setValueAtTime(0.03, this.ctx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05); osc.start(); osc.stop(this.ctx.currentTime + 0.05); }
+                else if(type === 'success') { osc.type = 'sine'; osc.frequency.setValueAtTime(400, this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, this.ctx.currentTime + 0.15); gain.gain.setValueAtTime(0.1, this.ctx.currentTime); gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.3); osc.start(); osc.stop(this.ctx.currentTime + 0.3); }
+                else if(type === 'fail') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, this.ctx.currentTime); osc.frequency.exponentialRampToValueAtTime(50, this.ctx.currentTime + 0.5); gain.gain.setValueAtTime(0.08, this.ctx.currentTime); gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5); osc.start(); osc.stop(this.ctx.currentTime + 0.5); }
+                else if(type === 'cash') { osc.type = 'square'; osc.frequency.setValueAtTime(1500, this.ctx.currentTime); osc.frequency.setValueAtTime(2000, this.ctx.currentTime + 0.1); gain.gain.setValueAtTime(0.05, this.ctx.currentTime); gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.2); osc.start(); osc.stop(this.ctx.currentTime + 0.2); }
+            }
+        };
 
-            themeIcons: {
-                'Chill': '🌿',
-                'Lycée': '🎒',
-                'Soirée': '🍻',
-                'Sport': '⚡',
-                'Flirt': '💖',
-                'Hot': '🔥',
-                'Secrets': '💀',
-                'Tous': '🌪️'
+        const app = {
+            joueurs: [], joueurInfos: {},
+            themeActuel: '', joueurTourIndex: 0,
+            maxVerites: 2, poolsActuels: { verites: [], actions: [] }, timerInterval: null,
+            
+            tresor: parseInt(localStorage.getItem('aov_tresor')) || 0,
+            hotDebloque: localStorage.getItem('aov_hot_unlocked') === 'true',
+            diamantDebloque: localStorage.getItem('aov_diamant_unlocked') === 'true',
+            skinsDebloques: localStorage.getItem('aov_skins_unlocked') === 'true',
+            confettisOrDebloque: localStorage.getItem('aov_confettis_unlocked') === 'true',
+            gainsPartieEncours: 0,
+            currentPromptType: '',
+            
+            freeSkins: ['🦁', '🦊', '🐼', '🐯', '🐻', '🐨'],
+            premiumSkins: ['👑', '🔥', '💎', '⚡', '💀', '🤖'],
+
+            themeClasses: { 
+                'Chill': 'theme-chill', 'Lycée': 'theme-lycee', 'Soirée': 'theme-soiree', 
+                'Sport': 'theme-sport', 'Flirt': 'theme-flirt', 'Secrets': 'theme-secrets', 
+                'Hot': 'theme-hot', 'Diamant Noir': 'theme-diamant' 
             },
 
+            // BANQUES DE QUESTIONS ET ACTIONS ULTRA DIVERSIFIÉES ET GÉANTES
             banques: {
-                'Chill': {
+                'Chill': { 
                     verites: [
-                        "Quel est ton pire achat compulsif inutile ?",
-                        "Quelle est ta dernière recherche Google la plus honteuse ?",
-                        "Qui est la personne ici que tu appellerais en urgence absolue en pleine nuit ?"
-                    ],
+                        "Quel est ton pire achat compulsif qui n'a servi à rien ?", 
+                        "Quelle est ta dernière recherche Google la plus honteuse ?", 
+                        "Quel est ton plus grand plaisir coupable en musique ou en série ?", 
+                        "Si tu devais manger un seul plat toute ta vie, ce serait quoi ?", 
+                        "Quel est ton plus gros ridicule en public dont tu te souviens ?",
+                        "Quelle est la chose la plus bizarre que tu fais quand tu es tout seul chez toi ?",
+                        "Quel est le pire cadeau que l'on t'ait offert et que tu as dû faire semblant d'aimer ?",
+                        "À quoi penses-tu généralement juste avant de t'endormir ?"
+                    ], 
                     actions: [
-                        "Fais un concours de regard intense de 30 secondes avec {cible}. Le premier qui rigole prend un gage.",
-                        "Laisse {cible} envoyer un message de son choix à la première personne de ton répertoire.",
-                        "Invente une rumeur complètement absurde sur {cible} et raconte-la avec le plus grand sérieux."
-                    ]
+                        "Invente une rumeur totalement absurde sur {cible} et raconte-la avec assurance.", 
+                        "Fais un compliment très sérieux et intense à {cible} pendant 20 secondes.", 
+                        "Imite ta célébrité ou ton influenceur préféré pendant 30 secondes.", 
+                        "Mime ta pire journée de cours ou de boulot en accéléré.", 
+                        "Envoie un message vocal de 5 secondes en faisant le bruit d'un animal au dernier contact de ta liste.",
+                        "Fais une danse ridicule sans musique pendant [TIMER:20]."
+                    ] 
                 },
-                'Lycée': {
+                'Lycée': { 
                     verites: [
-                        "Quel prof as-tu le plus envie d'envoyer balader en cours ?",
-                        "Sur qui as-tu honteusement copié lors du dernier contrôle important ?",
-                        "Quelle est la pire excuse foireuse que tu aies sortie pour justifier un retard ?"
-                    ],
+                        "Quel prof as-tu envie d'envoyer balader dès le matin ?", 
+                        "Quelle est ta pire note de toute ta scolarité ?", 
+                        "As-tu déjà dormi pendant un cours entier sans que le prof ne s'en aperçoive ?", 
+                        "Quel est le plus gros mensonge que tu as sorti à tes parents pour sécher ou justifier un retard ?", 
+                        "As-tu déjà copié sur quelqu'un lors d'un contrôle important ?",
+                        "Quel élève de ta classe trouves-tu le plus insupportable ?",
+                        "As-tu déjà mangé en cachette en plein milieu d'un cours ?"
+                    ], 
                     actions: [
-                        "Mime un prof emblématique de ton établissement, {cible} doit deviner de qui il s'agit.",
-                        "Confesse un faux secret ultra dramatique à {cible} en le fixant droit dans les yeux sans rire.",
-                        "Improvise un discours de délégué d'une minute chrono pour convaincre {cible} de voter pour toi."
-                    ]
+                        "Improvise un discours de délégué ultra convaincant pour réclamer un distributeur de tacos au lycée.", 
+                        "Mime un prof strict pendant [TIMER:20], {cible} doit deviner de quelle matière il s'agit.", 
+                        "Fais un sketch de 30 secondes montrant ta réaction quand tu reçois une interro surprise.", 
+                        "Prends la pose de penseur le plus dramatique possible pendant [TIMER:25].",
+                        "Invente un poème de 4 lignes sur le contrôle continu et recite-le avec emphase."
+                    ] 
                 },
-                'Soirée': {
+                'Soirée': { 
                     verites: [
-                        "Quel a été ton pire black-out ou moment de solitude légendaire en soirée ?",
-                        "As-tu déjà envoyé un texto ultra pathétique à un(e) ex en étant totalement bourré(e) ?",
-                        "Qui ici a la réputation de tenir le moins bien l'alcool selon toi ?"
-                    ],
+                        "Quel est ton pire black-out ou ta plus grosse cuite mémorable ?", 
+                        "Qui dans cette pièce tient le moins bien l'alcool selon toi ?", 
+                        "As-tu déjà envoyé un message bourré ultra gênant à la mauvaise personne ?", 
+                        "Quel est ton plus grand dossier en soirée que personne ne connaît ?",
+                        "As-tu déjà fait semblant d'être ivre pour rigoler ?",
+                        "Quel est le truc le plus débile que tu aies fait un soir de fête ?"
+                    ], 
                     actions: [
-                        "Jeu des 3 verres : On prépare devant {cible} 3 verres (2 d'eau et 1 de vodka). {cible} se retourne, on mélange, et elle doit en boire un pour deviner le verre d'alcool du premier coup ! Si elle rate, elle boit un gage de {nombre} gorgées.",
-                        "Distribue <span class='roulette-number-box' data-min='1' data-max='6'>...</span> gorgées bien méritées à la personne de ton choix, ou bois-les si tu refuses.",
-                        "Affronte {cible} à un 'Shifumi' impitoyable : le perdant boit <span class='roulette-number-box' data-min='2' data-max='5'>...</span> gorgées.",
-                        "Joue le barman fou : prépare un mélange improbable avec ce qu'il y a sur la table et bois-le en regardant {cible}."
-                    ]
+                        "Distribue <span class='roulette-number-box' data-min='1' data-max='6'>...</span> gorgées aux personnes de ton choix.", 
+                        "Affronte {cible} à un Shifumi instantané. Le perdant boit <span class='roulette-number-box' data-min='2' data-max='5'>...</span> gorgées.", 
+                        "Jeu des 3 verres : {cible} mélange les rôles, devine le bon verre ou bois <span class='roulette-number-box' data-min='1' data-max='4'>...</span> gorgées.",
+                        "💀 MALÉDICTION : Pendant 3 tours, {cible} ne doit pas prononcer 'Oui' ou 'Non'. Une gorgée par erreur.",
+                        "Bois un verre d'eau cul-sec en faisant un toast royal à la santé d'Armand."
+                    ] 
                 },
-                'Sport': {
+                'Sport': { 
                     verites: [
-                        "Quelle est ta meilleure excuse de lâche pour sécher les cours de sport ?",
-                        "Qui est le plus gros fragile en condition physique dans ce groupe ?",
-                        "As-tu déjà simulé une blessure imaginaire juste pour ne pas courir en EPS ?"
-                    ],
+                        "Quelle est ta pire excuse pour sécher l'EPS en catastrophe ?", 
+                        "As-tu déjà simulé une blessure pour ne pas courir le cross du collège/lycée ?", 
+                        "Quel sport trouves-tu absolument surestimé et ennuyeux à regarder ?", 
+                        "Quelle est ta pire honte ou gamelle monumentale en cours de sport ?", 
+                        "Quel athlète ou sportif professionnel détestes-tu secrètement ?",
+                        "Combien de pompes d'affilée penses-tu pouvoir faire sans t'arrêter ?",
+                        "Quel est le sport le plus ridicule auquel tu aies participé ?"
+                    ], 
                     actions: [
-                        "Tiens la position de la chaise contre un mur pendant <span class='roulette-number-box' data-min='20' data-max='60'>...</span> secondes sans bouger.",
-                        "Défie {cible} à un bras de fer féroce. Le perdant s'incline et prend un gage.",
-                        "Enchaîne <span class='roulette-number-box' data-min='10' data-max='25'>...</span> pompes impeccables. Si tu échoues, {cible} décide de ta punition."
-                    ]
+                        "Tiens la chaise contre un mur pendant [TIMER:45] sans tricher.", 
+                        "Enchaîne <span class='roulette-number-box' data-min='10' data-max='30'>...</span> squats sautés le plus vite possible.", 
+                        "Fais la planche abdominale pendant [TIMER:40] sans bouger d'un millimètre.", 
+                        "Imite l'échauffement ultra rigide et ridicule d'un coach sportif de fitness pendant [TIMER:25].",
+                        "Fais une course sur place en levant les genoux le plus haut possible pendant [TIMER:20].",
+                        "Porte {cible} sur ton dos sur 5 mètres sans la faire tomber.",
+                        "Fais <span class='roulette-number-box' data-min='5' data-max='15'>...</span> pompes bien rythmées.",
+                        "Tiens en équilibre sur un seul pied les yeux fermés pendant [TIMER:30]."
+                    ] 
                 },
-                'Flirt': {
+                'Flirt': { 
                     verites: [
-                        "Qui possède incontestablement le plus de charme et de charisme dans cette pièce ?",
-                        "Raconte ton pire râteau ou ta technique de drague la plus éclatée.",
-                        "As-tu déjà secrètement fantasmé sur la copine ou le copain d'un(e) de tes potes ?"
-                    ],
+                        "Quel est ton pire râteau de toute ton existence ?", 
+                        "Qui possède incontestablement le plus de charme dans cette pièce ?", 
+                        "As-tu déjà eu un coup de foudre total pour quelqu'un en moins de 5 minutes ?", 
+                        "Quel est ton critère numéro un chez une personne qui te fait craquer ?",
+                        "As-tu déjà stalké le compte Instagram de quelqu'un pendant des heures par ennui ou amour ?",
+                        "Quelle est la phrase d'accroche la plus cliché qu'on t'ait dite ?"
+                    ], 
                     actions: [
-                        "Offre un massage des épaules relaxant de <span class='roulette-number-box' data-min='15' data-max='45'>...</span> secondes bien mérité à {cible}.",
-                        "Mime ta pire technique de drague lourde et malaisante sur {cible} sans rigoler.",
-                        "Fais une déclaration d'amour théâtrale et enflammée d'une minute chrono à {cible}."
-                    ]
+                        "Fais un massage des épaules de [TIMER:30] à {cible} avec application.", 
+                        "Déclare ta flamme amoureuse la plus théâtrale possible à {cible} les genoux sur le sol.", 
+                        "Regarde {cible} droit dans les yeux sans cligner des paupières ni rire pendant [TIMER:20].",
+                        "Fais un clin d'œil ultra appuyé et un sourire ravageur à {cible}."
+                    ] 
                 },
-                'Hot': {
+                'Secrets': { 
                     verites: [
-                        "Quel est ton plus grand fantasme secret que tu n'as absolument jamais osé avouer ?",
-                        "Quelle est la chose la plus folle, osée ou torride que tu aies faite par pur désir ?",
-                        "Quel est ton 'guilty pleasure' le plus intense en matière de sexe et de séduction ?",
-                        "As-tu déjà eu des envies ou des actes coquins dans un endroit totalement inattendu ou public ?",
-                        "Quelle est la position ou le délire le plus chaud que tu aimerais absolument expérimenter ?",
-                        "Quel(le) acteur/actrice ou célébrité te fait complètement perdre la tête la nuit ?"
-                    ],
+                        "Quel est le plus lourd secret que tu caches encore à tes parents ?", 
+                        "As-tu déjà volé un objet, même un petit truc, quand tu étais plus jeune ?", 
+                        "Quel est ton plus grand regret dans ta vie jusqu'à présent ?", 
+                        "Quel secret confierais-tu à absolument personne ici ?",
+                        "As-tu déjà menti à ton meilleur ami sur un sujet très important ?"
+                    ], 
                     actions: [
-                        "Fais un bisou très langoureux ou dans le cou de {cible}.",
-                        "Mime de façon explicite ta position ou ton expression préférée pendant un moment intime.",
-                        "Envoie un message vocal ou textuel un peu osé à un contact au hasard (ou à {cible}).",
-                        "Laisse {cible} explorer ta galerie photo pendant <span class='roulette-number-box' data-min='10' data-max='30'>...</span> secondes sans rien interdire.",
-                        "Chuchote à l'oreille de {cible} la phrase la plus crue et osée qui te traverse l'esprit."
-                    ]
+                        "Laisse {cible} inspecter librement tes derniers messages ou photos pendant [TIMER:20].", 
+                        "Raconte ton plus grand moment de solitude absolue en public.", 
+                        "Avoue un petit péché mignon ou une manie bizarre que tu n'as jamais dite à personne."
+                    ] 
                 },
-                'Secrets': {
+                'Hot': { 
                     verites: [
-                        "Quel est le plus lourd secret que tu réussis à cacher à tes parents ?",
-                        "Quel est le mensonge le plus grave ou improbable que tu aies raconté à un(e) pote ?",
-                        "As-tu déjà volé un objet, même complètement insignifiant ? Lequel ?"
-                    ],
+                        "Quel est ton plus grand fantasme secret inavouable ?", 
+                        "Quelle est la chose la plus torride ou osée que tu aies faite ?", 
+                        "Quel(le) acteur/actrice ou célébrité te fait totalement fantasmer ?",
+                        "Quel est ton endroit le plus insolite où tu aimerais galocher quelqu'un ?"
+                    ], 
                     actions: [
-                        "Laisse {cible} fouiller librement dans ton journal d'appels ou tes derniers messages pendant <span class='roulette-number-box' data-min='10' data-max='30'>...</span> secondes.",
-                        "Raconte ton plus grand moment de solitude en public devant tout le monde sans filtre.",
-                        "Confesse une gaffe monumentale que tu n'as jamais osé avouer à personne ici."
-                    ]
+                        "Fais un bisou très langoureux dans le cou de {cible}.", 
+                        "Laisse {cible} explorer ta galerie photo personnelle pendant [TIMER:15].", 
+                        "Chuchote un secret très chaud à l'oreille de {cible}."
+                    ] 
+                },
+                'Diamant Noir': { 
+                    verites: [
+                        "Pour 1 million d'euros, serais-tu prêt à trahir la personne à ta droite sans hésiter ?", 
+                        "Quel est le plus grand complexe que tu caches derrière ton arrogance ?", 
+                        "Si tu devais bannir définitivement quelqu'un de cette pièce pour sauver ta peau, qui choisirais-tu ?"
+                    ], 
+                    actions: [
+                        "Lèche la chaussure de {cible} ou donne-lui 10 euros cash immédiatement.", 
+                        "Supprime sur le champ l'application de ton choix sur ton téléphone sous les yeux de tous.", 
+                        "Critique le style vestimentaire de {cible} avec un aplomb total pendant [TIMER:30]."
+                    ] 
                 }
+            },
+
+            vibrer(pattern=40) { if(navigator.vibrate) navigator.vibrate(pattern); },
+
+            initSystemEtAllerAuxThemes() {
+                audioSystem.init(); audioSystem.play('click'); this.vibrer(30);
+                this.updateUI();
+                this.changerEcran('screen-themes');
+            },
+            
+            updateUI() {
+                // MISE À JOUR PARTOUT : ACCUEIL, PANNEAU LATÉRAL, ETC.
+                document.getElementById('side-coin-display').innerText = this.tresor + " 🪙";
+                const homeCoin = document.getElementById('home-coin-display');
+                if(homeCoin) homeCoin.innerText = this.tresor + " 🪙";
+                
+                const hotStatus = document.getElementById('hot-status');
+                if (this.hotDebloque) { hotStatus.innerText = "👑 Déverrouillé"; hotStatus.style.color = "#4ade80"; }
+                
+                const diamStatus = document.getElementById('diamant-status');
+                if (this.diamantDebloque) { diamStatus.innerText = "👑 Déverrouillé"; diamStatus.style.color = "#4ade80"; }
+
+                const btnSkins = document.getElementById('btn-buy-skins');
+                if (this.skinsDebloques) { btnSkins.innerText = "Déjà possédé ✅"; btnSkins.disabled = true; btnSkins.style.background = "rgba(255,255,255,0.1)"; }
+
+                const btnConfettis = document.getElementById('btn-buy-confettis');
+                if (this.confettisOrDebloque) { btnConfettis.innerText = "Déjà possédé ✅"; btnConfettis.disabled = true; btnConfettis.style.background = "rgba(255,255,255,0.1)"; }
+            },
+
+            declencherSecretPrompt() {
+                this.vibrer();
+                if (!this.hotDebloque) {
+                    document.getElementById('promo-modal').classList.add('active');
+                } else {
+                    alert("👑 Le royaume Hot est déjà totalement ouvert, Majesté !");
+                }
+            },
+
+            fermerModal() { document.getElementById('promo-modal').classList.remove('active'); },
+
+            validerPromo() {
+                this.vibrer(); const code = document.getElementById('promo-input').value.trim().toUpperCase();
+                if (code === 'ARMAND29') {
+                    audioSystem.play('success'); this.hotDebloque = true; 
+                    localStorage.setItem('aov_hot_unlocked', 'true');
+                    this.fermerModal(); this.updateUI();
+                    alert("Accès Royal accordé ! Le thème Hot 18+ est ouvert.");
+                } else { audioSystem.play('fail'); alert("Code incorrect."); }
+            },
+
+            acheterDiamant() {
+                this.vibrer();
+                if (this.tresor >= 300) {
+                    this.tresor -= 300; localStorage.setItem('aov_tresor', this.tresor);
+                    this.diamantDebloque = true; localStorage.setItem('aov_diamant_unlocked', 'true');
+                    audioSystem.play('cash'); this.updateUI();
+                    alert("💎 Achat réussi ! Thème Diamant Noir débloqué.");
+                } else { audioSystem.play('fail'); alert("Il te manque " + (300 - this.tresor) + " 🪙 !"); }
+            },
+
+            acheterPackSkins() {
+                this.vibrer();
+                if (this.tresor >= 150) {
+                    this.tresor -= 150; localStorage.setItem('aov_tresor', this.tresor);
+                    this.skinsDebloques = true; localStorage.setItem('aov_skins_unlocked', 'true');
+                    audioSystem.play('cash'); this.updateUI();
+                    alert("👑 Pack de skins légendaires débloqué !");
+                } else { audioSystem.play('fail'); alert("Il te manque " + (150 - this.tresor) + " 🪙 !"); }
+            },
+
+            acheterConfettisOr() {
+                this.vibrer();
+                if (this.tresor >= 200) {
+                    this.tresor -= 200; localStorage.setItem('aov_tresor', this.tresor);
+                    this.confettisOrDebloque = true; localStorage.setItem('aov_confettis_unlocked', 'true');
+                    audioSystem.play('cash'); this.updateUI();
+                    alert("🌟 Effet Confettis Or Pur débloqué ! Tes réussites brilleront de mille feux.");
+                } else { audioSystem.play('fail'); alert("Il te manque " + (200 - this.tresor) + " 🪙 !"); }
+            },
+
+            accederThemeHot() {
+                if (this.hotDebloque) this.selectionnerTheme('Hot');
+                else document.getElementById('promo-modal').classList.add('active');
+            },
+
+            selectionnerDiamant() {
+                if (this.diamantDebloque) this.selectionnerTheme('Diamant Noir');
+                else { this.vibrer(); audioSystem.play('fail'); this.changerEcran('screen-shop'); }
             },
 
             changerEcran(idEcran) {
-                document.querySelectorAll('.liquid-glass > div').forEach(div => {
-                    if(!div.classList.contains('modal-overlay')) div.classList.add('hidden');
-                });
-                const ecran = document.getElementById(idEcran);
-                ecran.classList.remove('hidden');
-                
+                document.querySelectorAll('.liquid-glass > div').forEach(div => { if(!div.classList.contains('modal-overlay')) div.classList.add('hidden'); });
+                document.getElementById(idEcran).classList.remove('hidden');
+                this.updateUI(); // Rafraîchit les pièces à chaque changement d'écran
                 const cont = document.querySelector('.liquid-glass');
-                cont.classList.remove('card-transition');
-                void cont.offsetWidth;
-                cont.classList.add('card-transition');
+                cont.classList.remove('card-transition'); void cont.offsetWidth; cont.classList.add('card-transition');
             },
 
-            accederThemePro(nom) {
-                if (this.proDebloque) {
-                    this.selectionnerTheme(nom);
+            regenererPool() {
+                let tv = [], ta = [];
+                let nom = this.themeActuel;
+                if (nom === 'Tous') {
+                    let ths = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
+                    if (this.hotDebloque) ths.push('Hot');
+                    if (this.diamantDebloque) ths.push('Diamant Noir');
+                    ths.forEach(t => { 
+                        if(this.banques[t]) {
+                            tv.push(...this.banques[t].verites); 
+                            ta.push(...this.banques[t].actions); 
+                        }
+                    });
                 } else {
-                    document.getElementById('promo-modal').classList.add('active');
+                    tv = [...(this.banques[nom]?.verites || [])];
+                    ta = [...(this.banques[nom]?.actions || [])];
                 }
-            },
-
-            fermerModal() {
-                document.getElementById('promo-modal').classList.remove('active');
-            },
-
-            validerPromo() {
-                const code = document.getElementById('promo-input').value.trim().toUpperCase();
-                if (code === 'ARMAND29') {
-                    this.proDebloque = true;
-                    this.fermerModal();
-                    
-                    const btnHot = document.getElementById('theme-hot-btn');
-                    if(btnHot) {
-                        btnHot.classList.remove('pro');
-                        btnHot.classList.add('unlocked');
-                        btnHot.querySelector('.badge-vip').innerText = "👑 Déverrouillé par Majesté";
-                    }
-                    
-                    alert("Accès Royal accordé ! Tous les thèmes VIP sont ouverts.");
-                } else {
-                    alert("Code incorrect. Le royaume refuse votre requête.");
-                }
+                this.poolsActuels = { verites: tv, actions: ta };
             },
 
             selectionnerTheme(nom) {
+                this.vibrer(); audioSystem.play('click');
                 this.themeActuel = nom;
-                document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom + " " + (this.themeIcons[nom] || '');
-                
-                const icone = this.themeIcons[nom] || '✨';
-                document.getElementById('theme-icon-banner').innerText = icone;
-                document.getElementById('prompt-icon-header').innerText = icone;
-
-                if (nom === 'Tous') {
-                    let toutesVerites = [];
-                    let toutesActions = [];
-                    let themesDispo = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
-                    if (this.proDebloque) themesDispo.push('Hot');
-
-                    themesDispo.forEach(t => {
-                        toutesVerites.push(...this.banques[t].verites);
-                        toutesActions.push(...this.banques[t].actions);
-                    });
-
-                    this.poolsActuels = {
-                        verites: toutesVerites,
-                        actions: toutesActions
-                    };
-                } else {
-                    this.poolsActuels = {
-                        verites: [...this.banques[nom].verites],
-                        actions: [...this.banques[nom].actions]
-                    };
-                }
-
+                document.getElementById('theme-title-display').innerText = "👥 Thème : " + nom;
+                document.getElementById('bg-layer').className = 'bg-hardware-layer ' + (this.themeClasses[nom] || '');
+                this.regenererPool();
                 this.changerEcran('screen-players');
             },
 
             ajouterJoueur() {
-                const input = document.getElementById('player-input');
-                const nom = input.value.trim();
+                const input = document.getElementById('player-input'); const nom = input.value.trim();
                 if (nom && !this.joueurs.includes(nom)) {
+                    this.vibrer(20); audioSystem.play('click');
                     this.joueurs.push(nom);
-                    this.veritesConsecutives[nom] = 0;
-                    this.compteurLaches[nom] = 0;
+                    let defaultEmoji = this.freeSkins[this.joueurs.length % this.freeSkins.length];
+                    this.joueurInfos[nom] = { verites: 0, laches: 0, courage: 0, skinIndex: 0, skinPool: this.skinsDebloques ? [...this.freeSkins, ...this.premiumSkins] : [...this.freeSkins], emoji: defaultEmoji };
                     input.value = '';
-                    
-                    const list = document.getElementById('players-list');
-                    list.innerHTML = this.joueurs.map((j, index) => `
-                        <li class="player-card-item">
-                            <div class="player-info-left">
-                                <div class="player-avatar">👤</div>
-                                <span>${j}</span>
-                            </div>
-                            <span style="font-size: 0.75rem; color: #fbbf24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); padding: 4px 8px; border-radius: 8px;">✨ Joueur #${index + 1}</span>
-                        </li>
-                    `).join('');
-                    
-                    if (this.joueurs.length >= 3) {
-                        document.getElementById('start-game-btn').classList.remove('hidden');
-                    }
+                    this.rendreListeJoueurs();
+                    if (this.joueurs.length >= 2) document.getElementById('start-game-btn').classList.remove('hidden');
                 }
             },
 
-            lancerPartie() {
-                this.joueurTourIndex = 0;
-                this.preparerTour();
+            ajouterGagePerso() {
+                const promptInput = document.getElementById('custom-prompt-input');
+                const typeSelect = document.getElementById('custom-type');
+                const texte = promptInput.value.trim();
+                
+                if (texte) {
+                    this.vibrer(30); audioSystem.play('success');
+                    const targetPool = typeSelect.value;
+                    if (!this.poolsActuels[targetPool]) this.poolsActuels[targetPool] = [];
+                    this.poolsActuels[targetPool].push(texte);
+                    promptInput.value = '';
+                    alert("Gage perso ajouté avec succès au jeu ! 🎯");
+                } else {
+                    alert("Écris d'abord ton gage ou ta question !");
+                }
             },
 
-            preparerTour() {
-                const joueurActuel = this.joueurs[this.joueurTourIndex];
-                document.getElementById('pass-to-name').innerText = joueurActuel;
-                this.changerEcran('screen-pass-phone');
+            changerSkinJoueur(nom) {
+                this.vibrer(15); audioSystem.play('click');
+                let info = this.joueurInfos[nom];
+                info.skinIndex = (info.skinIndex + 1) % info.skinPool.length;
+                info.emoji = info.skinPool[info.skinIndex];
+                this.rendreListeJoueurs();
+            },
+
+            rendreListeJoueurs() {
+                const list = document.getElementById('players-list');
+                list.innerHTML = this.joueurs.map(j => `
+                    <li class="player-card-item">
+                        <div class="player-info-left" style="display:flex; align-items:center; gap:12px;">
+                            <div class="player-avatar" onclick="app.changerSkinJoueur('${j}')" title="Clique pour changer de skin">${this.joueurInfos[j].emoji}</div>
+                            <span>${j}</span>
+                        </div>
+                        <span style="font-size:0.7rem; color:#a1a1aa;">Tap avatar 🎨</span>
+                    </li>
+                `).join('');
+            },
+
+            lancerPartie() { 
+                this.vibrer([30,50]); audioSystem.play('click'); 
+                this.gainsPartieEncours = 0; 
+                this.joueurTourIndex = 0; 
+                this.preparerTour(); 
+            },
+
+            preparerTour() { 
+                document.getElementById('pass-to-name').innerText = this.joueurs[this.joueurTourIndex]; 
+                document.getElementById('current-gains').innerText = this.gainsPartieEncours;
+                this.changerEcran('screen-pass-phone'); 
             },
 
             afficherChoix() {
-                const joueurActuel = this.joueurs[this.joueurTourIndex];
-                document.getElementById('choix-player-name').innerText = `${joueurActuel}`;
+                this.vibrer(); audioSystem.play('click');
+                const joueurActuel = this.joueurs[this.joueurTourIndex]; const info = this.joueurInfos[joueurActuel];
+                document.getElementById('choix-player-name').innerText = `${info.emoji} ${joueurActuel}`;
                 
-                const badge = document.getElementById('coward-counter-badge');
-                if (this.compteurLaches[joueurActuel] > 0) {
-                    badge.innerHTML = `<span style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block;">🛡️️ Score de lâcheté : ${this.compteurLaches[joueurActuel]}</span>`;
-                    badge.classList.remove('hidden');
-                } else {
-                    badge.classList.add('hidden');
-                }
-                
-                const btnVerite = document.getElementById('btn-verite');
-                const textAvertissement = document.getElementById('avertissement-lache');
-                
-                if (this.veritesConsecutives[joueurActuel] >= this.maxVerites) {
-                    btnVerite.classList.add('btn-disabled');
-                    btnVerite.onclick = null;
-                    btnVerite.innerText = "❌ VÉRITÉ (Bloqué)";
+                const btnVerite = document.getElementById('btn-verite'), textAvertissement = document.getElementById('avertissement-lache');
+                if (info.verites >= this.maxVerites) {
+                    btnVerite.classList.add('btn-disabled'); btnVerite.onclick = null;
                     textAvertissement.innerText = "Trop de vérités d'affilée. Passe à l'action ! ⚡";
                 } else {
-                    btnVerite.classList.remove('btn-disabled');
-                    btnVerite.onclick = () => this.revelerPrompt('verite');
-                    btnVerite.innerText = "🤫 VÉRITÉ";
-                    textAvertissement.innerText = "";
+                    btnVerite.classList.remove('btn-disabled'); btnVerite.onclick = () => this.revelerPrompt('verite'); textAvertissement.innerText = "";
                 }
-                
                 this.changerEcran('screen-choice');
             },
 
             rouletteDestin() {
-                const choixPossibles = ['verite', 'action'];
-                const joueurActuel = this.joueurs[this.joueurTourIndex];
-                let choix = this.veritesConsecutives[joueurActuel] >= this.maxVerites ? 'action' : choixPossibles[Math.floor(Math.random() * choixPossibles.length)];
-                this.revelerPrompt(choix);
+                this.vibrer([30, 50, 30]); audioSystem.play('roulette');
+                const p = this.joueurs[this.joueurTourIndex];
+                let choix = this.joueurInfos[p].verites >= this.maxVerites ? 'action' : (Math.random() > 0.5 ? 'verite' : 'action');
+                setTimeout(() => this.revelerPrompt(choix), 300);
             },
 
             revelerPrompt(type) {
-                const joueurActuel = this.joueurs[this.joueurTourIndex];
+                this.vibrer(40); audioSystem.play('click'); this.currentPromptType = type;
+                clearInterval(this.timerInterval); document.getElementById('timer-container').classList.add('hidden');
+                const joueurActuel = this.joueurs[this.joueurTourIndex]; const info = this.joueurInfos[joueurActuel];
                 
-                if (type === 'verite') {
-                    this.veritesConsecutives[joueurActuel]++;
-                    document.getElementById('prompt-type').innerText = "🤫 VÉRITÉ";
-                    document.getElementById('prompt-type').style.color = "#60a5fa";
-                } else {
-                    this.veritesConsecutives[joueurActuel] = 0;
-                    document.getElementById('prompt-type').innerText = "🔥 ACTION";
-                    document.getElementById('prompt-type').style.color = "#f87171";
-                }
+                if (type === 'verite') { info.verites++; document.getElementById('prompt-type').innerText = "🤫 VÉRITÉ (+5 🪙)"; document.getElementById('prompt-type').style.color = "#60a5fa"; } 
+                else { info.verites = 0; document.getElementById('prompt-type').innerText = "🔥 ACTION (+10 🪙)"; document.getElementById('prompt-type').style.color = "#f87171"; }
 
                 let clePool = type + 's';
-                if (this.poolsActuels[clePool].length === 0) {
-                    if (this.themeActuel === 'Tous') {
-                        let toutes = [];
-                        let ths = ['Chill', 'Lycée', 'Soirée', 'Sport', 'Flirt', 'Secrets'];
-                        if(this.proDebloque) ths.push('Hot');
-                        ths.forEach(t => toutes.push(...this.banques[t][clePool]));
-                        this.poolsActuels[clePool] = toutes;
-                    } else {
-                        this.poolsActuels[clePool] = [...this.banques[this.themeActuel][clePool]];
-                    }
+                
+                if (!this.poolsActuels[clePool] || this.poolsActuels[clePool].length === 0) {
+                    this.regenererPool();
                 }
 
                 const indexAleatoire = Math.floor(Math.random() * this.poolsActuels[clePool].length);
                 let promptStr = this.poolsActuels[clePool].splice(indexAleatoire, 1)[0];
 
                 if (promptStr.includes('{cible}')) {
-                    let autresJoueurs = this.joueurs.filter(j => j !== joueurActuel);
-                    let cible = autresJoueurs[Math.floor(Math.random() * autresJoueurs.length)];
-                    promptStr = promptStr.replace('{cible}', `<span style="color: #fbbf24; font-weight: 800; text-transform: uppercase; text-shadow: 0 0 10px rgba(251,191,36,0.4);">${cible}</span>`);
+                    let autres = this.joueurs.filter(j => j !== joueurActuel);
+                    let cible = autres.length > 0 ? autres[Math.floor(Math.random() * autres.length)] : joueurActuel;
+                    promptStr = promptStr.replace('{cible}', `<span style="color: #fbbf24; font-weight: 800; text-transform: uppercase;">${cible}</span>`);
+                }
+
+                let timerMatch = promptStr.match(/\[TIMER:(\d+)\]/);
+                if (timerMatch) {
+                    let secs = parseInt(timerMatch[1]);
+                    promptStr = promptStr.replace(timerMatch[0], `<strong>${secs}s</strong>`);
+                    this.activerTimer(secs);
                 }
 
                 document.getElementById('prompt-text').innerHTML = promptStr;
                 this.changerEcran('screen-prompt');
 
-                // Animation de la roue numérique si présente
                 setTimeout(() => {
                     const box = document.querySelector('#prompt-text .roulette-number-box');
                     if(box) {
-                        const min = parseInt(box.getAttribute('data-min'));
-                        const max = parseInt(box.getAttribute('data-max'));
-                        let iterations = 0;
-                        const interval = setInterval(() => {
+                        const min = parseInt(box.getAttribute('data-min')), max = parseInt(box.getAttribute('data-max'));
+                        let iter = 0;
+                        const inv = setInterval(() => {
+                            audioSystem.play('click'); this.vibrer(10);
                             box.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
-                            iterations++;
-                            if (iterations > 10) {
-                                clearInterval(interval);
-                                const finalNum = Math.floor(Math.random() * (max - min + 1)) + min;
-                                box.innerText = finalNum;
-                            }
-                        }, 60);
+                            if (++iter > 12) { clearInterval(inv); box.innerText = Math.floor(Math.random() * (max - min + 1)) + min; audioSystem.play('success'); }
+                        }, 70);
                     }
                 }, 50);
             },
 
-            tourSuivant() {
-                this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length;
-                this.preparerTour();
+            activerTimer(secs) {
+                const tc = document.getElementById('timer-container'); tc.classList.remove('hidden'); tc.innerHTML = `<div id="countdown-display">00:${secs.toString().padStart(2,'0')}</div>`;
+                let remaining = secs;
+                this.timerInterval = setInterval(() => {
+                    remaining--;
+                    if(remaining <= 3 && remaining > 0) { audioSystem.play('click'); this.vibrer(50); }
+                    if(remaining <= 0) { clearInterval(this.timerInterval); tc.innerHTML = `<div id="countdown-display" style="animation:none;">BOUM 💥</div>`; this.vibrer([100, 50, 100, 50, 200]); } 
+                    else tc.innerHTML = `<div id="countdown-display">00:${remaining.toString().padStart(2,'0')}</div>`;
+                }, 1000);
+            },
+
+            lancerConfettisExplosion(btnElement) {
+                // Si l'effet or est débloqué, les confettis sont dorés et scintillants !
+                const colors = this.confettisOrDebloque ? ['#fbbf24', '#f59e0b', '#d97706', '#ffffff', '#ffdf00'] : ['#fbbf24', '#f59e0b', '#3b82f6', '#ef4444'];
+                const rect = btnElement.getBoundingClientRect();
+                const startX = rect.left + rect.width / 2; const startY = rect.top + rect.height / 2;
+
+                for(let i=0; i<60; i++) {
+                    let conf = document.createElement('div');
+                    conf.className = 'confetti-piece';
+                    conf.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                    conf.style.left = startX + 'px'; conf.style.top = startY + 'px';
+                    document.body.appendChild(conf);
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 100 + Math.random() * 320; 
+                    const tx = Math.cos(angle) * velocity; const ty = Math.sin(angle) * velocity - (Math.random() * 160);
+
+                    setTimeout(() => { 
+                        conf.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random()*720}deg) scale(${Math.random()})`; 
+                        conf.style.opacity = '0';
+                    }, 10);
+                    setTimeout(() => conf.remove(), 1200);
+                }
+            },
+
+            tourSuivant(assume = false, btnElement = null) {
+                clearInterval(this.timerInterval);
+                const p = this.joueurs[this.joueurTourIndex];
+                if(assume) { 
+                    this.joueurInfos[p].courage++; 
+                    if(btnElement) this.lancerConfettisExplosion(btnElement); 
+                    
+                    let gain = (this.currentPromptType === 'action') ? 10 : 5;
+                    this.gainsPartieEncours += gain;
+
+                    this.tresor += gain;
+                    localStorage.setItem('aov_tresor', this.tresor);
+                    this.updateUI();
+
+                    this.vibrer([60, 40, 120]); audioSystem.play('cash');
+                    setTimeout(() => { this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length; this.preparerTour(); }, 1200);
+                } else {
+                    this.joueurTourIndex = (this.joueurTourIndex + 1) % this.joueurs.length; this.preparerTour();
+                }
             },
 
             lachete() {
-                const joueurActuel = this.joueurs[this.joueurTourIndex];
-                this.compteurLaches[joueurActuel]++;
-                alert(`Lâcheté enregistrée pour ${joueurActuel} ! (${this.compteurLaches[joueurActuel]} refus au compteur). Gage activé ! 🏳️`);
-                this.tourSuivant();
+                clearInterval(this.timerInterval); this.vibrer([100, 50, 200]); audioSystem.play('fail');
+                const p = this.joueurs[this.joueurTourIndex]; this.joueurInfos[p].laches++;
+                this.tourSuivant(false);
+            },
+
+            afficherPodium() {
+                this.vibrer(100); audioSystem.play('success'); this.changerEcran('screen-podium');
+                
+                document.getElementById('final-gains-display').innerText = this.gainsPartieEncours;
+                
+                let sortedLaches = [...this.joueurs].sort((a,b) => this.joueurInfos[b].laches - this.joueurInfos[a].laches);
+                let sortedCourage = [...this.joueurs].sort((a,b) => this.joueurInfos[b].courage - this.joueurInfos[a].courage);
+                document.getElementById('podium-results').innerHTML = `
+                    <div class="podium-rank" style="border-color:#fbbf24; box-shadow:0 0 15px rgba(251,191,36,0.2);">
+                        <div class="podium-icon">🦁</div>
+                        <div class="podium-info"><span style="color:#fbbf24; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Kamikaze</span><br><strong style="font-size:1.3rem;">${sortedCourage[0]}</strong> (${this.joueurInfos[sortedCourage[0]].courage} réussites)</div>
+                    </div>
+                    <div class="podium-rank" style="border-color:#ef4444; background:rgba(239,68,68,0.05);">
+                        <div class="podium-icon">🏳️</div>
+                        <div class="podium-info"><span style="color:#ef4444; font-size:0.8rem; font-weight:800; text-transform:uppercase;">Le Gros Lâche</span><br><strong style="font-size:1.3rem;">${sortedLaches[0]}</strong> (${this.joueurInfos[sortedLaches[0]].laches} refus)</div>
+                    </div>
+                `;
             }
         };
     </script>
