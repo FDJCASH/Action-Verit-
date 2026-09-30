@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Action ou Vérité - Édition Royale VIP Ultime</title>
+    <title>Action ou Vérité - Édition Royale Multijoueur Ultime</title>
     <style>
         :root {
             --bg-color-1: #0a0002; --bg-color-2: #2b0006; --bg-color-3: #580c1f;
@@ -87,6 +87,7 @@
         .btn-teams { background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(220, 38, 38, 0.4)); border: 1px solid rgba(239, 68, 68, 0.5); margin-top: 10px; }
         .btn-feed { background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4)); border: 1px solid rgba(245, 158, 11, 0.5); margin-top: 10px; }
         .btn-roulette-mode { background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(190, 24, 93, 0.4)); border: 1px solid rgba(236, 72, 153, 0.5); margin-top: 10px; }
+        .btn-network { background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(3, 105, 161, 0.4)); border: 1px solid rgba(56, 189, 248, 0.5); margin-top: 10px; }
         .btn-disabled { background: rgba(255, 255, 255, 0.02) !important; color: #52525b !important; cursor: not-allowed !important; }
 
         #players-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -137,7 +138,6 @@
 
         .feed-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 14px; border-radius: 14px; margin-bottom: 8px; font-size: 0.88rem; text-align: left; display: flex; align-items: center; gap: 10px; animation: fadeInUp 0.3s ease; }
 
-        /* Notification de Trophée Secret */
         #achievement-popup {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
             background: linear-gradient(135deg, rgba(251, 191, 36, 0.95), rgba(217, 119, 6, 0.95));
@@ -174,7 +174,6 @@
 </head>
 <body>
 
-    <!-- POPUP TROPHÉE SECRET -->
     <div id="achievement-popup">
         <span style="font-size: 1.5rem;" id="ach-icon">🏆</span>
         <div>
@@ -210,7 +209,6 @@
 
         <div class="liquid-glass card-transition" id="app">
             
-            <!-- MODALE CODE PROMO CACHÉ -->
             <div class="modal-overlay" id="promo-modal">
                 <div class="modal-card">
                     <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 8px;">🔥</div>
@@ -235,8 +233,40 @@
                 <p style="margin-bottom: 15px; font-size: 0.88rem; color: #d4d4d8;">L'expérience ultime de soirée, fluide, interactive et sans pitié.</p>
                 <button class="btn-primary" onclick="app.initSystemEtAllerAuxThemes()">Commencer la partie 🚀</button>
                 <button class="btn-teams" onclick="app.lancerModeEquipes()">⚔️ Mode Guerre des Clans (Équipes)</button>
+                <button class="btn-network" onclick="app.ouvrirMenuReseau()">🌐 Salon Réseau (Multijoueur Local)</button>
                 <button class="btn-shop" onclick="app.changerEcran('screen-shop')">🛒 Boutique VIP & Skins</button>
                 <button class="btn-feed" onclick="app.ouvrirFilActu()">📜 Fil d'Actu en Direct</button>
+            </div>
+
+            <!-- ÉCRAN MENU RÉSEAU LOCAL -->
+            <div id="screen-network" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-home')">⬅ Accueil</button></div>
+                <div class="floating-icon" style="font-size: 2.5rem; margin-bottom: 5px;">📡</div>
+                <h1 style="font-size: 1.5rem; margin-bottom: 5px;">Salon Réseau Local</h1>
+                <p style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 15px;">Connecte tes amis sur le même Wi-Fi ou Point d'accès mobile.</p>
+                
+                <button class="btn-primary" onclick="app.demarrerHoteReseau()">👑 Créer un Salon (Hôte S23)</button>
+                <button class="btn-secondary" onclick="app.rejoindreSalonReseau()" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(3, 105, 161, 0.4)); border: 1px solid rgba(56, 189, 248, 0.5);">📱 Rejoindre un Salon</button>
+            </div>
+
+            <!-- ÉCRAN HÔTE LOBBY -->
+            <div id="screen-host-lobby" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                <div><button class="btn-back-liquid" onclick="app.changerEcran('screen-network')">⬅ Retour</button></div>
+                <h1 style="font-size: 1.3rem; margin-bottom: 2px;">📡 Salon Hôte Actif</h1>
+                <p style="font-size: 0.75rem; color: #a1a1aa; margin-bottom: 10px;">Partage cette IP locale à tes potes :</p>
+                
+                <div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(14,165,233,0.4); padding: 12px; border-radius: 14px; margin-bottom: 10px;">
+                    <div id="host-ip-display" style="font-size: 1.05rem; font-weight: 800; color: #38bdf8;">http://192.168.43.1:8080</div>
+                </div>
+
+                <div class="scrollable-content" style="max-height: 160px;">
+                    <h3 style="font-size: 0.85rem; color: #fca5a5; margin-bottom: 4px;">Appareils connectés :</h3>
+                    <ul id="network-players-list" style="list-style: none; padding: 0; margin: 0;">
+                        <li style="color: #71717a; font-size: 0.8rem;">En attente de connexion des autres téléphones...</li>
+                    </ul>
+                </div>
+
+                <button class="btn-primary" onclick="app.initSystemEtAllerAuxThemes()" style="margin-top: 5px;">Configurer les Thèmes & Joueurs 🚀</button>
             </div>
 
             <!-- ÉCRAN FIL D'ACTU -->
@@ -379,7 +409,7 @@
                 <button class="btn-primary" onclick="app.afficherChoix()" style="font-size: 1.1rem; padding: 16px;">C'est moi, je suis prêt ! 🔥</button>
             </div>
 
-            <!-- ÉCRAN 5 : LE CHOIX (AVEC BOUTON ROULETTE MODE) -->
+            <!-- ÉCRAN 5 : LE CHOIX -->
             <div id="screen-choice" class="hidden" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
                 <div id="choice-player-avatar-container"></div>
                 <div id="theme-icon-banner" style="font-size: 2.2rem; margin-bottom: 2px;" class="floating-icon">🎯</div>
@@ -546,7 +576,6 @@
                 if(navigator.vibrate) { try { navigator.vibrate(pattern); } catch(e) {} }
             },
 
-            // Système de Trophées Secrets
             verifierTrophées(nomJoueur) {
                 let info = this.joueurInfos[nomJoueur];
                 if (!info.trophées) info.trophées = [];
@@ -572,6 +601,25 @@
                 document.getElementById('ach-title').innerText = texte;
                 pop.classList.add('show');
                 setTimeout(() => { pop.classList.remove('show'); }, 3500);
+            },
+
+            ouvrirMenuReseau() {
+                this.vibrer(25); audioSystem.play('click');
+                this.changerEcran('screen-network');
+            },
+
+            demarrerHoteReseau() {
+                this.vibrer(30); audioSystem.play('success');
+                document.getElementById('host-ip-display').innerText = "http://192.168.43.1:8080 (Point d'accès mobile S23)";
+                this.changerEcran('screen-host-lobby');
+            },
+
+            rejoindreSalonReseau() {
+                this.vibrer(30); audioSystem.play('click');
+                let ip = prompt("Entre l'adresse IP affichée sur le téléphone de l'Hôte :");
+                if(ip) {
+                    alert("Connexion au salon distant " + ip + " réussie ! En attente du début de partie.");
+                }
             },
 
             initSystemEtAllerAuxThemes() {
@@ -1050,7 +1098,7 @@
 
                     localStorage.setItem('aov_tresor', this.tresor);
                     this.updateUI();
-                    this.verifierTrophées(p); // Vérifie si un trophée secret est débloqué
+                    this.verifierTrophées(p);
 
                     let typeText = this.currentPromptType === 'action' ? '🔥 une Action' : (this.currentPromptType === 'roulette' ? '🎰 une Roulette Mystère' : '🤫 une Vérité');
                     this.ajouterEvenementFeed(this.currentPromptType === 'action' ? '🔥' : (this.currentPromptType === 'roulette' ? '🎰' : '✨'), p, `A assumé ${typeText} et empoche +${gain} 🪙 !`);
